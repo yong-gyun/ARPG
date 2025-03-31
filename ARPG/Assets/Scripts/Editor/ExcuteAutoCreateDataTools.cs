@@ -1,16 +1,7 @@
 using UnityEngine;
 
-public class ExcuteAutoCreateDataTools : MonoBehaviour
+public class ExcuteAutoCreateDataTools
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    private readonly string EXCEL_CONVERTER_PATH = "ARPG/ExcelConverterTool";
+    private readonly string CREATE_STRING_TOOL_PATH = "ARPG/CreateStringDatas";
 }
