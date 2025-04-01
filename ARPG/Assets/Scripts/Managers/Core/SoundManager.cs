@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public partial class Define
+public class SoundManager
 {
     
 }
