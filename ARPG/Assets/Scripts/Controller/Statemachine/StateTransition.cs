@@ -11,7 +11,7 @@ public class StateTransition<T>
 
     public bool IsTransferable
     {
-        get { return _transitionCondition == null || _transitionCondition.Invoke(FromState); }
+        get { return _transitionCondition == null || _transitionCondition.Invoke(FromState) == true; }
     }
 
     public StateTransition(State<T> fromState, State<T> toState, Func<State<T>, bool> transitionCondition, bool canTransitionChangeToSelf)
