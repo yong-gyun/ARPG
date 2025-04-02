@@ -43,6 +43,13 @@ public abstract class StateMachine<CreatureType>
         }
     }
 
+    public void Update()
+    {
+
+
+        _currentStateData.State.Update();
+    }
+
     private void ChangeState(StateData stateData)
     {
         var prevState = _currentStateData;
