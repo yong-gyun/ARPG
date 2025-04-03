@@ -1,0 +1,9 @@
+[
+    {
+			"Hp" : 100,
+			"Energy" : 100,
+			"Defense" : 10,
+			"Physical" : 15,
+			"Magical" : 7
+    },
+]

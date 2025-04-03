@@ -82,7 +82,7 @@ public partial class DataManager
     }}
 #endif
 
-    public override void Clear()
+    public void Clear()
     {{
 {3}
     }}

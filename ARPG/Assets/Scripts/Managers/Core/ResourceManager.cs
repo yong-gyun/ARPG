@@ -22,6 +22,11 @@ public class ResourceManager
         return LoadAsync<Sprite>(dir, CheckKey(key, ".sprite"));
     }
 
+    public UniTask<TextAsset> LoadJson(string dir, string key)
+    {
+        return LoadAsync<TextAsset>(dir, CheckKey(key, ".json"));
+    }
+
     private string CheckKey(string key, string checkFormmat)
     {
         string result = key;
