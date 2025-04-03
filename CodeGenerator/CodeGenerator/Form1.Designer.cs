@@ -10,7 +10,6 @@
         private Label label5;
         private Label label6;
         private Label label7;
-        private ProgressBar progressBar;
         private CheckedListBox excelListViewer;
         private CheckBox serverJsonCheckBox;
         private CheckBox clientJsonCheckBox;
@@ -68,7 +67,6 @@
             serverSourceOutputPathBox = new TextBox();
             serverJsonCheckBox = new CheckBox();
             serverJsonOutputPathBox = new TextBox();
-            progressBar = new ProgressBar();
             excelListViewer = new CheckedListBox();
             showListButton = new Button();
             buildButton = new Button();
@@ -96,7 +94,7 @@
             panel1.Controls.Add(serverJsonOutputPathBox);
             panel1.Location = new Point(12, 8);
             panel1.Name = "panel1";
-            panel1.Size = new Size(776, 417);
+            panel1.Size = new Size(776, 478);
             panel1.TabIndex = 2;
             // 
             // label1
@@ -111,7 +109,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(16, 75);
+            label2.Location = new Point(16, 80);
             label2.Name = "label2";
             label2.Size = new Size(93, 15);
             label2.TabIndex = 3;
@@ -120,7 +118,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(16, 130);
+            label3.Location = new Point(16, 138);
             label3.Name = "label3";
             label3.Size = new Size(135, 15);
             label3.TabIndex = 6;
@@ -129,7 +127,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(16, 185);
+            label4.Location = new Point(16, 200);
             label4.Name = "label4";
             label4.Size = new Size(95, 15);
             label4.TabIndex = 9;
@@ -138,7 +136,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(16, 240);
+            label5.Location = new Point(16, 267);
             label5.Name = "label5";
             label5.Size = new Size(57, 15);
             label5.TabIndex = 12;
@@ -147,7 +145,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(16, 290);
+            label6.Location = new Point(16, 338);
             label6.Name = "label6";
             label6.Size = new Size(99, 15);
             label6.TabIndex = 15;
@@ -156,7 +154,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(16, 345);
+            label7.Location = new Point(16, 404);
             label7.Name = "label7";
             label7.Size = new Size(59, 15);
             label7.TabIndex = 18;
@@ -172,7 +170,7 @@
             // 
             // clientJsonOutputPathBox
             // 
-            clientJsonOutputPathBox.Location = new Point(16, 95);
+            clientJsonOutputPathBox.Location = new Point(16, 100);
             clientJsonOutputPathBox.Name = "clientJsonOutputPathBox";
             clientJsonOutputPathBox.Size = new Size(708, 23);
             clientJsonOutputPathBox.TabIndex = 2;
@@ -180,7 +178,7 @@
             // 
             // clientPacketOutputPathBox
             // 
-            clientPacketOutputPathBox.Location = new Point(16, 205);
+            clientPacketOutputPathBox.Location = new Point(16, 220);
             clientPacketOutputPathBox.Name = "clientPacketOutputPathBox";
             clientPacketOutputPathBox.Size = new Size(708, 23);
             clientPacketOutputPathBox.TabIndex = 8;
@@ -188,7 +186,7 @@
             // 
             // clientSourceOutputPathBox
             // 
-            clientSourceOutputPathBox.Location = new Point(16, 150);
+            clientSourceOutputPathBox.Location = new Point(16, 158);
             clientSourceOutputPathBox.Name = "clientSourceOutputPathBox";
             clientSourceOutputPathBox.Size = new Size(708, 23);
             clientSourceOutputPathBox.TabIndex = 5;
@@ -197,7 +195,7 @@
             // clientJsonCheckBox
             // 
             clientJsonCheckBox.AutoSize = true;
-            clientJsonCheckBox.Location = new Point(730, 101);
+            clientJsonCheckBox.Location = new Point(730, 106);
             clientJsonCheckBox.Name = "clientJsonCheckBox";
             clientJsonCheckBox.Size = new Size(15, 14);
             clientJsonCheckBox.TabIndex = 4;
@@ -206,7 +204,7 @@
             // 
             // serverPacketOutputPathBox
             // 
-            serverPacketOutputPathBox.Location = new Point(16, 365);
+            serverPacketOutputPathBox.Location = new Point(16, 424);
             serverPacketOutputPathBox.Name = "serverPacketOutputPathBox";
             serverPacketOutputPathBox.Size = new Size(708, 23);
             serverPacketOutputPathBox.TabIndex = 17;
@@ -214,7 +212,7 @@
             // 
             // serverSourceOutputPathBox
             // 
-            serverSourceOutputPathBox.Location = new Point(16, 310);
+            serverSourceOutputPathBox.Location = new Point(16, 358);
             serverSourceOutputPathBox.Name = "serverSourceOutputPathBox";
             serverSourceOutputPathBox.Size = new Size(708, 23);
             serverSourceOutputPathBox.TabIndex = 14;
@@ -223,7 +221,7 @@
             // serverJsonCheckBox
             // 
             serverJsonCheckBox.AutoSize = true;
-            serverJsonCheckBox.Location = new Point(730, 264);
+            serverJsonCheckBox.Location = new Point(730, 304);
             serverJsonCheckBox.Name = "serverJsonCheckBox";
             serverJsonCheckBox.Size = new Size(15, 14);
             serverJsonCheckBox.TabIndex = 13;
@@ -232,18 +230,11 @@
             // 
             // serverJsonOutputPathBox
             // 
-            serverJsonOutputPathBox.Location = new Point(16, 260);
+            serverJsonOutputPathBox.Location = new Point(16, 287);
             serverJsonOutputPathBox.Name = "serverJsonOutputPathBox";
             serverJsonOutputPathBox.Size = new Size(708, 23);
             serverJsonOutputPathBox.TabIndex = 11;
             serverJsonOutputPathBox.TextChanged += OnServerJsonOutputPathBoxEvent;
-            // 
-            // progressBar
-            // 
-            progressBar.Location = new Point(12, 440);
-            progressBar.Name = "progressBar";
-            progressBar.Size = new Size(776, 46);
-            progressBar.TabIndex = 0;
             // 
             // excelListViewer
             // 
@@ -295,7 +286,6 @@
             Controls.Add(excelListViewer);
             Controls.Add(panel1);
             Controls.Add(buildButton);
-            Controls.Add(progressBar);
             Name = "Form1";
             Text = "Code Generator";
             Load += Form1_Load;
