@@ -1,4 +1,5 @@
 using Creatures.HunterState;
+using Data.Contents;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -32,7 +33,9 @@ public class Hunter : Creature
         }
     }
 
-    private ESTATE _state;
+    public HunterInfo Info { get; set; }
+    
+    [SerializeField] private ESTATE _state;
 
     public override bool Init()
     {
@@ -46,9 +49,17 @@ public class Hunter : Creature
         AddState(ESTATE.ATTACK, new AttackState());
         AddState(ESTATE.HIT, new HitState());
         AddState(ESTATE.DEAD, new DeadState());
-        
-        State = ESTATE.IDLE;
         return true;
+    }
+
+    public async override void SetInfo(int creatureID)
+    {
+        Info = Managers.Data.GetHunterInfoDatas.Find(x => x.HunterID == creatureID);
+
+        _model = await Managers.Resource.InstantiateAsync("Creature/Hunter", Info.PrefabName, transform);
+        _anim = _model.GetComponent<Animator>();
+
+        State = ESTATE.IDLE;
     }
 
     private void Update()
@@ -58,16 +69,6 @@ public class Hunter : Creature
         float vertical = Input.GetAxis("Vertical");
         Dir = new Vector3(horizontal, 0f, vertical);
 
-        switch (State)
-        {
-            case ESTATE.IDLE:
-                {
-                    if (Dir != Vector3.zero)
-                    {
-                        State = ESTATE.MOVE;
-                    }
-                }
-                break;
-        }
+        _currentState.Update();
     }
 }

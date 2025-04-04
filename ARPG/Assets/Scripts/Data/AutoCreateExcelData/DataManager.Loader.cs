@@ -5,7 +5,7 @@ using Cysharp.Threading.Tasks;
 public partial class DataManager
 {
 	public List<BaseStat> GetBaseStatDatas { get; private set; }
-	public List<LevelStat> GetLevelStatDatas { get; private set; }
+	public List<HunterLevelStat> GetHunterLevelStatDatas { get; private set; }
 	public List<OverclockStat> GetOverclockStatDatas { get; private set; }
 	public List<HunterInfo> GetHunterInfoDatas { get; private set; }
 
@@ -13,7 +13,7 @@ public partial class DataManager
     public async UniTask LoadAll()
     {
 		GetBaseStatDatas = await Load<BaseStatLoader, BaseStat>("Stat", "BaseStat");
-		GetLevelStatDatas = await Load<LevelStatLoader, LevelStat>("Stat", "LevelStat");
+		GetHunterLevelStatDatas = await Load<HunterLevelStatLoader, HunterLevelStat>("Stat", "HunterLevelStat");
 		GetOverclockStatDatas = await Load<OverclockStatLoader, OverclockStat>("Stat", "OverclockStat");
 		GetHunterInfoDatas = await Load<HunterInfoLoader, HunterInfo>("Creature", "HunterInfo");
 
@@ -23,7 +23,7 @@ public partial class DataManager
     public void ConvertBinary()
     {
 		BaseStatLoader.ConvertBinary();
-		LevelStatLoader.ConvertBinary();
+		HunterLevelStatLoader.ConvertBinary();
 		OverclockStatLoader.ConvertBinary();
 		HunterInfoLoader.ConvertBinary();
 
@@ -33,7 +33,7 @@ public partial class DataManager
     public void Clear()
     {
 		GetBaseStatDatas.Clear();
-		GetLevelStatDatas.Clear();
+		GetHunterLevelStatDatas.Clear();
 		GetOverclockStatDatas.Clear();
 		GetHunterInfoDatas.Clear();
 

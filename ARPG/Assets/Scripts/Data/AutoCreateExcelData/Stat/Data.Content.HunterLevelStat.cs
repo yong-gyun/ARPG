@@ -9,22 +9,22 @@ using UnityEngine;
 
 namespace Data.Contents
 {
-    public class LevelStatLoader : ILoader<LevelStat>
+    public class HunterLevelStatLoader : ILoader<HunterLevelStat>
     {
-        public List<LevelStat> result { get; set; }
+        public List<HunterLevelStat> result { get; set; }
 
-        public List<LevelStat> Read()
+        public List<HunterLevelStat> Read()
         {
             return result;
         }
 #if UNITY_EDITOR
         public static void ConvertBinary()
         {
-            string path = "Assets/AssetBundles/Data/Stat/LevelStat.json";
+            string path = "Assets/AssetBundles/Data/Stat/HunterLevelStat.json";
             var load = AssetDatabase.LoadAssetAtPath(path, typeof(TextAsset)) as TextAsset;
             JsonSerializerSettings settings = new JsonSerializerSettings();
        
-            var convertPath = "Assets/AssetBundles/Data/Stat/LevelStat.bytes";     
+            var convertPath = "Assets/AssetBundles/Data/Stat/HunterLevelStat.bytes";     
             File.WriteAllBytes(convertPath, load.bytes);
             try
             {
@@ -39,7 +39,7 @@ namespace Data.Contents
     }
 
     [Serializable]
-    public class LevelStat
+    public class HunterLevelStat
     {
 		public int HunterID { get; set; }
 		public int Hp { get; set; }

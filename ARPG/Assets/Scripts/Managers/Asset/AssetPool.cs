@@ -47,7 +47,7 @@ public class AssetPool
             var handle = Addressables.LoadAssetAsync<T>(path);
             await UniTask.WaitUntil(() => handle.IsDone == true);
 
-            if (handle.Status == UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationStatus.Failed)
+            if (handle.Status == AsyncOperationStatus.Failed)
             {
                 Debug.LogError($"리소스 로드 실패 : {path}");
                 return null;

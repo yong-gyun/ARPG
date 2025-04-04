@@ -1,11 +1,5 @@
 public partial class Define
 {
-    public enum SceneType
-    {
-        StartScene,
-        GameScene
-    }
-
     public enum ClassType
     {
         None,

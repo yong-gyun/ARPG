@@ -55,6 +55,10 @@ public partial class DataManager
         {
             Debug.LogError($"Failed read {key}.json\n {e}");
         }
+        finally
+        {
+            Managers.Resource.Release(Managers.Resource.CheckDir(dir, "Data"), key + ".json", 1, true);
+        }
 
         return result;
     }

@@ -29,6 +29,18 @@ public class ResourceManager
         return LoadAsync<TextAsset>(CheckDir(dir, "Data"), CheckKey(key, ".json"));
     }
 
+    public async UniTask<GameObject> InstantiateAsync(string dir, string key, Transform parent = null)
+    {
+        GameObject prefab = await LoadGameObjectAsync(dir, key);
+        if (prefab == null)
+            return null;
+
+        GameObject go = Object.Instantiate(prefab);
+        go.name = prefab.name;
+        go.transform.SetParent(parent);
+        return go;
+    }
+
     public string CheckKey(string key, string checkFormmat)
     {
         string result = key;

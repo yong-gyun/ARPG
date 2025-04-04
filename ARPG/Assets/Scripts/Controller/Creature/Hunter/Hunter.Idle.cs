@@ -24,7 +24,8 @@ namespace Creatures.HunterState
 
         public void Update()
         {
-            
+            if (_owner.Dir != Vector3.zero)
+                _owner.State = Hunter.ESTATE.MOVE;
         }
     }
 }

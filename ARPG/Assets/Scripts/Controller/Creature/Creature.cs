@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
 
-public class Creature : InitBase
+public abstract class Creature : InitBase
 {
     public IObservable<IState> OnChangeStateEvent { get { return _onChangeStateEvent.AsObservable(); } }
     public Vector3 Dir { get { return _dir.normalized; } set { _dir = value; } }
@@ -15,6 +15,8 @@ public class Creature : InitBase
     protected IState _currentState;
 
     protected Animator _anim;
+
+    [SerializeField] protected GameObject _model;
 
     protected void AddState(Enum stateKey, IState state)
     {
@@ -38,4 +40,6 @@ public class Creature : InitBase
     {
         _anim.CrossFade(animation.ToString(), normalizedTransitionDuration);
     }
+
+    public abstract void SetInfo(int creatureID);
 }

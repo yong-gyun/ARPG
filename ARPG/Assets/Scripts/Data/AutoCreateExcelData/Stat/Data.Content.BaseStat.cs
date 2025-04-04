@@ -41,10 +41,11 @@ namespace Data.Contents
     [Serializable]
     public class BaseStat
     {
-		public int HunterID { get; set; }
+		public int TemplateID { get; set; }
 		public int Hp { get; set; }
 		public int Mp { get; set; }
 		public int Defense { get; set; }
 		public int Attack { get; set; }
+
     }
 }

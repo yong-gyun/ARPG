@@ -1,6 +1,6 @@
 [
     {
-			"HunterID" : 1,
+			"TemplateID" : 1001,
 			"Hp" : 3000,
 			"Mp" : 100,
 			"Defense" : 10,
