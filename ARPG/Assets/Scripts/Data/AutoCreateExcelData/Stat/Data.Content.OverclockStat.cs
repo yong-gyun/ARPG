@@ -9,22 +9,22 @@ using UnityEngine;
 
 namespace Data.Contents
 {
-    public class BaseStatLoader : ILoader<BaseStat>
+    public class OverclockStatLoader : ILoader<OverclockStat>
     {
-        public List<BaseStat> result { get; set; }
+        public List<OverclockStat> result { get; set; }
 
-        public List<BaseStat> Read()
+        public List<OverclockStat> Read()
         {
             return result;
         }
 #if UNITY_EDITOR
         public static void ConvertBinary()
         {
-            string path = "Assets/AssetBundles/Data/Stat/BaseStat.json";
+            string path = "Assets/AssetBundles/Data/Stat/OverclockStat.json";
             var load = AssetDatabase.LoadAssetAtPath(path, typeof(TextAsset)) as TextAsset;
             JsonSerializerSettings settings = new JsonSerializerSettings();
        
-            var convertPath = "Assets/AssetBundles/Data/Stat/BaseStat.bytes";     
+            var convertPath = "Assets/AssetBundles/Data/Stat/OverclockStat.bytes";     
             File.WriteAllBytes(convertPath, load.bytes);
             try
             {
@@ -39,12 +39,11 @@ namespace Data.Contents
     }
 
     [Serializable]
-    public class BaseStat
+    public class OverclockStat
     {
-		public int HunterID { get; set; }
-		public int Hp { get; set; }
-		public int Mp { get; set; }
-		public int Defense { get; set; }
-		public int Attack { get; set; }
+		public Define.OverClockStatType OverClock { get; set; }
+		public Define.StatType Stat { get; set; }
+		public Define.EffectType Effect { get; set; }
+		public int Value { get; set; }
     }
 }

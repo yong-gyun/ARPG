@@ -1,9 +1,9 @@
 [
     {
-			"Hp" : 100,
-			"Energy" : 100,
+			"HunterID" : 1,
+			"Hp" : 3000,
+			"Mp" : 100,
 			"Defense" : 10,
-			"Physical" : 15,
-			"Magical" : 7
+			"Attack" : 15
     },
 ]

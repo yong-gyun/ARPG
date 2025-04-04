@@ -18,9 +18,9 @@ public interface ILoader<TKey, TValue>
 
 public partial class DataManager
 {
-    public void Init()
+    public async void Init()
     {
-
+        await LoadAll();
     }
 
     public async UniTask<List<TItem>> Load<TLoader, TItem>(string dir, string key) where TLoader : ILoader<TItem>
@@ -48,11 +48,12 @@ public partial class DataManager
             {
                 TextAsset textAsset = await Managers.Resource.LoadJson(dir, key);
                 result = JsonConvert.DeserializeObject<TLoader>("{ \"result\" : " + textAsset.text + "}").Read();
+                Debug.Log($"Load {key}.json");
             }
         }
         catch (Exception e)
         {
-            Debug.LogError($"Failed read {key}.json");
+            Debug.LogError($"Failed read {key}.json\n {e}");
         }
 
         return result;
@@ -66,7 +67,10 @@ public partial class DataManager
             Dictionary<TKey, TValue> result = JsonConvert.DeserializeObject<TLoader>("{ \"result\" : " + textAsset.text + "}").MakeDict();
 
             if (result != null)
+            {
+                Managers.Resource.Release(Managers.Resource.CheckDir(dir, "Data"), key, 1, true);
                 return result;
+            }
 
         }
         catch (Exception e)

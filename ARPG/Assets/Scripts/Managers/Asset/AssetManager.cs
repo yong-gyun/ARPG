@@ -18,4 +18,9 @@ public class AssetManager
     {
         return ZString.Concat(DIRECTORY_PATH + "/" + dir + "/" + asset);
     }
+
+    public void Release(string key, int releaseCount, bool releaseImmediate)
+    {
+        _assetPool.Release(ZString.Concat(DIRECTORY_PATH, "/", key), releaseCount, releaseImmediate);
+    }
 }

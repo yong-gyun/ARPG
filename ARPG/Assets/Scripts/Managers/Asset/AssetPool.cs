@@ -62,12 +62,13 @@ public class AssetPool
         return _addressableRefDatas[path].UseAsset() as T;
     }
 
-    public void Release(string key, int releaseCount)
+    public void Release(string key, int releaseCount, bool releaseImmediate = false)
     {
+        int ms = releaseImmediate == true ? 0 : TimeSpan.FromSeconds(60).Milliseconds;
         if (_addressableRefDatas.TryGetValue(key, out AssetRefData refData) == true)
         {
             if (Interlocked.Add(ref refData.count, -releaseCount) <= 0)
-                ReleaseRefData(key, TimeSpan.FromSeconds(60).Milliseconds).Forget();
+                ReleaseRefData(key, ms).Forget();
         }
     }
 
@@ -100,6 +101,7 @@ public class AssetPool
             //아무 곳에서도 사용하지 않음
             _addressableRefDatas.Remove(key);
             refData.Release();
+            Debug.Log($"에셋 릴리즈 {key}");
         }
 
         _releaseAssets.Remove(key);

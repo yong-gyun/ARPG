@@ -30,7 +30,7 @@ public class StartScene : BaseScene
             else
             {
                 //패치할 내역 없음
-                Managers.Scene.LoadScene(Define.SceneType.GameScene);
+                OnCompletedResourceDownload();
             }
         }
     }
@@ -51,7 +51,14 @@ public class StartScene : BaseScene
         }
 
         Addressables.Release(handle);
-        Managers.Scene.LoadScene(Define.SceneType.GameScene);
+
+        OnCompletedResourceDownload();
+    }
+
+    public void OnCompletedResourceDownload()
+    {
+        Managers.Data.Init();
+        Managers.Scene.LoadSceneAsync(Define.SceneType.GameScene);
     }
 
     private double GetDownloadResourceSize(string label)
