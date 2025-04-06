@@ -18,11 +18,6 @@ public interface ILoader<TKey, TValue>
 
 public partial class DataManager
 {
-    public async void Init()
-    {
-        await LoadAll();
-    }
-
     public async UniTask<List<TItem>> Load<TLoader, TItem>(string dir, string key) where TLoader : ILoader<TItem>
     {
         List<TItem> result = null;

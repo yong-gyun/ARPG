@@ -42,21 +42,28 @@ public class AssetPool
     
     public async UniTask<T> LoadAsync<T>(string path) where T : Object
     {
-        if (_addressableRefDatas.ContainsKey(path) == false)
+        try
         {
-            var handle = Addressables.LoadAssetAsync<T>(path);
-            await UniTask.WaitUntil(() => handle.IsDone == true);
-
-            if (handle.Status == AsyncOperationStatus.Failed)
+            if (_addressableRefDatas.ContainsKey(path) == false)
             {
-                Debug.LogError($"리소스 로드 실패 : {path}");
-                return null;
+                var handle = Addressables.LoadAssetAsync<T>(path);
+                await UniTask.WaitUntil(() => handle.IsDone == true);
+
+                if (handle.Status == AsyncOperationStatus.Failed)
+                {
+                    Debug.LogError($"리소스 로드 실패 : {path}");
+                    return null;
+                }
+
+                AssetRefData refData = new AssetRefData(path, handle);
+                Debug.Log($"리소스 로드 성공: {path}");
+
+                _addressableRefDatas[path] = refData;
             }
+        }
+        catch (Exception e)
+        {
 
-            AssetRefData refData = new AssetRefData(path, handle);
-            Debug.Log($"리소스 로드 성공: {path}");
-
-            _addressableRefDatas[path] = refData;
         }
 
         return _addressableRefDatas[path].UseAsset() as T;

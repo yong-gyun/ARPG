@@ -14,15 +14,15 @@ public abstract class BaseStats : MonoBehaviour
     [SerializeField] protected int _defense;
     [SerializeField] protected float _speed;         //¾ê´Â °Á ÇÏµåÄÚµù °ª
 
-    public void Init(int templateID, int level)
+    public virtual void Init(int templateID)
     {
-        var info = Managers.Data.GetBaseStatDatas.Find(x => x.TemplateID == _templateID);
+        var info = Managers.Data.GetBaseStatDatas.Find(x => x.TemplateID == templateID);
         _templateID = templateID;
-        _level = level;
-
         _hp = info.Hp;
         _mp = info.Mp;
         _atk = info.Attack;
         _defense = info.Defense;
     }
+
+    public abstract void SetLevel(int level);
 }

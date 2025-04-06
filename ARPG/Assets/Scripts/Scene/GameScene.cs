@@ -7,7 +7,12 @@ public class GameScene : BaseScene
         if (base.Init() == false)
             return false;
 
-
+        SpawnTest();
         return true;
+    }
+
+    public async void SpawnTest()
+    {
+        await Managers.Object.Spawn(1001);
     }
 }

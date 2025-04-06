@@ -55,9 +55,9 @@ public class StartScene : BaseScene
         OnCompletedResourceDownload();
     }
 
-    public void OnCompletedResourceDownload()
+    public async void OnCompletedResourceDownload()
     {
-        Managers.Data.Init();
+        await Managers.Data.LoadAll();
         Managers.Scene.LoadSceneAsync(Define.SceneType.GameScene);
     }
 

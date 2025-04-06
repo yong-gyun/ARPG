@@ -19,15 +19,16 @@ public class ObjectManager
 
     public HashSet<Hunter> Hunters { get; private set; } = new HashSet<Hunter>();
 
-    public async UniTask<Hunter> SpawnHunter(int hunterID)
+    public async UniTask<Creature> Spawn(int templateID)
     {
-        GameObject go = await Managers.Resource.InstantiateAsync("Creature", "Hunter");
+        Define.CreatureType creatureType = templateID.GetCreatureType();
+        GameObject go = await Managers.Resource.InstantiateAsync("Creature", $"{creatureType}");
         if (go == null)
             return null;
 
-        Hunter hunter = go.GetOrAddComponent<Hunter>();
-        hunter.SetInfo(hunterID);
-        return hunter;
+        Creature creature = go.GetOrAddComponent<Creature>();
+        creature.SetInfo(templateID);
+        return creature;
     }
 
     public Transform CreateRoot(string name)

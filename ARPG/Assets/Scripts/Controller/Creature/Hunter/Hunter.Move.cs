@@ -16,7 +16,7 @@ namespace Creatures.HunterState
 
         public void Enter()
         {
-
+            _owner.SetAnimation("Move");
         }
 
         public void Exit()

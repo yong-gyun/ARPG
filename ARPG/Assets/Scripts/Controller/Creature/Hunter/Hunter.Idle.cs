@@ -14,7 +14,7 @@ namespace Creatures.HunterState
 
         public void Enter()
         {
-
+            _owner.SetAnimation("Idle");
         }
 
         public void Exit()

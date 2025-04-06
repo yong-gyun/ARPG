@@ -7,6 +7,7 @@ public class Hunter : Creature
 {
     public enum ESTATE
     {
+        NONE,
         IDLE,
         MOVE,
         ATTACK,
@@ -28,14 +29,11 @@ public class Hunter : Creature
             {
                 _state = value;
                 ChangeState(_state);
-                SetAnimation(_state);
             }
         }
     }
 
-    public HunterInfo Info { get; set; }
-    
-    [SerializeField] private ESTATE _state;
+    [SerializeField] private ESTATE _state = ESTATE.NONE;
 
     public override bool Init()
     {
@@ -52,13 +50,9 @@ public class Hunter : Creature
         return true;
     }
 
-    public async override void SetInfo(int creatureID)
+    public override void SetInfo(int templateID)
     {
-        Info = Managers.Data.GetHunterInfoDatas.Find(x => x.HunterID == creatureID);
-
-        _model = await Managers.Resource.InstantiateAsync("Creature/Hunter", Info.PrefabName, transform);
-        _anim = _model.GetComponent<Animator>();
-
+        base.SetInfo(templateID);
         State = ESTATE.IDLE;
     }
 
@@ -69,6 +63,7 @@ public class Hunter : Creature
         float vertical = Input.GetAxis("Vertical");
         Dir = new Vector3(horizontal, 0f, vertical);
 
-        _currentState.Update();
+        if (_currentState != null)
+            _currentState.Update();
     }
 }

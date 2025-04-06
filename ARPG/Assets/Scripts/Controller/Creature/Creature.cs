@@ -1,4 +1,5 @@
 using Common.State;
+using Data.Contents;
 using System;
 using System.Collections.Generic;
 using UniRx;
@@ -8,12 +9,15 @@ public abstract class Creature : InitBase
 {
     public IObservable<IState> OnChangeStateEvent { get { return _onChangeStateEvent.AsObservable(); } }
     public Vector3 Dir { get { return _dir.normalized; } set { _dir = value; } }
+    public CreatureInfo Info { get; set; }
     protected Vector3 _dir;
 
     protected Dictionary<Enum, IState> _states = new Dictionary<Enum, IState>();
-    protected Subject<IState> _onChangeStateEvent;
+    protected Subject<IState> _onChangeStateEvent = new Subject<IState>();
     protected IState _currentState;
 
+    protected ColliderEventCallback _colliderEventCallback;
+    protected BaseStats _stats;
     protected Animator _anim;
 
     [SerializeField] protected GameObject _model;
@@ -28,7 +32,9 @@ public abstract class Creature : InitBase
     {
         if (_states.TryGetValue(key, out var state) == false)
             return;
-        _currentState.Exit();
+
+        if (_currentState != null)
+            _currentState.Exit();
 
         _currentState = state;
         state.Enter();
@@ -36,10 +42,21 @@ public abstract class Creature : InitBase
         _onChangeStateEvent.OnNext(state);
     }
 
-    public void SetAnimation(Enum animation, float normalizedTransitionDuration = 0.1f)
+    public void SetAnimation(string animationName, float duration = 0.2f, int layer = 0)
     {
-        _anim.CrossFade(animation.ToString(), normalizedTransitionDuration);
+        _anim.CrossFade(animationName, duration, layer);
     }
 
-    public abstract void SetInfo(int creatureID);
+    public async virtual void SetInfo(int templateID)
+    {
+        Define.CreatureType creatureType = templateID.GetCreatureType();
+
+        Info = Managers.Data.GetCreatureInfoDatas.Find(info => info.TemplateID == templateID);
+        _model = await Managers.Resource.InstantiateAsync($"Creature/{creatureType}", $"{Info.PrefabName}/{Info.PrefabName}.prefab", transform);
+        _anim = _model.GetComponent<Animator>();
+        _stats = gameObject.GetOrAddComponent<BaseStats>();
+        _stats.Init(templateID);
+
+        _colliderEventCallback = _model.GetOrAddComponent<ColliderEventCallback>();
+    }
 }
