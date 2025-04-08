@@ -5,13 +5,14 @@ namespace Creatures.HunterState
 {
     public class MoveState : IState
     {
+        private CharacterController _characterControl;
         private Hunter _owner;
         private float _speed;
 
         public void Init(MonoBehaviour owner)
         {
             _owner = owner.GetComponent<Hunter>();
-
+            _characterControl = _owner.CharacterControl;
         }
 
         public void Enter()
@@ -32,7 +33,7 @@ namespace Creatures.HunterState
                 return;
             }
 
-            _owner.transform.position += _owner.Dir * _speed * Time.deltaTime;
+            _characterControl.Move(_owner.Dir * _speed);
         }
     }
 }

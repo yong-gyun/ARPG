@@ -35,6 +35,8 @@ public class Hunter : Creature
 
     [SerializeField] private ESTATE _state = ESTATE.NONE;
 
+    public CharacterController CharacterControl { get; set; }
+
     public override bool Init()
     {
         if (base.Init() == false)
@@ -53,6 +55,13 @@ public class Hunter : Creature
     public override void SetInfo(int templateID)
     {
         base.SetInfo(templateID);
+        CharacterControl = gameObject.GetOrAddComponent<CharacterController>();
+        CharacterController temp = _model.GetComponent<CharacterController>();
+        CharacterControl.center = temp.center;
+        CharacterControl.radius = temp.radius;
+        CharacterControl.height = temp.height;
+
+        Destroy(temp);
         State = ESTATE.IDLE;
     }
 

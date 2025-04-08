@@ -10,6 +10,7 @@ public abstract class Creature : InitBase
     public IObservable<IState> OnChangeStateEvent { get { return _onChangeStateEvent.AsObservable(); } }
     public Vector3 Dir { get { return _dir.normalized; } set { _dir = value; } }
     public CreatureInfo Info { get; set; }
+    public Stats Stats { get { return _stats; } }
     protected Vector3 _dir;
 
     protected Dictionary<Enum, IState> _states = new Dictionary<Enum, IState>();
@@ -17,7 +18,7 @@ public abstract class Creature : InitBase
     protected IState _currentState;
 
     protected ColliderEventCallback _colliderEventCallback;
-    protected BaseStats _stats;
+    protected Stats _stats;
     protected Animator _anim;
 
     [SerializeField] protected GameObject _model;
@@ -42,7 +43,7 @@ public abstract class Creature : InitBase
         _onChangeStateEvent.OnNext(state);
     }
 
-    public void SetAnimation(string animationName, float duration = 0.2f, int layer = 0)
+    public void SetAnimation(string animationName, float duration = 0.1f, int layer = 0)
     {
         _anim.CrossFade(animationName, duration, layer);
     }
@@ -54,9 +55,7 @@ public abstract class Creature : InitBase
         Info = Managers.Data.GetCreatureInfoDatas.Find(info => info.TemplateID == templateID);
         _model = await Managers.Resource.InstantiateAsync($"Creature/{creatureType}", $"{Info.PrefabName}/{Info.PrefabName}.prefab", transform);
         _anim = _model.GetComponent<Animator>();
-        _stats = gameObject.GetOrAddComponent<BaseStats>();
+        _stats = gameObject.GetOrAddComponent<Stats>();
         _stats.Init(templateID);
-
-        _colliderEventCallback = _model.GetOrAddComponent<ColliderEventCallback>();
     }
 }

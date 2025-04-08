@@ -2,9 +2,11 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public abstract class BaseStats : MonoBehaviour
+public abstract class Stats : MonoBehaviour
 {
     protected Dictionary<Define.StatType, float> _additionalStats = new Dictionary<Define.StatType, float>();
+
+    public float Speed { get { return _speed; } }
 
     [SerializeField] protected int _templateID;
     [SerializeField] protected int _level;

@@ -1,7 +1,7 @@
 using Data.Contents;
 using UnityEngine;
 
-public class HunterStats : BaseStats
+public class HunterStats : Stats
 {
     public int Hp { get { return GetStatValue(_hp, _levelStat == null ? 0 : _levelStat.Hp); } }
     public int Mp { get { return GetStatValue(_mp, _levelStat == null ? 0 : _levelStat.Mp); } }
