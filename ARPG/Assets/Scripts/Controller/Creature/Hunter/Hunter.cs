@@ -1,7 +1,9 @@
 using Creatures.HunterState;
+using Cysharp.Threading.Tasks;
 using Data.Contents;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
 
 public class Hunter : Creature
 {
@@ -49,24 +51,31 @@ public class Hunter : Creature
         AddState(ESTATE.ATTACK, new AttackState());
         AddState(ESTATE.HIT, new HitState());
         AddState(ESTATE.DEAD, new DeadState());
+
+        OnSetInfoCallback.Subscribe(_ =>
+        {
+            CharacterControl = gameObject.GetOrAddComponent<CharacterController>();
+
+            CharacterController temp = _model.GetComponent<CharacterController>();
+            CharacterControl.center = temp.center;
+            CharacterControl.radius = temp.radius;
+            CharacterControl.height = temp.height;
+
+            Destroy(temp);
+            State = ESTATE.IDLE;
+        });
+
         return true;
-    }
-
-    public override void SetInfo(int templateID)
-    {
-        base.SetInfo(templateID);
-        CharacterControl = gameObject.GetOrAddComponent<CharacterController>();
-        CharacterController temp = _model.GetComponent<CharacterController>();
-        CharacterControl.center = temp.center;
-        CharacterControl.radius = temp.radius;
-        CharacterControl.height = temp.height;
-
-        Destroy(temp);
-        State = ESTATE.IDLE;
     }
 
     private void Update()
     {
+        if (_init == false)
+            return;
+
+        if (CharacterControl == null)
+            return;
+
         //TODO 스테이트 변경
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
@@ -74,5 +83,10 @@ public class Hunter : Creature
 
         if (_currentState != null)
             _currentState.Update();
+
+        if (CharacterControl.isGrounded == false)
+        {
+            CharacterControl.Move(Vector3.down * 9.8f);
+        }
     }
 }

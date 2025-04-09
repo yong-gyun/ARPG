@@ -12,7 +12,8 @@ namespace Creatures.HunterState
         public void Init(MonoBehaviour owner)
         {
             _owner = owner.GetComponent<Hunter>();
-            _characterControl = _owner.CharacterControl;
+            _speed = _owner.Stats.Speed;
+            _characterControl = owner.GetComponent<CharacterController>();
         }
 
         public void Enter()

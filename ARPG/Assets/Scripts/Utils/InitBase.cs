@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class InitBase : MonoBehaviour
 {
-    private bool _init;
+    protected bool _init;
 
     private void Awake()
     {

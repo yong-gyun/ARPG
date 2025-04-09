@@ -1,4 +1,5 @@
 using Common.State;
+using Cysharp.Threading.Tasks;
 using Data.Contents;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,10 @@ public abstract class Creature : InitBase
     public Vector3 Dir { get { return _dir.normalized; } set { _dir = value; } }
     public CreatureInfo Info { get; set; }
     public Stats Stats { get { return _stats; } }
+    public IObservable<Unit> OnSetInfoCallback { get { return _onSetInfoCallback.AsObservable(); } }
+
+    protected Subject<Unit> _onSetInfoCallback = new Subject<Unit>();
+
     protected Vector3 _dir;
 
     protected Dictionary<Enum, IState> _states = new Dictionary<Enum, IState>();
@@ -48,7 +53,7 @@ public abstract class Creature : InitBase
         _anim.CrossFade(animationName, duration, layer);
     }
 
-    public async virtual void SetInfo(int templateID)
+    public async void SetInfo(int templateID)
     {
         Define.CreatureType creatureType = templateID.GetCreatureType();
 
@@ -57,5 +62,7 @@ public abstract class Creature : InitBase
         _anim = _model.GetComponent<Animator>();
         _stats = gameObject.GetOrAddComponent<Stats>();
         _stats.Init(templateID);
+
+        _onSetInfoCallback.OnNext(Unit.Default);
     }
 }
