@@ -27,7 +27,7 @@ public class ObjectManager
             return null;
 
         Creature creature = go.GetOrAddComponent<Creature>();
-        creature.SetInfo(templateID);
+        creature.Init(templateID);
         return creature;
     }
 

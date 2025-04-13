@@ -7,12 +7,12 @@ namespace Creatures.HunterState
     {
         private CharacterController _characterControl;
         private Hunter _owner;
-        private float _speed;
+
+        private float GetSppeed() { return _owner.Stats == null ? 0f : _owner.Stats.Speed; }
 
         public void Init(MonoBehaviour owner)
         {
             _owner = owner.GetComponent<Hunter>();
-            _speed = _owner.Stats.Speed;
             _characterControl = owner.GetComponent<CharacterController>();
         }
 
@@ -34,7 +34,7 @@ namespace Creatures.HunterState
                 return;
             }
 
-            _characterControl.Move(_owner.Dir * _speed);
+            _characterControl.Move(_owner.Dir * GetSppeed() * Time.deltaTime);
         }
     }
 }

@@ -6,15 +6,13 @@ using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
 
-public abstract class Creature : InitBase
+public abstract class Creature : MonoBehaviour
 {
     public IObservable<IState> OnChangeStateEvent { get { return _onChangeStateEvent.AsObservable(); } }
     public Vector3 Dir { get { return _dir.normalized; } set { _dir = value; } }
     public CreatureInfo Info { get; set; }
     public Stats Stats { get { return _stats; } }
-    public IObservable<Unit> OnSetInfoCallback { get { return _onSetInfoCallback.AsObservable(); } }
-
-    protected Subject<Unit> _onSetInfoCallback = new Subject<Unit>();
+    public bool IsInitialized { get { return _init; } }
 
     protected Vector3 _dir;
 
@@ -22,10 +20,9 @@ public abstract class Creature : InitBase
     protected Subject<IState> _onChangeStateEvent = new Subject<IState>();
     protected IState _currentState;
 
-    protected ColliderEventCallback _colliderEventCallback;
     protected Stats _stats;
     protected Animator _anim;
-
+    protected bool _init;
     [SerializeField] protected GameObject _model;
 
     protected void AddState(Enum stateKey, IState state)
@@ -53,16 +50,19 @@ public abstract class Creature : InitBase
         _anim.CrossFade(animationName, duration, layer);
     }
 
-    public async void SetInfo(int templateID)
+    public virtual async UniTask Init(int templateID)
     {
-        Define.CreatureType creatureType = templateID.GetCreatureType();
+        if (_init == true)
+            return;
 
+        Define.CreatureType creatureType = templateID.GetCreatureType();
         Info = Managers.Data.GetCreatureInfoDatas.Find(info => info.TemplateID == templateID);
+        
         _model = await Managers.Resource.InstantiateAsync($"Creature/{creatureType}", $"{Info.PrefabName}/{Info.PrefabName}.prefab", transform);
         _anim = _model.GetComponent<Animator>();
+
         _stats = gameObject.GetOrAddComponent<Stats>();
         _stats.Init(templateID);
-
-        _onSetInfoCallback.OnNext(Unit.Default);
+        _init = true;
     }
 }

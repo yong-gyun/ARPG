@@ -39,10 +39,12 @@ public class Hunter : Creature
 
     public CharacterController CharacterControl { get; set; }
 
-    public override bool Init()
+    public async override UniTask Init(int templateID)
     {
-        if (base.Init() == false)
-            return false;
+        if (_init == true)
+            return;
+
+        await base.Init(templateID);
 
         AddState(ESTATE.IDLE, new IdleState());
         AddState(ESTATE.MOVE, new MoveState());
@@ -52,20 +54,15 @@ public class Hunter : Creature
         AddState(ESTATE.HIT, new HitState());
         AddState(ESTATE.DEAD, new DeadState());
 
-        OnSetInfoCallback.Subscribe(_ =>
-        {
-            CharacterControl = gameObject.GetOrAddComponent<CharacterController>();
+        CharacterControl = gameObject.GetOrAddComponent<CharacterController>();
 
-            CharacterController temp = _model.GetComponent<CharacterController>();
-            CharacterControl.center = temp.center;
-            CharacterControl.radius = temp.radius;
-            CharacterControl.height = temp.height;
+        CharacterController temp = _model.GetComponent<CharacterController>();
+        CharacterControl.center = temp.center;
+        CharacterControl.radius = temp.radius;
+        CharacterControl.height = temp.height;
 
-            Destroy(temp);
-            State = ESTATE.IDLE;
-        });
-
-        return true;
+        Destroy(temp);
+        State = ESTATE.IDLE;
     }
 
     private void Update()
