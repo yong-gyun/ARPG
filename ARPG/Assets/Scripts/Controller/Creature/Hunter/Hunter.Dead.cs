@@ -6,8 +6,9 @@ namespace Creatures.HunterState
     public class DeadState : IState
     {
         private Hunter _owner;
-
-        public void Init(MonoBehaviour owner)
+        public Creature GetOwner() { return _owner; }
+        public Vector3 GetDir() { return _owner.Dir; }
+        public void Init(Creature owner)
         {
             _owner = owner.GetComponent<Hunter>();
         }

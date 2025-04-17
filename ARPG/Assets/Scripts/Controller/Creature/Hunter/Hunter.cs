@@ -37,8 +37,6 @@ public class Hunter : Creature
 
     [SerializeField] private ESTATE _state = ESTATE.NONE;
 
-    public CharacterController CharacterControl { get; set; }
-
     public async override UniTask Init(int templateID)
     {
         if (_init == true)
@@ -54,23 +52,12 @@ public class Hunter : Creature
         AddState(ESTATE.HIT, new HitState());
         AddState(ESTATE.DEAD, new DeadState());
 
-        CharacterControl = gameObject.GetOrAddComponent<CharacterController>();
-
-        CharacterController temp = _model.GetComponent<CharacterController>();
-        CharacterControl.center = temp.center;
-        CharacterControl.radius = temp.radius;
-        CharacterControl.height = temp.height;
-
-        Destroy(temp);
         State = ESTATE.IDLE;
     }
 
     private void Update()
     {
         if (_init == false)
-            return;
-
-        if (CharacterControl == null)
             return;
 
         //TODO 스테이트 변경
@@ -80,10 +67,5 @@ public class Hunter : Creature
 
         if (_currentState != null)
             _currentState.Update();
-
-        if (CharacterControl.isGrounded == false)
-        {
-            CharacterControl.Move(Vector3.down * 9.8f);
-        }
     }
 }

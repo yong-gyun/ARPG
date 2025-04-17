@@ -5,9 +5,10 @@ namespace Creatures.HunterState
 {
     public class IdleState : IState
     {
-        private Hunter _owner; 
-        
-        public void Init(MonoBehaviour owner)
+        private Hunter _owner;
+        public Creature GetOwner() { return _owner; }
+        public Vector3 GetDir() { return _owner.Dir; }
+        public void Init(Creature owner)
         {
             _owner = owner.GetComponent<Hunter>();
         }

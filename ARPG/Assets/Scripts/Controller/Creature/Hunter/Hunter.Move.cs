@@ -5,15 +5,17 @@ namespace Creatures.HunterState
 {
     public class MoveState : IState
     {
-        private CharacterController _characterControl;
+        private Rigidbody _rigidbody;
         private Hunter _owner;
 
+        public Creature GetOwner() { return _owner; }
+        public Vector3 GetDir() { return _owner.Dir; }
         private float GetSppeed() { return _owner.Stats == null ? 0f : _owner.Stats.Speed; }
 
-        public void Init(MonoBehaviour owner)
+        public void Init(Creature owner)
         {
             _owner = owner.GetComponent<Hunter>();
-            _characterControl = owner.GetComponent<CharacterController>();
+            _rigidbody = owner.GetComponent<Rigidbody>();
         }
 
         public void Enter()
@@ -28,13 +30,15 @@ namespace Creatures.HunterState
 
         public void Update()
         {
-            if (_owner.Dir == Vector3.zero)
+            if (GetDir() == Vector3.zero)
             {
                 _owner.State = Hunter.ESTATE.IDLE;
                 return;
             }
 
-            _characterControl.Move(_owner.Dir * GetSppeed() * Time.deltaTime);
+            Quaternion qua = Quaternion.LookRotation(GetDir());
+            _owner.transform.rotation = Quaternion.Slerp(_owner.transform.rotation, qua, 180f * Time.deltaTime);
+            _rigidbody.linearVelocity = GetDir() * GetSppeed() * Time.deltaTime;
         }
     }
 }

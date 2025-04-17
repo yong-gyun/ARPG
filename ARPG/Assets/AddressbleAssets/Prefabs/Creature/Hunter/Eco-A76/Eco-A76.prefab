@@ -3840,7 +3840,8 @@ GameObject:
   m_Component:
   - component: {fileID: 747465876254596748}
   - component: {fileID: 3501912982989711946}
-  - component: {fileID: 3726857757021319219}
+  - component: {fileID: 3778497086909662367}
+  - component: {fileID: 308627520757326439}
   m_Layer: 0
   m_Name: Eco-A76
   m_TagString: Untagged
@@ -3891,8 +3892,8 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!143 &3726857757021319219
-CharacterController:
+--- !u!65 &3778497086909662367
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -3906,16 +3907,24 @@ CharacterController:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 1.5
-  m_Radius: 0.25
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.75, z: 0}
+  m_Size: {x: 0.25, y: 1.35, z: 0.25}
+  m_Center: {x: 0, y: 0.7, z: 0}
+--- !u!114 &308627520757326439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6340651224912691709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 722e441c51d35c647a4b73b4b357a546, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6412820766451538564
 GameObject:
   m_ObjectHideFlags: 0
