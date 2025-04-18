@@ -12,6 +12,13 @@ public class HunterGroup : MonoBehaviour
 
     private Subject<Hunter> _onChangeHunterCallback = new Subject<Hunter>();
 
+    private void Update()
+    {
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
+        CurrentHunter.Dir = new Vector3(horizontal, 0f, vertical);
+    }
+
     public void OnChangeHunter(int index)
     {
 

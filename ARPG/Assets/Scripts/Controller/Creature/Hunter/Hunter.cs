@@ -55,15 +55,10 @@ public class Hunter : Creature
         State = ESTATE.IDLE;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (_init == false)
             return;
-
-        //TODO 스테이트 변경
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
-        Dir = new Vector3(horizontal, 0f, vertical);
 
         if (_currentState != null)
             _currentState.Update();

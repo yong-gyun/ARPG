@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class GameScene : BaseScene
 {
+    [SerializeField] private CameraController _cameraController;
+
     public override bool Init()
     {
         if (base.Init() == false)
@@ -13,6 +15,7 @@ public class GameScene : BaseScene
 
     public async void SpawnTest()
     {
-        await Managers.Object.Spawn(1001);
+        Creature player = await Managers.Object.Spawn(1001);
+        _cameraController.Init(player.transform);
     }
 }

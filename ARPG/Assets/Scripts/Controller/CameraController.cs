@@ -2,12 +2,21 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    [SerializeField] private Transform _target;
     [SerializeField] private Vector3 _offset;
-    [SerializeField] private GameObject _target;
-    [SerializeField] private float _rotTime;
-    [SerializeField] private float _moveTime;
 
-    public void Init(GameObject target)
+    [SerializeField] private float _sensitive;
+    [SerializeField] private float _smoothSpeed;
+
+    [SerializeField] private float _minXAngle;
+    [SerializeField] private float _maxXAngle;
+    //[SerializeField] private float _minYAngle;
+    //[SerializeField] private float _maxYAngle;
+
+    [SerializeField] private float _yaw;            //좌우 회전
+    [SerializeField] private float _pitch;          //상하 회전
+
+    public void Init(Transform target)
     {
         _target = target;
     }
@@ -17,13 +26,20 @@ public class CameraController : MonoBehaviour
         if (_target == null)
             return;
 
-        float mouseX = Input.GetAxis("MouseX");
-        float mouseY = Input.GetAxis("MouseY");
+        float mouseX = Input.GetAxis("Mouse X") * _sensitive;
+        float mouseY = Input.GetAxis("Mouse Y") * _sensitive;
 
-        Quaternion qua = Quaternion.Euler(mouseY, mouseX, 0f);
-        transform.rotation = Quaternion.Slerp(transform.rotation, qua, _moveTime);
+        _pitch = Mathf.Clamp(mouseY, _minXAngle, _maxXAngle);
 
-        Vector3 dest = _target.transform.position + _offset;
-        transform.position = dest;
+        Quaternion rot = Quaternion.Euler(_pitch, _yaw, 0f);
+        Vector3 offset = rot * new Vector3(0f, 0f, _offset.z);
+        Vector3 caculatedPos = _target.position + offset + Vector3.up * _offset.y;
+        Vector3 dir = caculatedPos - _target.position;
+
+        Vector3 destPos = caculatedPos;
+        if (Physics.Raycast(_target.position, dir.normalized, out RaycastHit hit, _offset.z) == true)
+            destPos = hit.point;
+        
+        transform.position = Vector3.Lerp(transform.position, destPos, _smoothSpeed * Time.deltaTime);
     }
 }
