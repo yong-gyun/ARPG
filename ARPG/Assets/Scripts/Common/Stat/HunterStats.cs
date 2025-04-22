@@ -11,13 +11,14 @@ public class HunterStats : Stats
     public int CriticalPercent;
     public int CriticalDamage;
     public int Penetration;
+    public float DashSpeed;
 
-    private HunterLevelStat _levelStat;
+    private HunterLevelStatScript _levelStat;
     
 
     public override void SetLevel(int level)
     {
-        _levelStat = Managers.Data.GetHunterLevelStatDatas.Find(x => x.HunterID == _templateID.GetCreatureID());
+        _levelStat = Managers.Data.GetHunterLevelStatScripts.Find(x => x.HunterID == _templateID.GetCreatureID());
     }
 
     public int GetStatValue(int baseStat, int levelStat)

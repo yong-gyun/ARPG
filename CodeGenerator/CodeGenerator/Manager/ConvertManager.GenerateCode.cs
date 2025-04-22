@@ -20,13 +20,14 @@ namespace CodeGenerator.Manager
 
             foreach ((string directory, string file) info in clientDataFiles)
             {
-                string fieldName = "Get" + info.file + "Datas";
-                fields += $"\tpublic List<{info.file}> {fieldName} " + "{ get; private set; }\n";
+                string className = info.file + "Script";
+                string fieldName = "Get" + className + "s";
+                fields += $"\tpublic List<{className}> {fieldName} " + "{ get; private set; }\n";
 
-                string loader = string.Format(Define.DATA_LOAD_FORMAT, fieldName, info.file, $"{info.directory}\", \"{info.file}");
+                string loader = string.Format(Define.DATA_LOAD_FORMAT, fieldName, className, $"{info.directory}\", \"{info.file}");
                 
                 loaders += loader + "\n";
-                binaryConverter += "\t\t" + info.file + "Loader.ConvertBinary();\n";
+                binaryConverter += "\t\t" + className + "Loader.ConvertBinary();\n";
                 
                 clears += string.Format("\t\t{0}.Clear();\n", fieldName);
             }
@@ -54,7 +55,7 @@ namespace CodeGenerator.Manager
                 string directoryName = table.TableName.Substring(0, idx);
                 string className = table.TableName.Substring(idx + 1);
                 string fullPath = $@"{targetPath}\{directoryName}\Data.Content.{className}.cs";
-                string result = string.Format(Define.CLIENT_DATA_CONTENT_FORMAT, className, GetFields(table), $@"Assets/AssetBundles/Data/{directoryName}/{className}");
+                string result = string.Format(Define.CLIENT_DATA_CONTENT_FORMAT, className + "Script", GetFields(table), $@"Assets/AssetBundles/Data/{directoryName}/{className}");
 
                 string directoryPath = targetPath + @$"\{directoryName}";
                 if (Directory.Exists(directoryPath) == false)

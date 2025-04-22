@@ -1,19 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
-
+using Data.Contents.LoaderForm;
 
 namespace Data.Contents
 {
-    public class CreatureInfoLoader : ILoader<CreatureInfo>
+    public class CreatureInfoScriptLoader : ILoader<CreatureInfoScript>
     {
-        public List<CreatureInfo> result { get; set; }
+        public List<CreatureInfoScript> result { get; set; }
 
-        public List<CreatureInfo> Read()
+        public List<CreatureInfoScript> Read()
         {
             return result;
         }
@@ -39,7 +38,7 @@ namespace Data.Contents
     }
 
     [Serializable]
-    public class CreatureInfo
+    public class CreatureInfoScript
     {
 		public int TemplateID { get; set; }
 		public string PrefabName { get; set; }

@@ -1,19 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
-
+using Data.Contents.LoaderForm;
 
 namespace Data.Contents
 {
-    public class HunterLevelStatLoader : ILoader<HunterLevelStat>
+    public class HunterLevelStatScriptLoader : ILoader<HunterLevelStatScript>
     {
-        public List<HunterLevelStat> result { get; set; }
+        public List<HunterLevelStatScript> result { get; set; }
 
-        public List<HunterLevelStat> Read()
+        public List<HunterLevelStatScript> Read()
         {
             return result;
         }
@@ -39,7 +38,7 @@ namespace Data.Contents
     }
 
     [Serializable]
-    public class HunterLevelStat
+    public class HunterLevelStatScript
     {
 		public int HunterID { get; set; }
 		public int Hp { get; set; }

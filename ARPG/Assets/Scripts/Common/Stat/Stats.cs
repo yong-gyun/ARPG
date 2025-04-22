@@ -18,7 +18,7 @@ public abstract class Stats : MonoBehaviour
 
     public virtual void Init(int templateID)
     {
-        var info = Managers.Data.GetBaseStatDatas.Find(x => x.TemplateID == templateID);
+        var info = Managers.Data.GetBaseStatScripts.Find(x => x.TemplateID == templateID);
         _templateID = templateID;
         _hp = info.Hp;
         _mp = info.Mp;

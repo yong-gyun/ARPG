@@ -34,12 +34,31 @@ public partial class Define
 
     public enum EffectType
     {
-        Abs,            //절대값
-        Percent,        //계수
+        Damage,
+        Damage_Fixed,
     }
 
     public enum PopupType
     {
 
+    }
+
+    public enum SkillType
+    {
+        Passive,
+        Attack,
+        NormalSkill_1,
+        NormalSkill_2,
+        BreakSkill,
+        UltSkill,
+    }
+
+    public enum CreatureState
+    {
+        IDLE,
+        MOVE,
+        SKILL,
+        HIT,
+        DEAD
     }
 }

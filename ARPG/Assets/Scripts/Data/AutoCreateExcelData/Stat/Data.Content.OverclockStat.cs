@@ -1,19 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
-
+using Data.Contents.LoaderForm;
 
 namespace Data.Contents
 {
-    public class OverclockStatLoader : ILoader<OverclockStat>
+    public class OverclockStatScriptLoader : ILoader<OverclockStatScript>
     {
-        public List<OverclockStat> result { get; set; }
+        public List<OverclockStatScript> result { get; set; }
 
-        public List<OverclockStat> Read()
+        public List<OverclockStatScript> Read()
         {
             return result;
         }
@@ -39,7 +38,7 @@ namespace Data.Contents
     }
 
     [Serializable]
-    public class OverclockStat
+    public class OverclockStatScript
     {
 		public Define.OverClockStatType OverClock { get; set; }
 		public Define.StatType Stat { get; set; }
