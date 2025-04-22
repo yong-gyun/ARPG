@@ -61,6 +61,7 @@ public class Hunter : Creature
                 _control.Move(Dir * _stats.Speed * Time.deltaTime);
                 break;
             case MoveType.Run:
+                _control.Move(Dir * _stats.Speed * Time.deltaTime);
                 break;
             case MoveType.Dash:
                 break;
