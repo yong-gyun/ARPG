@@ -9,11 +9,11 @@ using UnityEngine;
 
 namespace Data.Contents
 {
-    public class BaseStatLoader : ILoader<BaseStat>
+    public class BaseStatScriptLoader : ILoader<BaseStatScript>
     {
-        public List<BaseStat> result { get; set; }
+        public List<BaseStatScript> result { get; set; }
 
-        public List<BaseStat> Read()
+        public List<BaseStatScript> Read()
         {
             return result;
         }
@@ -39,7 +39,7 @@ namespace Data.Contents
     }
 
     [Serializable]
-    public class BaseStat
+    public class BaseStatScript
     {
 		public int TemplateID { get; set; }
 		public int Hp { get; set; }

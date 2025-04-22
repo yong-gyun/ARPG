@@ -3,15 +3,13 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     [SerializeField] private Transform _target;
-    [SerializeField] private Vector3 _offset;
+    [SerializeField] private Vector3 _offset = new Vector3(0f, 3f, -4f);
 
-    [SerializeField] private float _sensitive;
-    [SerializeField] private float _smoothSpeed;
+    [SerializeField] private float _sensitive = 2.5f;
+    [SerializeField] private float _smoothSpeed = 10f;
 
-    [SerializeField] private float _minXAngle;
-    [SerializeField] private float _maxXAngle;
-    //[SerializeField] private float _minYAngle;
-    //[SerializeField] private float _maxYAngle;
+    [SerializeField] private float _minAngle = -30f;
+    [SerializeField] private float _maxAngle = 45f;
 
     [SerializeField] private float _yaw;            //좌우 회전
     [SerializeField] private float _pitch;          //상하 회전
@@ -26,10 +24,10 @@ public class CameraController : MonoBehaviour
         if (_target == null)
             return;
 
-        float mouseX = Input.GetAxis("Mouse X") * _sensitive;
-        float mouseY = Input.GetAxis("Mouse Y") * _sensitive;
+        _yaw += Input.GetAxis("Mouse X") * _sensitive;
+        _pitch += Input.GetAxis("Mouse Y") * _sensitive;
 
-        _pitch = Mathf.Clamp(mouseY, _minXAngle, _maxXAngle);
+        _pitch = Mathf.Clamp(_pitch, _minAngle, _maxAngle);
 
         Quaternion rot = Quaternion.Euler(_pitch, _yaw, 0f);
         Vector3 offset = rot * new Vector3(0f, 0f, _offset.z);
@@ -41,5 +39,7 @@ public class CameraController : MonoBehaviour
             destPos = hit.point;
         
         transform.position = Vector3.Lerp(transform.position, destPos, _smoothSpeed * Time.deltaTime);
+
+        transform.LookAt(_target, Vector3.up);
     }
 }

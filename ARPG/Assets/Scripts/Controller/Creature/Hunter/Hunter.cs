@@ -1,66 +1,74 @@
-using Creatures.HunterState;
 using Cysharp.Threading.Tasks;
 using Data.Contents;
 using System.Collections.Generic;
 using UnityEngine;
-using UniRx;
+using Common.State.Hunter;
+
+namespace Common.State.Hunter
+{
+    public enum UseAttackType
+    {
+        Attack,
+        Skill
+    }
+
+    public enum MoveType
+    {
+        Walk,
+        Run,
+        Dash
+    }
+}
 
 public class Hunter : Creature
 {
-    public enum ESTATE
+    private HunterStats _stats;
+    private MoveType _moveType;
+    private UseAttackType _useAttackType;
+    private CharacterController _control;
+
+    public override async UniTask Init(int templateID)
     {
-        NONE,
-        IDLE,
-        MOVE,
-        ATTACK,
-        SKILL,
-        HIT,
-        DASH,
-        DEAD,
-    }
-
-    public ESTATE State 
-    { 
-        get 
-        { 
-            return _state;
-        }
-        set
-        {
-            if (_state != value)
-            {
-                _state = value;
-                ChangeState(_state);
-            }
-        }
-    }
-
-    [SerializeField] private ESTATE _state = ESTATE.NONE;
-
-    public async override UniTask Init(int templateID)
-    {
-        if (_init == true)
-            return;
+        _stats = gameObject.GetOrAddComponent<HunterStats>();
+        _stats.Init(templateID);
 
         await base.Init(templateID);
-
-        AddState(ESTATE.IDLE, new IdleState());
-        AddState(ESTATE.MOVE, new MoveState());
-        AddState(ESTATE.DASH, new DashState());
-        AddState(ESTATE.SKILL, new SkillState());
-        AddState(ESTATE.ATTACK, new AttackState());
-        AddState(ESTATE.HIT, new HitState());
-        AddState(ESTATE.DEAD, new DeadState());
-
-        State = ESTATE.IDLE;
     }
 
-    private void FixedUpdate()
+    protected override void OnUpdate()
     {
-        if (_init == false)
-            return;
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
 
-        if (_currentState != null)
-            _currentState.Update();
+        Dir = new Vector3(horizontal, 0f, vertical);
+
+        base.OnUpdate();
+    }
+
+    protected override void UpdateIdle()
+    {
+        if (Dir != Vector3.zero)
+        {
+            ChangeState(Define.CreatureState.MOVE);
+        }
+    }
+
+    protected override void UpdateMove()
+    {
+        switch (_moveType)
+        {
+            case MoveType.Walk:
+                _control.Move(Dir * _stats.Speed * Time.deltaTime);
+                break;
+            case MoveType.Run:
+                break;
+            case MoveType.Dash:
+                break;
+        }
+    }
+
+    public override void ChangeState(Define.CreatureState state)
+    {
+
     }
 }

@@ -4,38 +4,38 @@ using Cysharp.Threading.Tasks;
 
 public partial class DataManager
 {
-	public List<BaseStat> GetBaseStatDatas { get; private set; }
-	public List<HunterLevelStat> GetHunterLevelStatDatas { get; private set; }
-	public List<OverclockStat> GetOverclockStatDatas { get; private set; }
-	public List<CreatureInfo> GetCreatureInfoDatas { get; private set; }
+	public List<BaseStatScript> GetBaseStatScripts { get; private set; }
+	public List<HunterLevelStatScript> GetHunterLevelStatScripts { get; private set; }
+	public List<OverclockStatScript> GetOverclockStatScripts { get; private set; }
+	public List<CreatureInfoScript> GetCreatureInfoScripts { get; private set; }
 
 
     public async UniTask LoadAll()
     {
-		GetBaseStatDatas = await Load<BaseStatLoader, BaseStat>("Stat", "BaseStat");
-		GetHunterLevelStatDatas = await Load<HunterLevelStatLoader, HunterLevelStat>("Stat", "HunterLevelStat");
-		GetOverclockStatDatas = await Load<OverclockStatLoader, OverclockStat>("Stat", "OverclockStat");
-		GetCreatureInfoDatas = await Load<CreatureInfoLoader, CreatureInfo>("Creature", "CreatureInfo");
+		GetBaseStatScripts = await Load<BaseStatScriptLoader, BaseStatScript>("Stat", "BaseStat");
+		GetHunterLevelStatScripts = await Load<HunterLevelStatScriptLoader, HunterLevelStatScript>("Stat", "HunterLevelStat");
+		GetOverclockStatScripts = await Load<OverclockStatScriptLoader, OverclockStatScript>("Stat", "OverclockStat");
+		GetCreatureInfoScripts = await Load<CreatureInfoScriptLoader, CreatureInfoScript>("Creature", "CreatureInfo");
 
     }
 
 #if UNITY_EDITOR
     public void ConvertBinary()
     {
-		BaseStatLoader.ConvertBinary();
-		HunterLevelStatLoader.ConvertBinary();
-		OverclockStatLoader.ConvertBinary();
-		CreatureInfoLoader.ConvertBinary();
+		BaseStatScriptLoader.ConvertBinary();
+		HunterLevelStatScriptLoader.ConvertBinary();
+		OverclockStatScriptLoader.ConvertBinary();
+		CreatureInfoScriptLoader.ConvertBinary();
 
     }
 #endif
 
     public void Clear()
     {
-		GetBaseStatDatas.Clear();
-		GetHunterLevelStatDatas.Clear();
-		GetOverclockStatDatas.Clear();
-		GetCreatureInfoDatas.Clear();
+		GetBaseStatScripts.Clear();
+		GetHunterLevelStatScripts.Clear();
+		GetOverclockStatScripts.Clear();
+		GetCreatureInfoScripts.Clear();
 
     }
 }
