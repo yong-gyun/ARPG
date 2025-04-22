@@ -23,9 +23,12 @@ public abstract class Creature : MonoBehaviour
 
     [SerializeField] protected Define.CreatureState _state;
 
+    protected ColliderEventCallback _colliderEvent;
+
     public void SetAnimation(string animationName, float duration = 0.1f, int layer = 0)
     {
         _anim.CrossFade(animationName, duration, layer);
+        Debug.Log($"Set animation {animationName}");
     }
 
     public virtual async UniTask Init(int templateID)
@@ -43,36 +46,36 @@ public abstract class Creature : MonoBehaviour
 
     protected virtual void Update()
     {
-        OnUpdate();
+        OnUpdate(Time.deltaTime);
     }
 
-    protected virtual void OnUpdate()
+    protected virtual void OnUpdate(float deltaTime)
     {
         switch (State)
         {
-            case Define.CreatureState.IDLE:
-                UpdateIdle();
+            case Define.CreatureState.Idle:
+                UpdateIdle(deltaTime);
                 break;
-            case Define.CreatureState.MOVE:
-                UpdateMove();
+            case Define.CreatureState.Move:
+                UpdateMove(deltaTime);
                 break;
-            case Define.CreatureState.SKILL:
-                UpdateSkill();
+            case Define.CreatureState.Skill:
+                UpdateSkill(deltaTime);
                 break;
-            case Define.CreatureState.HIT:
-                UpdateHit();
+            case Define.CreatureState.Hit:
+                UpdateHit(deltaTime);
                 break;
-            case Define.CreatureState.DEAD:
-                UpdateDead();
+            case Define.CreatureState.Dead:
+                UpdateDead(deltaTime);
                 break;
         }
     }
 
-    protected virtual void UpdateIdle() { }
-    protected virtual void UpdateMove() { }
-    protected virtual void UpdateSkill() { }
-    protected virtual void UpdateHit() { }
-    protected virtual void UpdateDead() { }
+    protected virtual void UpdateIdle(float deltaTime) { }
+    protected virtual void UpdateMove(float deltaTime) { }
+    protected virtual void UpdateSkill(float deltaTime) { }
+    protected virtual void UpdateHit(float deltaTime) { }
+    protected virtual void UpdateDead(float deltaTime) { }
 
     public abstract void ChangeState(Define.CreatureState state);
 }

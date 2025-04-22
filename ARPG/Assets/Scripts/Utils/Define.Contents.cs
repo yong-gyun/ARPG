@@ -1,5 +1,12 @@
 public partial class Define
 {
+    public enum ConstDefType
+    {
+        RunSpeed = 1,       //이동속도 * 달리기 속도      
+        DashDistance,       //대쉬 거리
+        DashTime,           //대쉬 시간
+    }
+
     public enum ClassType
     {
         None,
@@ -55,10 +62,10 @@ public partial class Define
 
     public enum CreatureState
     {
-        IDLE,
-        MOVE,
-        SKILL,
-        HIT,
-        DEAD
+        Idle,
+        Move,
+        Skill,
+        Hit,
+        Dead
     }
 }

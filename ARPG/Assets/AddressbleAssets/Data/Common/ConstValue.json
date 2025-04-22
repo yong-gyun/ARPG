@@ -1,0 +1,14 @@
+[
+    {
+			"ConstType" : 1,
+			"Value" : .25
+    },
+    {
+			"ConstType" : 2,
+			"Value" : 3
+    },
+    {
+			"ConstType" : 3,
+			"Value" : .35
+    },
+]
