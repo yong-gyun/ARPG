@@ -133,3 +133,10 @@ ModelImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 256301
+  packageName: Sword Animations Pack
+  packageVersion: 1.0.2
+  assetPath: Assets/Art/SwordAnimationPack/Animation/FBX/03_Walk/01_Walk_RM/09_Walk_B_L_90_RM/Walk_Stop_B_L_90_RM.fbx
+  uploadId: 609330

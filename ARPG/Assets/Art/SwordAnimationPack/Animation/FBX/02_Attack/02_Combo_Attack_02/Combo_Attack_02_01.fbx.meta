@@ -248,7 +248,8 @@ ModelImporter:
     - name: lowerarm_twist_01_l
       parentName: lowerarm_l
       position: {x: -0.14, y: 1.0658141e-16, z: 1.4210854e-16}
-      rotation: {x: 0.0000000037252894, y: 0.000000007450579, z: 0.000000002328306, w: 1}
+      rotation: {x: 0.0000000037252894, y: 0.000000007450579, z: 0.000000002328306,
+        w: 1}
       scale: {x: 1.0000002, y: 1.0000002, z: 1.0000005}
     - name: upperarm_twist_01_l
       parentName: upperarm_l
@@ -498,3 +499,10 @@ ModelImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 256301
+  packageName: Sword Animations Pack
+  packageVersion: 1.0.2
+  assetPath: Assets/Art/SwordAnimationPack/Animation/FBX/02_Attack/02_Combo_Attack_02/Combo_Attack_02_01.fbx
+  uploadId: 609330

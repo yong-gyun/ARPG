@@ -6,3 +6,10 @@ NativeFormatImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 256301
+  packageName: Sword Animations Pack
+  packageVersion: 1.0.2
+  assetPath: Assets/Art/SwordAnimationPack/Animation/Humanoid/06_Dodge/01_Dodge/Dodge_F.anim
+  uploadId: 609330

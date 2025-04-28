@@ -7,6 +7,7 @@ public partial class Define
         StartScene,
         GameScene
     }
+
     public enum CreatureType
     {
         Hunter = 1,

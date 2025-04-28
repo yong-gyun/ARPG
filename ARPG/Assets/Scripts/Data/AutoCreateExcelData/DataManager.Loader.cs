@@ -28,6 +28,8 @@ public partial class DataManager
 	public List<OverclockStatScript> GetOverclockStatScripts { get; private set; }
 	public List<CreatureInfoScript> GetCreatureInfoScripts { get; private set; }
 	public List<ConstValueScript> GetConstValueScripts { get; private set; }
+	public List<EffectInfoScript> GetEffectInfoScripts { get; private set; }
+	public List<HunterEffectInfoScript> GetHunterEffectInfoScripts { get; private set; }
 
 
     public async UniTask LoadAll()
@@ -37,6 +39,8 @@ public partial class DataManager
 		GetOverclockStatScripts = await Load<OverclockStatScriptLoader, OverclockStatScript>("Stat", "OverclockStat");
 		GetCreatureInfoScripts = await Load<CreatureInfoScriptLoader, CreatureInfoScript>("Creature", "CreatureInfo");
 		GetConstValueScripts = await Load<ConstValueScriptLoader, ConstValueScript>("Common", "ConstValue");
+		GetEffectInfoScripts = await Load<EffectInfoScriptLoader, EffectInfoScript>("Effect", "EffectInfo");
+		GetHunterEffectInfoScripts = await Load<HunterEffectInfoScriptLoader, HunterEffectInfoScript>("Effect", "HunterEffectInfo");
 
     }
 
@@ -48,6 +52,8 @@ public partial class DataManager
 		OverclockStatScriptLoader.ConvertBinary();
 		CreatureInfoScriptLoader.ConvertBinary();
 		ConstValueScriptLoader.ConvertBinary();
+		EffectInfoScriptLoader.ConvertBinary();
+		HunterEffectInfoScriptLoader.ConvertBinary();
 
     }
 #endif
@@ -59,6 +65,8 @@ public partial class DataManager
 		GetOverclockStatScripts.Clear();
 		GetCreatureInfoScripts.Clear();
 		GetConstValueScripts.Clear();
+		GetEffectInfoScripts.Clear();
+		GetHunterEffectInfoScripts.Clear();
 
     }
 

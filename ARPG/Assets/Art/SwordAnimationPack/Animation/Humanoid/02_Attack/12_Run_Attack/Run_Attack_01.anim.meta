@@ -6,3 +6,10 @@ NativeFormatImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 256301
+  packageName: Sword Animations Pack
+  packageVersion: 1.0.2
+  assetPath: Assets/Art/SwordAnimationPack/Animation/Humanoid/02_Attack/12_Run_Attack/Run_Attack_01.anim
+  uploadId: 609330

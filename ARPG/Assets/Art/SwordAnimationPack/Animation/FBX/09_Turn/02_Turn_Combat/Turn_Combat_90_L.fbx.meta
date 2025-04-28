@@ -133,3 +133,10 @@ ModelImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 256301
+  packageName: Sword Animations Pack
+  packageVersion: 1.0.2
+  assetPath: Assets/Art/SwordAnimationPack/Animation/FBX/09_Turn/02_Turn_Combat/Turn_Combat_90_L.fbx
+  uploadId: 609330

@@ -133,3 +133,10 @@ ModelImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 256301
+  packageName: Sword Animations Pack
+  packageVersion: 1.0.2
+  assetPath: Assets/Art/SwordAnimationPack/Animation/FBX/03_Walk/03_Walk_Block_RM/08_Walk_Block_B_R_45_RM/Walk_Block_Start_B_R_45_RM.fbx
+  uploadId: 609330

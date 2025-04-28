@@ -133,3 +133,10 @@ ModelImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 256301
+  packageName: Sword Animations Pack
+  packageVersion: 1.0.2
+  assetPath: Assets/Art/SwordAnimationPack/Animation/FBX/06_Dodge/06_Dodge_Combat_to_Run/Dodge_Combat_to_Run_B_R_45.fbx
+  uploadId: 609330

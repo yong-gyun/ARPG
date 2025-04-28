@@ -6,9 +6,13 @@ public class InitBase : MonoBehaviour
 {
     protected bool _init;
 
-    private void Awake()
+    public virtual bool Init(int templateID)
     {
-        Init();
+        if (true == _init)
+            return false;
+
+        _init = true;
+        return true;
     }
 
     public virtual bool Init()

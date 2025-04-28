@@ -52,12 +52,12 @@ public partial class Define
 
     public enum SkillType
     {
-        Passive,
-        Attack,
-        NormalSkill_1,
-        NormalSkill_2,
-        BreakSkill,
-        UltSkill,
+        Passive = 1,
+        Attack = 2,
+        NormalSkill_1 = 3,      
+        NormalSkill_2 = 4,      
+        BreakSkill = 5,         
+        UltSkill = 6,           
     }
 
     public enum CreatureState
