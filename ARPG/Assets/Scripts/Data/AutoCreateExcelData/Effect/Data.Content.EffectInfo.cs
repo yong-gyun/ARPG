@@ -40,7 +40,7 @@ namespace Data.Contents
     [Serializable]
     public class EffectInfoScript
     {
-		public int SkillID { get; set; }
+        public int SkillID { get; set; }
 		public int SkillArg { get; set; }
 		public Define.EffectType Effect { get; set; }
 		public int Lv1 { get; set; }

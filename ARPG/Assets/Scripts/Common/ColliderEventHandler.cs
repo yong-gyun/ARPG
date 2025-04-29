@@ -2,7 +2,7 @@ using System;
 using UniRx;
 using UnityEngine;
 
-public class ColliderEventCallback : MonoBehaviour
+public class ColliderEventHandler : MonoBehaviour
 {
     public IObservable<Collider> OnTriggerEnterCallback { get { return _onTriggerEnterCallback.AsObservable(); } }
     public IObservable<Collider> OnTriggerStayCallback { get { return _onTriggerStayCallback.AsObservable(); } }
@@ -25,5 +25,12 @@ public class ColliderEventCallback : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         _onTriggerExitCallback.OnNext(other);
+    }
+
+    public void Clear()
+    {
+        _onTriggerEnterCallback.Dispose();
+        _onTriggerStayCallback.Dispose();
+        _onTriggerExitCallback.Dispose();
     }
 }

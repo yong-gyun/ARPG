@@ -23,7 +23,7 @@ public abstract class Creature : MonoBehaviour
 
     [SerializeField] protected Define.CreatureState _state;
 
-    protected ColliderEventCallback _colliderEvent;
+    protected ColliderEventHandler _colliderEvent;
 
     public void SetAnimation(string animationName, float duration = 0.1f, int layer = 0)
     {
@@ -78,4 +78,9 @@ public abstract class Creature : MonoBehaviour
     protected virtual void UpdateDead(float deltaTime) { }
 
     public abstract void ChangeState(Define.CreatureState state);
+
+    public virtual void TakeDamage(EffectInfoScript script, Creature attacker)
+    {
+
+    }
 }

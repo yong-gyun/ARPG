@@ -18,6 +18,13 @@ public partial class Define
         Healer          //힐러
     }
 
+    public enum ColliderEventType
+    {
+        Enter,
+        Stay,
+        Exit
+    }
+
     public enum OverClockStatType
     {
         Str,        //근력: 추가 공격력

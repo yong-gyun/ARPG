@@ -47,7 +47,7 @@ public class Hunter : Creature
         _control.height = collider.size.y;
         _control.radius = collider.size.x;
 
-        _colliderEvent = _model.GetOrAddComponent<ColliderEventCallback>();
+        _colliderEvent = _model.GetOrAddComponent<ColliderEventHandler>();
     }
 
     protected override void OnUpdate(float deltaTime)

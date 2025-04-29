@@ -5,13 +5,15 @@ using UnityEngine;
 
 public class Effect : MonoBehaviour
 {
+    public Creature Owner { get; private set; }
     [SerializeField] private List<EffectBase> _effects = new List<EffectBase>();
     public int SkillID { get; private set; }
 
     private bool _init;
     
-    public void Init(int templateID)
+    public void Init(int templateID, Creature owner)
     {
+        Owner = owner;
         SkillID = templateID;
         foreach (var effect in _effects)
             effect.Init(this);
