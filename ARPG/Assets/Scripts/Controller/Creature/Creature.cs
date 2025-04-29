@@ -5,12 +5,16 @@ using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
 
-public abstract class Creature : MonoBehaviour
+public abstract partial class Creature : MonoBehaviour
 {
     public Define.CreatureState State { get { return _state; } }
 
+    public Define.CreatureType CreatureType { get; set; }
+
     public Vector3 Dir { get { return _dir.normalized; } set { _dir = value; } }
-    public CreatureInfoScript Info { get; set; }
+    
+    public CreatureInfoScript Info { get; private set; }
+    
     public bool IsInitialized { get { return _init; } }
     
     protected Vector3 _dir;
@@ -41,6 +45,8 @@ public abstract class Creature : MonoBehaviour
         
         _model = await Managers.Resource.InstantiateAsync($"Creature/{creatureType}", $"{Info.PrefabName}/{Info.PrefabName}.prefab", transform);
         _anim = _model.GetComponent<Animator>();
+
+        SetStat(templateID);
         _init = true;
     }
 
@@ -79,8 +85,9 @@ public abstract class Creature : MonoBehaviour
 
     public abstract void ChangeState(Define.CreatureState state);
 
-    public virtual void TakeDamage(EffectInfoScript script, Creature attacker)
+    public virtual void TakeDamage(SkillInfoScript script, Creature attacker)
     {
+        float damage = ExtendedHelper.CalcuateDamage(script, this, attacker);
 
     }
 }

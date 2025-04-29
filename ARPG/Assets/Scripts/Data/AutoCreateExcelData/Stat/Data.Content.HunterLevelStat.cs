@@ -41,10 +41,10 @@ namespace Data.Contents
     public class HunterLevelStatScript
     {
 		public int HunterID { get; set; }
-		public int Hp { get; set; }
-		public int Attack { get; set; }
-		public int Mp { get; set; }
-		public int Defense { get; set; }
+		public float Hp { get; set; }
+		public float Attack { get; set; }
+		public float Mp { get; set; }
+		public float Defense { get; set; }
 
     }
 }

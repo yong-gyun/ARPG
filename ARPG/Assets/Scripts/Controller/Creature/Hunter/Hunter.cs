@@ -20,12 +20,12 @@ namespace Common.State.Hunter
     }
 }
 
-public class Hunter : Creature
+public partial class Hunter : Creature
 {
-    private HunterStats _stats;
     [SerializeField] private MoveType _moveType;
     [SerializeField] private UseAttackType _useAttackType;
     private CharacterController _control;
+    private CameraController _cameraControl;
 
     private Vector3 _lockDir;
     private float _curDashTime = 0f;
@@ -33,14 +33,12 @@ public class Hunter : Creature
 
     private void Awake()
     {
+        _cameraControl = (Managers.Scene.CurrentScene as GameScene).GetCameraController;
         _control = GetComponent<CharacterController>();
     }
 
     public override async UniTask Init(int templateID)
     {
-        _stats = gameObject.GetOrAddComponent<HunterStats>();
-        _stats.Init(templateID);
-
         await base.Init(templateID);
 
         BoxCollider collider = _model.GetComponent<BoxCollider>();
@@ -55,7 +53,7 @@ public class Hunter : Creature
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
 
-        Dir = new Vector3(horizontal, 0f, vertical);
+        Dir = _cameraControl.Forward * vertical + _cameraControl.Right * horizontal;
 
         base.OnUpdate(deltaTime);
     }
@@ -94,6 +92,8 @@ public class Hunter : Creature
             return;
         }
 
+        transform.forward = new Vector3(_cameraControl.transform.right.x, 0f, _cameraControl.transform.forward.z).normalized;
+        Debug.Log(new Vector3(_cameraControl.transform.right.x, 0f, _cameraControl.transform.forward.z).normalized);
         if (_moveType != MoveType.Dash)
         {
             if (Input.GetKeyDown(KeyCode.LeftShift))
@@ -118,25 +118,29 @@ public class Hunter : Creature
         switch (_moveType)
         {
             case MoveType.Walk:
-                _control.Move(Dir * _stats.Speed * deltaTime);
+                _control.Move(Dir * Speed * deltaTime);
                 break;
             case MoveType.Run:
-                _control.Move(Dir * _stats.RunSpeed * deltaTime);
+                _control.Move(Dir * RunSpeed * deltaTime);
                 break;
             case MoveType.Dash:
                 {
                     _curDashTime += deltaTime;
                     Debug.Log(transform.position);
-                    if (_curDashTime >= _stats.DashTime)
+                    if (_curDashTime >= DashTime)
                     {
                         ChangeState(Define.CreatureState.Idle);
                         return;
                     }
 
-                    _control.Move(_lockDir.normalized * _stats.DashSpeed * deltaTime);
+                    _control.Move(_lockDir.normalized * DashSpeed * deltaTime);
                 }
                 break;
         }
+
+        Vector3 dir = _moveType != MoveType.Dash ? Dir : _lockDir.normalized;
+        Quaternion qua = Quaternion.LookRotation(dir);
+        transform.rotation = Quaternion.Slerp(transform.rotation, qua, 10f);
     }
 
     public override void ChangeState(Define.CreatureState state)

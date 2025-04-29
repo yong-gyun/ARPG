@@ -41,7 +41,7 @@ namespace Data.Contents
     public class ConstValueScript
     {
 		public Define.ConstDefType ConstType { get; set; }
-		public float Value { get; set; }
+		public int Value { get; set; }
 
     }
 }

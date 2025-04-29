@@ -11,10 +11,17 @@ public class SceneManagerEx
     public BaseScene CurrentScene { get; private set; }
 
     public IObservable<float> OnLoadSceneCallback { get { return _onLoadSceneCallback.AsObservable(); } }
+    private AsyncOperationHandle _currentSceneAsyncHandle;
     private Subject<float> _onLoadSceneCallback = new Subject<float>();
+
 
     public async void LoadSceneAsync(Define.SceneType sceneType)
     {
+        if (_currentSceneAsyncHandle.IsValid() == true)
+        {
+            await Addressables.UnloadSceneAsync(_currentSceneAsyncHandle);
+        }
+
         //TODO 씬 로드
         AsyncOperationHandle handle = Addressables.LoadSceneAsync(GetScenePath(sceneType));
         
@@ -22,11 +29,11 @@ public class SceneManagerEx
         {
             //씬 로드가 완료될 때까지 대기
             _onLoadSceneCallback.OnNext(handle.PercentComplete);
+            Debug.Log(handle.PercentComplete);
             await UniTask.Yield();
         }
 
         _onLoadSceneCallback.OnNext(1f);
-        Addressables.Release(handle);
     }
 
     public void RegisterCurrentScene(BaseScene scene)

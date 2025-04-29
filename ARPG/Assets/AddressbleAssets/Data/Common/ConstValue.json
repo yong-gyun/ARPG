@@ -1,14 +1,18 @@
 [
     {
 			"ConstType" : 1,
-			"Value" : .25
+			"Value" : 1250000
     },
     {
 			"ConstType" : 2,
-			"Value" : 3
+			"Value" : 300000
     },
     {
 			"ConstType" : 3,
-			"Value" : .35
+			"Value" : 350000
+    },
+    {
+			"ConstType" : 4,
+			"Value" : 5
     },
 ]

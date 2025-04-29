@@ -2,9 +2,10 @@ public partial class Define
 {
     public enum ConstDefType
     {
-        RunSpeed = 1,       //이동속도 * 달리기 속도      
-        DashDistance,       //대쉬 거리
-        DashTime,           //대쉬 시간
+        RunSpeed = 1,           //이동속도 * 달리기 속도      
+        DashDistance = 2,       //대쉬 거리
+        DashTime = 3,           //대쉬 시간
+        HunterMoveSpeed = 4,    //헌터 이동 속도
     }
 
     public enum ClassType
@@ -50,6 +51,8 @@ public partial class Define
     {
         Damage,
         Damage_Fixed,
+        Buff,
+        Debuff,
     }
 
     public enum PopupType
@@ -60,11 +63,14 @@ public partial class Define
     public enum SkillType
     {
         Passive = 1,
-        Attack = 2,
-        NormalSkill_1 = 3,      
-        NormalSkill_2 = 4,      
-        BreakSkill = 5,         
-        UltSkill = 6,           
+        Combat_Attack_1 = 2,
+        Combat_Attack_2 = 3,
+        Combat_Attack_3 = 4,
+        Combat_Attack_4 = 5,
+        NormalSkill_1 = 6,      
+        NormalSkill_2 = 7,      
+        BreakSkill = 8,         
+        UltSkill = 9,           
     }
 
     public enum CreatureState

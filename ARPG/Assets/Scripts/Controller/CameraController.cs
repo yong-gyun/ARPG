@@ -2,14 +2,18 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField] private Transform _target;
-    [SerializeField] private Vector3 _offset = new Vector3(0f, 3f, -4f);
+    public Vector3 Forward { get { return new Vector3(transform.forward.x, 0f, transform.forward.z).normalized; } }
+    public Vector3 Right { get { return new Vector3(transform.right.x, 0f, transform.right.z).normalized; } }
 
-    [SerializeField] private float _sensitive = 2.5f;
+    [SerializeField] private Transform _target;
+    [SerializeField] private Vector3 _offset = new Vector3(0f, 4f, -5.75f);
+
+    [SerializeField] private float _horizontalSensitive = 2.5f;
+    [SerializeField] private float _verticalSensitive = 1f;
     [SerializeField] private float _smoothSpeed = 10f;
 
     [SerializeField] private float _minAngle = -30f;
-    [SerializeField] private float _maxAngle = 45f;
+    [SerializeField] private float _maxAngle = 0f;
 
     [SerializeField] private float _yaw;            //좌우 회전
     [SerializeField] private float _pitch;          //상하 회전
@@ -24,8 +28,8 @@ public class CameraController : MonoBehaviour
         if (_target == null)
             return;
 
-        _yaw += Input.GetAxis("Mouse X") * _sensitive;
-        _pitch += Input.GetAxis("Mouse Y") * _sensitive;
+        _yaw += Input.GetAxis("Mouse X") * _horizontalSensitive;
+        _pitch -= Input.GetAxis("Mouse Y") * _verticalSensitive;
 
         _pitch = Mathf.Clamp(_pitch, _minAngle, _maxAngle);
 
@@ -37,9 +41,8 @@ public class CameraController : MonoBehaviour
         Vector3 destPos = caculatedPos;
         if (Physics.Raycast(_target.position, dir.normalized, out RaycastHit hit, _offset.z) == true)
             destPos = hit.point;
-        
-        transform.position = Vector3.Lerp(transform.position, destPos, _smoothSpeed * Time.deltaTime);
 
+        transform.position = Vector3.Lerp(transform.position, destPos, _smoothSpeed * Time.deltaTime);
         transform.LookAt(_target, Vector3.up);
     }
 }

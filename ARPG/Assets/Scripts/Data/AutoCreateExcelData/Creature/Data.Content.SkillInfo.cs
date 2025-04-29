@@ -8,22 +8,22 @@ using Data.Contents.LoaderForm;
 
 namespace Data.Contents
 {
-    public class EffectInfoScriptLoader : ILoader<EffectInfoScript>
+    public class SkillInfoScriptLoader : ILoader<SkillInfoScript>
     {
-        public List<EffectInfoScript> result { get; set; }
+        public List<SkillInfoScript> result { get; set; }
 
-        public List<EffectInfoScript> Read()
+        public List<SkillInfoScript> Read()
         {
             return result;
         }
 #if UNITY_EDITOR
         public static void ConvertBinary()
         {
-            string path = "Assets/AssetBundles/Data/Effect/EffectInfo.json";
+            string path = "Assets/AssetBundles/Data/Creature/SkillInfo.json";
             var load = AssetDatabase.LoadAssetAtPath(path, typeof(TextAsset)) as TextAsset;
             JsonSerializerSettings settings = new JsonSerializerSettings();
        
-            var convertPath = "Assets/AssetBundles/Data/Effect/EffectInfo.bytes";     
+            var convertPath = "Assets/AssetBundles/Data/Creature/SkillInfo.bytes";     
             File.WriteAllBytes(convertPath, load.bytes);
             try
             {
@@ -38,20 +38,21 @@ namespace Data.Contents
     }
 
     [Serializable]
-    public class EffectInfoScript
+    public class SkillInfoScript
     {
-        public int SkillID { get; set; }
+		public int SkillID { get; set; }
 		public int SkillArg { get; set; }
 		public Define.EffectType Effect { get; set; }
-		public int Lv1 { get; set; }
-		public int Lv2 { get; set; }
-		public int Lv3 { get; set; }
-		public int Lv4 { get; set; }
-		public int Lv5 { get; set; }
-		public int Lv6 { get; set; }
-		public int Lv7 { get; set; }
-		public int Lv8 { get; set; }
-		public int Lv9 { get; set; }
-		public int Lv10 { get; set; }
+		public long Lv1 { get; set; }
+		public long Lv2 { get; set; }
+		public long Lv3 { get; set; }
+		public long Lv4 { get; set; }
+		public long Lv5 { get; set; }
+		public long Lv6 { get; set; }
+		public long Lv7 { get; set; }
+		public long Lv8 { get; set; }
+		public long Lv9 { get; set; }
+		public long Lv10 { get; set; }
+
     }
 }

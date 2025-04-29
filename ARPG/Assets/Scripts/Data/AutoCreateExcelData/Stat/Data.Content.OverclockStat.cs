@@ -43,6 +43,6 @@ namespace Data.Contents
 		public Define.OverClockStatType OverClock { get; set; }
 		public Define.StatType Stat { get; set; }
 		public Define.EffectType Effect { get; set; }
-		public int Value { get; set; }
+		public float Value { get; set; }
     }
 }

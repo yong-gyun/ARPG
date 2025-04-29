@@ -1,0 +1,11 @@
+[
+    {
+			"CreatureID" : 1,
+			"PassiveID" : 11,
+			"NormalAttack1ID" : 12,
+			"NormalAttack2ID" : 13,
+			"NormalAttack3ID" : 14,
+			"NormalAttack4ID" : 15,
+			"UltSkillID" : 16
+    },
+]

@@ -2,13 +2,17 @@ using UnityEngine;
 
 public class GameScene : BaseScene
 {
+    public CameraController GetCameraController => _cameraController;
+
     [SerializeField] private CameraController _cameraController;
+
 
     public override bool Init()
     {
         if (base.Init() == false)
             return false;
 
+        Cursor.lockState = CursorLockMode.Locked;
         SpawnTest();
         return true;
     }

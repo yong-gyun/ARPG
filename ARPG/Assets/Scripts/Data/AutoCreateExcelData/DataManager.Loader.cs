@@ -27,9 +27,8 @@ public partial class DataManager
 	public List<HunterLevelStatScript> GetHunterLevelStatScripts { get; private set; }
 	public List<OverclockStatScript> GetOverclockStatScripts { get; private set; }
 	public List<CreatureInfoScript> GetCreatureInfoScripts { get; private set; }
+	public List<SkillInfoScript> GetSkillInfoScripts { get; private set; }
 	public List<ConstValueScript> GetConstValueScripts { get; private set; }
-	public List<EffectInfoScript> GetEffectInfoScripts { get; private set; }
-	public List<HunterEffectInfoScript> GetHunterEffectInfoScripts { get; private set; }
 
 
     public async UniTask LoadAll()
@@ -38,9 +37,8 @@ public partial class DataManager
 		GetHunterLevelStatScripts = await Load<HunterLevelStatScriptLoader, HunterLevelStatScript>("Stat", "HunterLevelStat");
 		GetOverclockStatScripts = await Load<OverclockStatScriptLoader, OverclockStatScript>("Stat", "OverclockStat");
 		GetCreatureInfoScripts = await Load<CreatureInfoScriptLoader, CreatureInfoScript>("Creature", "CreatureInfo");
+		GetSkillInfoScripts = await Load<SkillInfoScriptLoader, SkillInfoScript>("Creature", "SkillInfo");
 		GetConstValueScripts = await Load<ConstValueScriptLoader, ConstValueScript>("Common", "ConstValue");
-		GetEffectInfoScripts = await Load<EffectInfoScriptLoader, EffectInfoScript>("Effect", "EffectInfo");
-		GetHunterEffectInfoScripts = await Load<HunterEffectInfoScriptLoader, HunterEffectInfoScript>("Effect", "HunterEffectInfo");
 
     }
 
@@ -51,9 +49,8 @@ public partial class DataManager
 		HunterLevelStatScriptLoader.ConvertBinary();
 		OverclockStatScriptLoader.ConvertBinary();
 		CreatureInfoScriptLoader.ConvertBinary();
+		SkillInfoScriptLoader.ConvertBinary();
 		ConstValueScriptLoader.ConvertBinary();
-		EffectInfoScriptLoader.ConvertBinary();
-		HunterEffectInfoScriptLoader.ConvertBinary();
 
     }
 #endif
@@ -64,9 +61,8 @@ public partial class DataManager
 		GetHunterLevelStatScripts.Clear();
 		GetOverclockStatScripts.Clear();
 		GetCreatureInfoScripts.Clear();
+		GetSkillInfoScripts.Clear();
 		GetConstValueScripts.Clear();
-		GetEffectInfoScripts.Clear();
-		GetHunterEffectInfoScripts.Clear();
 
     }
 

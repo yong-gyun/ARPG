@@ -269,13 +269,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d49a864fd5ec47499b54c73a06d9594, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  offset: {x: 0, y: 3, z: -6}
-  sensitivity: 3
-  distance: 6
-  minYAngle: -20
-  maxYAngle: 60
-  smoothSpeed: 10
+  _target: {fileID: 0}
+  _offset: {x: 0, y: 4, z: -5.75}
+  _horizontalSensitive: 2.5
+  _verticalSensitive: 1
+  _smoothSpeed: 10
+  _minAngle: -30
+  _maxAngle: 0
+  _yaw: 0
+  _pitch: 0
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
