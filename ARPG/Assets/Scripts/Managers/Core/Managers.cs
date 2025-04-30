@@ -2,6 +2,10 @@ using UnityEngine;
 
 public class Managers : MonoBehaviour
 {
+    public bool OnInitialized { get { return _init; } }
+
+    private static bool _init;
+
     public static Managers Instance
     {
         get
@@ -14,7 +18,7 @@ public class Managers : MonoBehaviour
 
                 s_instance = go.GetOrAddComponent<Managers>();
                 DontDestroyOnLoad(go);
-                Init();
+                Init();   
             }
 
             return s_instance;
@@ -29,6 +33,7 @@ public class Managers : MonoBehaviour
     public static SceneManagerEx Scene { get { return Instance._scene; } }
     public static PopupManager Popup { get { return Instance._popup; } }
     public static ObjectManager Object { get { return Instance._object; } }
+    public static InputManager Input { get { return Instance._input; } }
 
     private ResourceManager _resource = new ResourceManager();
     private SoundManager _sound = new SoundManager();
@@ -36,9 +41,24 @@ public class Managers : MonoBehaviour
     private SceneManagerEx _scene = new SceneManagerEx();
     private PopupManager _popup = new PopupManager();
     private ObjectManager _object = new ObjectManager();
-    
+    private InputManager _input = new InputManager();
+
     static void Init()
     {
+        s_instance._input.Init();
+        _init = true;
+    }
 
+    private void Update()
+    {
+        if (OnInitialized == false)
+            return;
+
+        _input.OnUpdate();
+    }
+
+    private void OnApplicationQuit()
+    {
+        _input.SaveData();
     }
 }

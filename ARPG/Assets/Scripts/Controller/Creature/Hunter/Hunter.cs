@@ -1,8 +1,11 @@
-using Cysharp.Threading.Tasks;
+using UniRx;
+using System;
 using Data.Contents;
 using System.Collections.Generic;
 using UnityEngine;
 using Common.State.Hunter;
+using Cysharp.Threading.Tasks;
+using Common.Input;
 
 namespace Common.State.Hunter
 {
@@ -24,6 +27,7 @@ public partial class Hunter : Creature
 {
     [SerializeField] private MoveType _moveType;
     [SerializeField] private UseAttackType _useAttackType;
+
     private CharacterController _control;
     private CameraController _cameraControl;
 
@@ -35,6 +39,8 @@ public partial class Hunter : Creature
     {
         _cameraControl = (Managers.Scene.CurrentScene as GameScene).GetCameraController;
         _control = GetComponent<CharacterController>();
+
+        BindInputKey();
     }
 
     public override async UniTask Init(int templateID)
@@ -50,10 +56,7 @@ public partial class Hunter : Creature
 
     protected override void OnUpdate(float deltaTime)
     {
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
-
-        Dir = _cameraControl.Forward * vertical + _cameraControl.Right * horizontal;
+        Dir = _cameraControl.Forward * _vertical + _cameraControl.Right * _horizontal;
 
         base.OnUpdate(deltaTime);
     }
