@@ -1,6 +1,7 @@
 using Cysharp.Text;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using static UnityEngine.UI.Image;
 using Object = UnityEngine.Object;
 
 public class ResourceManager
@@ -27,15 +28,62 @@ public class ResourceManager
         return LoadAsync<TextAsset>(CheckDir(dir, "Data"), CheckKey(key, ".json"));
     }
 
-    public async UniTask<GameObject> InstantiateAsync(string dir, string key, Transform parent = null)
+    public async UniTask<GameObject> InstantiateAsync(string dir, string key, Vector3 pos, Quaternion rot, Transform parent = null, bool pool = false)
+    {
+        GameObject go = await InstantiateAsync(dir, key, parent, pool);
+        if (go == null)
+            return null;
+
+        go.transform.position = pos;
+        go.transform.rotation = rot;
+        return go;
+    }
+
+    public async UniTask<GameObject> InstantiateAsync(string dir, string key, Transform parent = null, bool pool = false)
     {
         GameObject prefab = await LoadGameObjectAsync(dir, key);
         if (prefab == null)
             return null;
+        
+        if (pool == true)
+        {
+            string path = ZString.Concat(CheckDir(dir, "Prefabs"), "/", CheckKey(key, ".prefab"));
+            GameObject go = Managers.Pool.Pop(path, prefab);
+            return go;
+        }
+        else
+        {
+            return Instantiate(prefab, parent, false);
+        }
+    }
 
-        GameObject go = Object.Instantiate(prefab);
-        go.name = prefab.name;
-        go.transform.SetParent(parent);
+    public GameObject Instantiate(GameObject origin, Transform parent = null, bool pool = false)
+    {
+        if (origin == null)
+            return null;
+
+        GameObject go = null;
+        if (pool == true)
+        {
+            string key = origin.name;
+            go = Managers.Pool.Pop(key, origin, false);
+        }
+        else
+        {
+            go = Object.Instantiate(origin, parent);
+        }
+
+        return go;
+    }
+
+    public GameObject Instantiate(GameObject origin, Vector3 pos, Quaternion rot, Transform parent = null, bool pool = false)
+    {
+        GameObject go = Instantiate(origin, parent, pool);
+        if (go == null)
+            return null;
+
+        go.transform.position = pos;
+        go.transform.rotation = rot;
         return go;
     }
 
@@ -55,6 +103,11 @@ public class ResourceManager
             result = ZString.Concat(root, "/", dir);
 
         return result;
+    }
+
+    public void Release(string key, int releaseCount = 1, bool releaseImmediate = false)
+    {
+        assetManager.Release(key, releaseCount, releaseImmediate);
     }
 
     public void Release(string dir, string asset, int releaseCount = 1, bool releaseImmediate = false)

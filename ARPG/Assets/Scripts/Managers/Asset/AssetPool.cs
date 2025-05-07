@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -11,24 +12,26 @@ public class AssetPool
 {
     public class AssetRefData
     {
+        public string Key { get { return _key; } }
         public int count;
+        public Object GetAssetOrigin { get { return _resource; } }
 
         private string _key;
         private AsyncOperationHandle _handle;
-        private Object _resourceCache;
+        private Object _resource;
 
         public AssetRefData(string key, AsyncOperationHandle handle)
         {
             this._key = key;
             _handle = handle;
-            _resourceCache = handle.Result as Object;
+            _resource = handle.Result as Object;
         }
 
         public Object UseAsset()
         {
             Interlocked.Increment(ref count);
             Debug.Log($"에셋 사용: {_key}, {count}");
-            return _resourceCache;
+            return _resource;
         }
 
         public void Release()
@@ -39,6 +42,12 @@ public class AssetPool
 
     private Dictionary<string, AssetRefData> _addressableRefDatas = new Dictionary<string, AssetRefData>();
     private HashSet<string> _releaseAssets = new HashSet<string>();
+
+    public AssetRefData Find(Object resource)
+    {
+        var ret = _addressableRefDatas.Values.ToList().Find(x => x.GetAssetOrigin == resource);
+        return ret;
+    }
     
     public async UniTask<T> LoadAsync<T>(string path) where T : Object
     {
@@ -63,7 +72,7 @@ public class AssetPool
         }
         catch (Exception e)
         {
-
+            Debug.LogError($"Error: {path}\n{e.Message}");
         }
 
         return _addressableRefDatas[path].UseAsset() as T;

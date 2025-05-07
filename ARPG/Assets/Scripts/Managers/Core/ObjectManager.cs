@@ -36,14 +36,4 @@ public class ObjectManager
         Transform root = new GameObject(name).transform;
         return root;
     }
-
-    public GameObject InstantiateSkill(GameObject origin, Vector3 pos, Quaternion rot)
-    {
-        if (origin == null)
-            return null;
-
-        GameObject go = Object.Instantiate(origin, pos, rot);
-        go.name = origin.name;
-        return go;
-    }
 }

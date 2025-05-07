@@ -3,6 +3,8 @@ using Common.Skill;
 using System;
 using NUnit.Framework.Constraints;
 using Cysharp.Threading.Tasks;
+using static UnityEngine.Rendering.DebugUI.Table;
+using static UnityEngine.UI.Image;
 
 namespace Common.Skill
 {
@@ -32,30 +34,24 @@ namespace Common.Skill
 }
 
 [CreateAssetMenu(fileName = "Skill", menuName = "ScriptableObject/Skill", order = 0)]
-public class SkillScriptableObject : ScriptableObject
+public class SkillData : ScriptableObject
 {
     public Define.SkillType skillTye;
     private Creature _owner;
+    private GameObject _skillObject;
+
+    [SerializeField] private Vector3 _offset;
+    [SerializeField] private Vector3 _pos;
 
     public SkillActionData actionData;
     [SerializeField] private SkillDir _dir;
-    [SerializeField] private Vector3 _offset;
-    [SerializeField] private Vector3 _pos;
 
     public void Init(Creature creature)
     {
         _owner = creature;
     }
 
-    public async void OnSkillAction()
-    {
-        
-        Vector3 dir = GetDir();
-        Vector3 pos = new Vector3(dir.x * _pos.x, _pos.y, dir.z * _pos.z);
-        Quaternion qua = Quaternion.LookRotation(dir);
-        await UniTask.Delay(actionData.delay);
-        Managers.Object.InstantiateSkill(actionData.skillObject, pos + _offset, qua);
-    }
+    public Vector3 GetPos() { return _offset + _pos; }
 
     public Vector3 GetDir()
     {
@@ -63,16 +59,16 @@ public class SkillScriptableObject : ScriptableObject
         switch (_dir)
         {
             case SkillDir.Front:
-                ret = _owner.transform.forward;
+                ret = _skillObject.transform.forward;
                 break;
             case SkillDir.Back:
-                ret = - _owner.transform.forward;
+                ret = -_skillObject.transform.forward;
                 break;
             case SkillDir.Right:
-                ret = _owner.transform.right;
+                ret = _skillObject.transform.right;
                 break;
             case SkillDir.Left:
-                ret = - _owner.transform.right;
+                ret = -_skillObject.transform.right;
                 break;
         }
 

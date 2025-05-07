@@ -34,6 +34,7 @@ public class Managers : MonoBehaviour
     public static PopupManager Popup { get { return Instance._popup; } }
     public static ObjectManager Object { get { return Instance._object; } }
     public static InputManager Input { get { return Instance._input; } }
+    public static PoolManager Pool { get { return Instance._pool; } }
 
     private ResourceManager _resource = new ResourceManager();
     private SoundManager _sound = new SoundManager();
@@ -42,6 +43,7 @@ public class Managers : MonoBehaviour
     private PopupManager _popup = new PopupManager();
     private ObjectManager _object = new ObjectManager();
     private InputManager _input = new InputManager();
+    private PoolManager _pool = new PoolManager();
 
     static void Init()
     {
