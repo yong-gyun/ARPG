@@ -9,12 +9,6 @@ using Common.Input;
 
 namespace Common.State.Hunter
 {
-    public enum UseAttackType
-    {
-        Attack,
-        Skill
-    }
-
     public enum MoveType
     {
         Walk,
@@ -26,13 +20,15 @@ namespace Common.State.Hunter
 public partial class Hunter : Creature
 {
     [SerializeField] private MoveType _moveType;
-    [SerializeField] private UseAttackType _useAttackType;
+    [SerializeField] private Define.SkillType _currentSkill;
 
     private CharacterController _control;
     private CameraController _cameraControl;
 
+    private bool _actionFlag;
+
     private Vector3 _lockDir;
-    private float _curDashTime = 0f;
+    [SerializeField] private float _curDashTime = 0f;
     private int _attackIndex;
 
     private void Awake()
@@ -40,7 +36,8 @@ public partial class Hunter : Creature
         _cameraControl = (Managers.Scene.CurrentScene as GameScene).GetCameraController;
         _control = GetComponent<CharacterController>();
 
-        BindInputKey();
+        BindMouseInputEvent();
+        BindKeyInputEvent();
     }
 
     public override async UniTask Init(int templateID)
@@ -56,8 +53,10 @@ public partial class Hunter : Creature
 
     protected override void OnUpdate(float deltaTime)
     {
-        Dir = _cameraControl.Forward * _vertical + _cameraControl.Right * _horizontal;
+        if (_control.isGrounded == false)
+            _control.Move(Vector3.down * 9.8f * deltaTime);       
 
+        Dir = _cameraControl.Forward * _vertical + _cameraControl.Right * _horizontal;
         base.OnUpdate(deltaTime);
     }
 
@@ -96,7 +95,6 @@ public partial class Hunter : Creature
         }
 
         transform.forward = new Vector3(_cameraControl.transform.right.x, 0f, _cameraControl.transform.forward.z).normalized;
-        Debug.Log(new Vector3(_cameraControl.transform.right.x, 0f, _cameraControl.transform.forward.z).normalized);
         if (_moveType != MoveType.Dash)
         {
             if (Input.GetKeyDown(KeyCode.LeftShift))
@@ -129,7 +127,6 @@ public partial class Hunter : Creature
             case MoveType.Dash:
                 {
                     _curDashTime += deltaTime;
-                    Debug.Log(transform.position);
                     if (_curDashTime >= DashTime)
                     {
                         ChangeState(Define.CreatureState.Idle);
@@ -144,6 +141,11 @@ public partial class Hunter : Creature
         Vector3 dir = _moveType != MoveType.Dash ? Dir : _lockDir.normalized;
         Quaternion qua = Quaternion.LookRotation(dir);
         transform.rotation = Quaternion.Slerp(transform.rotation, qua, 10f);
+    }
+
+    protected override void UpdateSkill(float deltaTime)
+    {
+        
     }
 
     public override void ChangeState(Define.CreatureState state)
@@ -175,7 +177,7 @@ public partial class Hunter : Creature
                 break;
             case Define.CreatureState.Skill:
                 {
-
+                    
                 }
                 break;
             case Define.CreatureState.Hit:

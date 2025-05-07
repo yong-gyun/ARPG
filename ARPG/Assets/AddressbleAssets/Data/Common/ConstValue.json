@@ -5,14 +5,14 @@
     },
     {
 			"ConstType" : 2,
-			"Value" : 300000
+			"Value" : 5000000
     },
     {
 			"ConstType" : 3,
-			"Value" : 350000
+			"Value" : 750000
     },
     {
 			"ConstType" : 4,
-			"Value" : 5
+			"Value" : 3
     },
 ]

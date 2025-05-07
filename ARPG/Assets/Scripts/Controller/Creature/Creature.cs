@@ -43,7 +43,7 @@ public abstract partial class Creature : MonoBehaviour
         Define.CreatureType creatureType = templateID.GetCreatureType();
         Info = Managers.Data.GetCreatureInfoScripts.Find(info => info.TemplateID == templateID);
         
-        _model = await Managers.Resource.InstantiateAsync($"Creature/{creatureType}", $"{Info.PrefabName}/{Info.PrefabName}.prefab", transform);
+        _model = await Managers.Resource.InstantiateAsync($"Creature/{creatureType}/{Info.PrefabName}", $"{Info.PrefabName}.prefab", transform);
         _anim = _model.GetComponent<Animator>();
 
         SetStat(templateID);

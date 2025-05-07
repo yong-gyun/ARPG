@@ -3,15 +3,49 @@ using UniRx;
 using UnityEngine;
 using DG.Tweening;
 using Cysharp.Threading.Tasks;
-using static UnityEngine.GraphicsBuffer;
-using static UnityEngine.Rendering.DebugUI;
+using Common.State.Hunter;
 
 public partial class Hunter : Creature
 {
     private float _horizontal;
     private float _vertical;
 
-    private void BindInputKey()
+    private void BindMouseInputEvent()
+    {
+        Managers.Input.InputMouseEventHandler.Subscribe(info =>
+        {
+            if (State == Define.CreatureState.Skill ||
+                State == Define.CreatureState.Hit ||
+                State == Define.CreatureState.Dead)
+                return;
+
+            if (info.inputState == Define.InputState.Down)
+            {
+                if (info.keyID == Define.KeyID.NormalAttack)
+                {
+                    _currentSkill = Define.SkillType.Combat_Attack_1;
+                    ChangeState(Define.CreatureState.Skill);
+                }
+                else if (info.keyID == Define.KeyID.NormalSkill_1)
+                {
+                    _currentSkill = Define.SkillType.NormalSkill_1;
+                    ChangeState(Define.CreatureState.Skill);
+                }
+                else if (info.keyID == Define.KeyID.NormalSkill_2)
+                {
+                    _currentSkill = Define.SkillType.NormalSkill_2;
+                    ChangeState(Define.CreatureState.Skill);
+                }
+                else if (info.keyID == Define.KeyID.UltSkill)
+                {
+                    _currentSkill = Define.SkillType.UltSkill;
+                    ChangeState(Define.CreatureState.Skill);
+                }
+            }
+        }).AddTo(this);
+    }
+
+    private void BindKeyInputEvent()
     {
         Managers.Input.InputKeyEventHandler.Subscribe(async info =>
         {

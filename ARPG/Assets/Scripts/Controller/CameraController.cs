@@ -9,7 +9,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private Vector3 _offset = new Vector3(0f, 4f, -5.75f);
 
     [SerializeField] private float _horizontalSensitive = 2.5f;
-    [SerializeField] private float _verticalSensitive = 1f;
+    [SerializeField] private float _verticalSensitive = 0.5f;
     [SerializeField] private float _smoothSpeed = 10f;
 
     [SerializeField] private float _minAngle = -30f;
@@ -40,7 +40,10 @@ public class CameraController : MonoBehaviour
 
         Vector3 destPos = caculatedPos;
         if (Physics.Raycast(_target.position, dir.normalized, out RaycastHit hit, _offset.z) == true)
+        {
             destPos = hit.point;
+            Debug.Log($"Change cam point {hit.point}");
+        }
 
         transform.position = Vector3.Lerp(transform.position, destPos, _smoothSpeed * Time.deltaTime);
         transform.LookAt(_target, Vector3.up);

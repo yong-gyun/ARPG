@@ -60,6 +60,9 @@ public class InputManager
         {
             string file = File.ReadAllText(Path);
             UserInputSettingAllData userInputAllDatas = JsonUtility.FromJson<UserInputSettingAllData>(file);
+            if (userInputAllDatas.userInputSettingDatas == null)
+                Debug.Log("Check");
+
             if (userInputAllDatas != null)
             {
                 foreach (var item in userInputAllDatas.userInputSettingDatas)
@@ -211,6 +214,9 @@ public class InputManager
     {
         UserInputSettingAllData userInputSettingAllData = new UserInputSettingAllData();
         userInputSettingAllData.userInputSettingDatas = new List<UserInputSettingData>();
+        if (_userKeySettingDatas == null || _userKeySettingDatas.Count == 0)
+            Debug.Log("Check");
+
         foreach (var item in _userKeySettingDatas)
         {
             var saveData = new UserInputSettingData();

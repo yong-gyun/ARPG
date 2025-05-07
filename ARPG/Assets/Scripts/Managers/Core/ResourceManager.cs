@@ -1,8 +1,6 @@
 using Cysharp.Text;
 using Cysharp.Threading.Tasks;
-using UnityEditor.VersionControl;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using Object = UnityEngine.Object;
 
 public class ResourceManager
