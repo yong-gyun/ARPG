@@ -1,7 +1,9 @@
 using Cysharp.Text;
 using Cysharp.Threading.Tasks;
+using System;
+using UniRx;
+using UniRx.Triggers;
 using UnityEngine;
-using static UnityEngine.UI.Image;
 using Object = UnityEngine.Object;
 
 public class ResourceManager
@@ -44,17 +46,27 @@ public class ResourceManager
         GameObject prefab = await LoadGameObjectAsync(dir, key);
         if (prefab == null)
             return null;
-        
+
+        GameObject go = null;
         if (pool == true)
         {
             string path = ZString.Concat(CheckDir(dir, "Prefabs"), "/", CheckKey(key, ".prefab"));
-            GameObject go = Managers.Pool.Pop(path, prefab);
-            return go;
+            go = Managers.Pool.Pop(prefab, path);
         }
         else
         {
-            return Instantiate(prefab, parent, false);
+            go = Instantiate(prefab, parent, false);
         }
+
+        if (go != null)
+        {
+            go.OnDestroyAsObservable().Subscribe(_ =>
+            {
+                Release(CheckDir(dir, "Prefabs"), CheckKey(key, ".prefab"));
+            });
+        }
+
+        return go;
     }
 
     public GameObject Instantiate(GameObject origin, Transform parent = null, bool pool = false)
@@ -65,8 +77,7 @@ public class ResourceManager
         GameObject go = null;
         if (pool == true)
         {
-            string key = origin.name;
-            go = Managers.Pool.Pop(key, origin, false);
+            go = Managers.Pool.Pop(origin, checkRef: false);
         }
         else
         {
@@ -85,6 +96,19 @@ public class ResourceManager
         go.transform.position = pos;
         go.transform.rotation = rot;
         return go;
+    }
+
+    public async void Destroy(GameObject go, float t = 0f)
+    {
+        if (Managers.Pool.CheckPoolObject(go))   //풀링 오브젝트인 경우 다시 반환
+        {
+            await UniTask.Delay(TimeSpan.FromSeconds(t));
+            Managers.Pool.Pop(go);
+        }
+        else
+        {
+            Object.Destroy(go, t);
+        }
     }
 
     public string CheckKey(string key, string checkFormmat)

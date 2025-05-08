@@ -33,13 +33,13 @@ public static partial class ExtendedHelper
         return 0;
     }
 
-    public async static UniTask<GameObject> CreteSkill(this SkillData skillData)
+    public async static UniTask<GameObject> CreateSkill(this SkillData skillData)
     {
         Vector3 dir = skillData.GetDir();
         Vector3 pos = skillData.GetPos();
         Vector3 dest = new Vector3(dir.x * pos.x, pos.y, dir.z * pos.z);
 
-        Quaternion qua = Quaternion.LookRotation(dir);
+        Quaternion rot = Quaternion.LookRotation(dir);
         await UniTask.Delay(skillData.actionData.delay);
 
 
@@ -47,7 +47,7 @@ public static partial class ExtendedHelper
         if (origin == null)
             return null;
 
-        GameObject go = Object.Instantiate(origin, pos, qua);
+        GameObject go = Managers.Resource.Instantiate(origin, pos, rot);
         go.name = origin.name;
         return go;
     }

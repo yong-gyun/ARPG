@@ -20,7 +20,6 @@ namespace Common.State.Hunter
 public partial class Hunter : Creature
 {
     [SerializeField] private MoveType _moveType;
-    [SerializeField] private Define.SkillType _currentSkill;
 
     private CharacterController _control;
     private CameraController _cameraControl;

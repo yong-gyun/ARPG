@@ -36,26 +36,25 @@ namespace Common.Skill
 [CreateAssetMenu(fileName = "Skill", menuName = "ScriptableObject/Skill", order = 0)]
 public class SkillData : ScriptableObject
 {
-    public Define.SkillType skillTye;
     private Creature _owner;
     private GameObject _skillObject;
 
-    [SerializeField] private Vector3 _offset;
-    [SerializeField] private Vector3 _pos;
-
     public SkillActionData actionData;
     [SerializeField] private SkillDir _dir;
+    [SerializeField] private Vector3 _offset;
+    [SerializeField] private Vector3 _pos;
 
     public void Init(Creature creature)
     {
         _owner = creature;
+        _skillObject.GetComponent<Effect>().Init(creature);
     }
 
     public Vector3 GetPos() { return _offset + _pos; }
 
     public Vector3 GetDir()
     {
-        Vector3 ret = Vector3.zero;
+        Vector3 ret = Vector3.one;
         switch (_dir)
         {
             case SkillDir.Front:

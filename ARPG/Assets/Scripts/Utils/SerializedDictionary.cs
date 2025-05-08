@@ -33,6 +33,7 @@ namespace System.Collections.Generic.Serialized
                 var obj = _keyValueList.Find(x => EqualityComparer<TKey>.Default.Equals(x.key, key));
                 if (obj == null)
                     return default;
+
                 return obj.value;
             }
             set 
@@ -40,6 +41,7 @@ namespace System.Collections.Generic.Serialized
                 var obj = _keyValueList.Find(x => EqualityComparer<TKey>.Default.Equals(x.key, key));
                 if (obj == null)
                     return;
+
                 obj.value = value;
             }
         }
@@ -47,6 +49,19 @@ namespace System.Collections.Generic.Serialized
         public IEnumerator GetEnumerator()
         {
             return _keyValueList.GetEnumerator();
+        }
+
+        public bool TryGetValue(TKey key, out TValue value)
+        {
+            object ret = _keyValueList.Find(x => EqualityComparer<TKey>.Default.Equals(x.key, key));
+            if (ret == null)
+            {
+                value = default;
+                return false;
+            }
+
+            value = (TValue) ret;
+            return true;
         }
     }
 }

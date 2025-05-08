@@ -77,6 +77,14 @@ public class PoolManager
 {
     private Dictionary<string, Pool> _pools = new Dictionary<string, Pool>();
 
+    public bool CheckPoolObject(GameObject go)
+    {
+        if (_pools.ContainsKey(go.name) == false)
+            return false;
+
+        return true;
+    }
+
     public void Push(string key, GameObject go)
     {
         if (_pools.TryGetValue(key, out var pool) == false)
@@ -88,12 +96,12 @@ public class PoolManager
         pool.Push(go);
     }
 
-    public GameObject Pop(string key, GameObject origin, bool checkRef = true)
+    public GameObject Pop(GameObject origin, string key = "", bool checkRef = true)
     {
         if (_pools.TryGetValue(key, out var pool) == false)
         {
             pool = new Pool(key, origin, checkRef);
-            _pools.Add(key, pool);
+            _pools.Add(origin.name, pool);
         }
 
         return pool.Pop();

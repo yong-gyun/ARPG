@@ -27,6 +27,10 @@ public abstract partial class Creature : MonoBehaviour
 
     [SerializeField] protected Define.CreatureState _state;
 
+    [SerializeField] protected Define.SkillType _currentSkill;
+
+    [SerializeField] protected SkillStateDatas _skillStateData;
+
     protected ColliderEventHandler _colliderEvent;
 
     public void SetAnimation(string animationName, float duration = 0.1f, int layer = 0)
@@ -44,7 +48,10 @@ public abstract partial class Creature : MonoBehaviour
         Info = Managers.Data.GetCreatureInfoScripts.Find(info => info.TemplateID == templateID);
         
         _model = await Managers.Resource.InstantiateAsync($"Creature/{creatureType}/{Info.PrefabName}", $"{Info.PrefabName}.prefab", transform);
+        _skillStateData = await Managers.Resource.LoadAsync<SkillStateDatas>($"Creature/{creatureType}/{Info.PrefabName}/Skill", $"skills.asset");
         _anim = _model.GetComponent<Animator>();
+
+        _skillStateData.Init(this);
 
         SetStat(templateID);
         _init = true;
@@ -88,6 +95,16 @@ public abstract partial class Creature : MonoBehaviour
     public virtual void TakeDamage(SkillInfoScript script, Creature attacker)
     {
         float damage = ExtendedHelper.CalcuateDamage(script, this, attacker);
+    }
 
+    public async virtual void SkillAction(int command)
+    {
+        SkillData skillData = _skillStateData.GetSkillData(_currentSkill);
+        if (skillData != null)
+        {
+            GameObject go = await skillData.CreateSkill();
+            Effect effect = go.GetComponent<Effect>();
+            effect.PlayAction(command);
+        }
     }
 }

@@ -51,8 +51,16 @@ public partial class Define
     {
         Damage,
         Damage_Fixed,
+        Dot,
         Buff,
         Debuff,
+    }
+
+    public enum DamageType
+    {
+        None,
+        Damage,
+        Dot,
     }
 
     public enum PopupType
