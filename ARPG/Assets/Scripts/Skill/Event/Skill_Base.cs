@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using static Skill;
 
 public class Skill_Base
 {
@@ -7,7 +8,12 @@ public class Skill_Base
 
     [SerializeField] protected Define.TargetType _targetType;
 
+    public ExecuteType executeType = ExecuteType.Colision;   //스킬 판정 (충돌, 즉시 발동 등)
+
     [SerializeField] protected int _skillArg;
+
+    [SerializeField] protected List<Creature> _targets = new List<Creature>();
+
     protected int _skillID;
 
     public virtual void Init(Creature creature, int skillID)
@@ -16,9 +22,9 @@ public class Skill_Base
         _skillID = skillID;
     }
 
-    public virtual void OnEnter() { }
+    public virtual void Execute() { }
 
-    public virtual void OnUpdate(float deltaTime) { }
+    public virtual void Apply(Creature target) { }
 
-    public virtual void OnExit() { }
+    public virtual void Release(Creature target) { }
 }

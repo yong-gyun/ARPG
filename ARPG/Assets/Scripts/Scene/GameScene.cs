@@ -12,6 +12,7 @@ public class GameScene : BaseScene
         if (base.Init() == false)
             return false;
 
+        _cameraController = GameObject.FindObjectOfType<CameraController>();
         Cursor.lockState = CursorLockMode.Locked;
         SpawnTest();
         return true;

@@ -48,7 +48,7 @@ public abstract partial class Creature : MonoBehaviour
         Info = Managers.Data.GetCreatureInfoScripts.Find(info => info.TemplateID == templateID);
         
         _model = await Managers.Resource.InstantiateAsync($"Creature/{creatureType}/{Info.PrefabName}", $"{Info.PrefabName}.prefab", transform);
-        _skillStateData = await Managers.Resource.LoadAsync<SkillStateDatas>($"Creature/{creatureType}/{Info.PrefabName}/Skill", $"skills.asset");
+        _skillStateData = await Managers.Resource.LoadAsync<SkillStateDatas>($"Prefabs/Creature/{creatureType}/{Info.PrefabName}/Skill", $"skills.asset");
         _anim = _model.GetComponent<Animator>();
 
         _skillStateData.Init(this);
