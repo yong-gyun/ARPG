@@ -1,5 +1,13 @@
 public partial class Define
 {
+    public enum TargetType
+    {
+        Me,         //나
+        Monster,      //적들 (일반몹 + 보스)
+        Boss,       //보스만
+        Player,     //전체 플레이어
+    }
+
     public enum ConstDefType
     {
         RunSpeed = 1,           //이동속도 * 달리기 속도      

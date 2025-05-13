@@ -44,32 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f4a39ed50e15ce4583eecca49c441e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _effects:
-  - rid: 480751750486950028
-  - rid: 480751750486950029
+  _effects: []
   activeTime: 0
   deactiveTime: 0
   references:
     version: 2
-    RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 480751750486950028
-      type: {class: ActiveEffect, ns: , asm: Assembly-CSharp}
-      data:
-        command: 0
-        activeDelay: 0
-        deactiveDelay: 0
-        _activeObjects: []
-        _deactiveObjects: []
-    - rid: 480751750486950029
-      type: {class: DamageEventEffect, ns: , asm: Assembly-CSharp}
-      data:
-        command: 0
-        _eventType: 0
-        _eventObject: {fileID: 0}
-        _event:
-          rid: -2
-        skillID: 0
-        skillArg: 0
-        _targetCreatures: 
+    RefIds: []
