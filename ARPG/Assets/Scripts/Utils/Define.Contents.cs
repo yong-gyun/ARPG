@@ -78,6 +78,7 @@ public partial class Define
 
     public enum SkillType
     {
+        None = 0,
         Passive = 1,
         Combat_Attack_1 = 2,
         Combat_Attack_2 = 3,

@@ -24607,6 +24607,7 @@ GameObject:
   - component: {fileID: 4247423622316926776}
   - component: {fileID: 5948632898938515425}
   - component: {fileID: 981954534171678873}
+  - component: {fileID: 7835359154371153137}
   m_Layer: 0
   m_Name: Sword Slash 9
   m_TagString: Untagged
@@ -24622,7 +24623,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8970773280927450828}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: -0.18301307, y: -0.68301266, z: 0.6830126, w: 0.18301305}
   m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -24631,7 +24632,7 @@ Transform:
   - {fileID: 6597513379148756655}
   - {fileID: 1683333469201552234}
   m_Father: {fileID: 5649840453191640274}
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 60, y: -90, z: 90}
 --- !u!198 &5948632898938515425
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -29502,3 +29503,24 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!65 &7835359154371153137
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8970773280927450828}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.25, y: 2, z: 1}
+  m_Center: {x: 0, y: -1.5, z: 0}

@@ -41,32 +41,45 @@ public class InputManager
     {
         if (File.Exists(Path) == false)
         {
-            Array array = Enum.GetValues(typeof(KeyID));
-            foreach (KeyID id in array)
-            {
-                if (GetInputEnv(id) == InputEnv.Mouse)
-                {
-                    var mouseIndex = GetDefaultMouseInputValue(id);
-                    _userKeySettingDatas.Add(id, mouseIndex);
-                }
-                else
-                {
-                    var keyCode = GetDefaultKeyValue(id);
-                    _userKeySettingDatas.Add(id, (int)keyCode);
-                }
-            }
+            LoadDefaultData();
         }
         else
         {
-            string file = File.ReadAllText(Path);
-            UserInputSettingAllData userInputAllDatas = JsonUtility.FromJson<UserInputSettingAllData>(file);
-            if (userInputAllDatas.userInputSettingDatas == null)
-                Debug.Log("Check");
+            LoadData();
+        }
 
-            if (userInputAllDatas != null)
+        if (_userKeySettingDatas.Count == 0)
+            LoadDefaultData();
+    }
+
+    private void LoadData()
+    {
+        string file = File.ReadAllText(Path);
+        UserInputSettingAllData userInputAllDatas = JsonUtility.FromJson<UserInputSettingAllData>(file);
+        if (userInputAllDatas.userInputSettingDatas == null)
+            Debug.Log("Check");
+
+        if (userInputAllDatas != null)
+        {
+            foreach (var item in userInputAllDatas.userInputSettingDatas)
+                _userKeySettingDatas.Add(item.keyID, item.keyCode);
+        }
+    }
+
+    private void LoadDefaultData()
+    {
+        Array array = Enum.GetValues(typeof(KeyID));
+        foreach (KeyID id in array)
+        {
+            if (GetInputEnv(id) == InputEnv.Mouse)
             {
-                foreach (var item in userInputAllDatas.userInputSettingDatas)
-                    _userKeySettingDatas.Add(item.keyID, item.keyCode);
+                var mouseIndex = GetDefaultMouseInputValue(id);
+                _userKeySettingDatas.Add(id, mouseIndex);
+            }
+            else
+            {
+                var keyCode = GetDefaultKeyValue(id);
+                _userKeySettingDatas.Add(id, (int)keyCode);
             }
         }
     }

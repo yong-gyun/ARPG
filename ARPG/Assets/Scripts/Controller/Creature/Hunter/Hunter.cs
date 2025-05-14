@@ -176,7 +176,13 @@ public partial class Hunter : Creature
                 break;
             case Define.CreatureState.Skill:
                 {
-                    
+                    if (_currentSkill == Define.SkillType.None)
+                    {
+                        ChangeState(Define.CreatureState.Idle);
+                        return;
+                    }
+
+                    _skillStateData.GetSkillData(_currentSkill);
                 }
                 break;
             case Define.CreatureState.Hit:

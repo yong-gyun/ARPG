@@ -47,7 +47,9 @@ public class SkillData : ScriptableObject
     public void Init(Creature creature)
     {
         _owner = creature;
-        _skillObject.GetComponent<Effect>().Init(creature);
+        _skillObject = actionData.skillObject;
+        Effect effect = _skillObject.GetComponent<Effect>();
+        effect?.Init(creature);
     }
 
     public Vector3 GetPos() { return _offset + _pos; }
