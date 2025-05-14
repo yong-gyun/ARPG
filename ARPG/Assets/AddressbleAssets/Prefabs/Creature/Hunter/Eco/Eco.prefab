@@ -3843,6 +3843,7 @@ GameObject:
   - component: {fileID: 3778497086909662367}
   - component: {fileID: -8727486433055344627}
   - component: {fileID: 308627520757326439}
+  - component: {fileID: -3191479074469454499}
   m_Layer: 0
   m_Name: Eco
   m_TagString: Untagged
@@ -3953,6 +3954,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 722e441c51d35c647a4b73b4b357a546, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-3191479074469454499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6340651224912691709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e0dad05764ddaf44b25b7e9bd65c701, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skillStateData: {fileID: 11400000, guid: b272ea5220551554885a408e270e08e6, type: 2}
 --- !u!1 &6412820766451538564
 GameObject:
   m_ObjectHideFlags: 0

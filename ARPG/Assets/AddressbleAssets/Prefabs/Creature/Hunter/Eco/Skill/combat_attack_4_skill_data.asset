@@ -9,13 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d729837ff7e82ff4597a98adafebac51, type: 3}
+  m_Script: {fileID: 11500000, guid: 582291dbe61344f428ffbf32b94833c3, type: 3}
   m_Name: combat_attack_4_skill_data
   m_EditorClassIdentifier: 
   actionData:
     animName: Combo_Attack_04
     delay: 0
-    actionType: 1
+    actionType: 0
     skillObject: {fileID: 5316056333868350506, guid: c84c7635af0ff944ca99e5b538231ad5, type: 3}
   _dir: 0
   _offset: {x: 0, y: 0, z: 0}

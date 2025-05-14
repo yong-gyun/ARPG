@@ -47,6 +47,19 @@ public partial class Hunter : Creature
         _control.height = collider.size.y;
         _control.radius = collider.size.x;
 
+        _skillEvent.OnSkillAnimationEndEvent.Subscribe(_ =>
+        {
+            if (_nextSkillType == Define.SkillType.None || _nextSkillType == _skillEvent.CurrentSkill)
+            {
+                ChangeState(Define.CreatureState.Idle);
+            }
+            else
+            {
+                _skillEvent.CurrentSkill = _nextSkillType;
+                ChangeState(Define.CreatureState.Skill);
+            }
+        });
+
         _colliderEvent = _model.GetOrAddComponent<ColliderEventHandler>();
     }
 
@@ -155,6 +168,7 @@ public partial class Hunter : Creature
                 {
                     _curDashTime = 0f;
                     _moveType = MoveType.Walk;
+                    _skillEvent.CurrentSkill = Define.SkillType.None;
                     SetAnimation("Idle");
                 }
                 break;
@@ -176,13 +190,8 @@ public partial class Hunter : Creature
                 break;
             case Define.CreatureState.Skill:
                 {
-                    if (_currentSkill == Define.SkillType.None)
-                    {
-                        ChangeState(Define.CreatureState.Idle);
-                        return;
-                    }
-
-                    _skillStateData.GetSkillData(_currentSkill);
+                    var skillSetting = _skillEvent.GetCurrentSkillSettingData();
+                    SetAnimation(skillSetting.actionData.animName);
                 }
                 break;
             case Define.CreatureState.Hit:

@@ -1,12 +1,13 @@
-using System;
+using System.Collections.Generic;
 using System.Collections.Generic.Serialized;
+using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "SkillStateData", menuName = "ScriptableObject/SkillStateData", order = 0)]
 public class SkillStateDatas : ScriptableObject
 {
     [SerializeField]
-    private SerializedDictionary<Define.SkillType, SkillData> _skillStateDict = new SerializedDictionary<Define.SkillType, SkillData>();
+    private SerializedDictionary<Define.SkillType, SkillSettingData> _skillStateDict = new SerializedDictionary<Define.SkillType, SkillSettingData>();
 
     public void Init(Creature owner)
     {
@@ -14,8 +15,13 @@ public class SkillStateDatas : ScriptableObject
             mit.Init(owner);
     }
 
-    public SkillData GetSkillData(Define.SkillType skillType)
+    public SkillSettingData GetSkillSettingData(Define.SkillType skillType)
     {
         return _skillStateDict[skillType];
+    }
+
+    public List<SkillSettingData> GetSkillSettingDataAll()
+    {
+        return _skillStateDict.Values.ToList();
     }
 }

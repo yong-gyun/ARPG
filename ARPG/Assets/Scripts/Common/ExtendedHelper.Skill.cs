@@ -33,7 +33,7 @@ public static partial class ExtendedHelper
         return 0;
     }
 
-    public async static UniTask<GameObject> CreateSkill(this SkillData skillData)
+    public async static UniTask<GameObject> CreateSkill(this SkillSettingData skillData)
     {
         Vector3 dir = skillData.GetDir();
         Vector3 pos = skillData.GetPos();
