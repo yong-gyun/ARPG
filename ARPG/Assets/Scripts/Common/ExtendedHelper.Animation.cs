@@ -7,8 +7,9 @@ public static partial class ExtendedHelper
 {
     public static AnimationClip GetAnimationClip(this Animator animator, string clipName, int layerIndex = 0)
     {
-        var clips = animator.GetCurrentAnimatorClipInfo(layerIndex);
-        var index = Array.FindIndex(clips, x => x.clip.name == clipName);
+        AnimationClip[] clips = animator.runtimeAnimatorController.animationClips;
+
+        var index = Array.FindIndex(clips, x => x.name == clipName);
         if (index == -1)
         {
             Debug.LogWarningFormat("Clip with name {0} not found in layer with index {1}", clipName, layerIndex);
@@ -16,7 +17,7 @@ public static partial class ExtendedHelper
         }
         
         var ret = clips[index];
-        return ret.clip;
+        return ret;
     }
 
     public static void RegisterAnimationEvent(this AnimationClip clip, string eventName, float time)
