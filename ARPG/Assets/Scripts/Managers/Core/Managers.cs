@@ -31,7 +31,7 @@ public class Managers : MonoBehaviour
     public static SoundManager Sound { get { return Instance._sound; } }
     public static DataManager Data { get { return Instance._data; } }
     public static SceneManagerEx Scene { get { return Instance._scene; } }
-    public static PopupManager Popup { get { return Instance._popup; } }
+    public static UIManager UI { get { return Instance._ui; } }
     public static ObjectManager Object { get { return Instance._object; } }
     public static InputManager Input { get { return Instance._input; } }
     public static PoolManager Pool { get { return Instance._pool; } }
@@ -40,7 +40,7 @@ public class Managers : MonoBehaviour
     private SoundManager _sound = new SoundManager();
     private DataManager _data = new DataManager();
     private SceneManagerEx _scene = new SceneManagerEx();
-    private PopupManager _popup = new PopupManager();
+    private UIManager _ui = new UIManager();
     private ObjectManager _object = new ObjectManager();
     private InputManager _input = new InputManager();
     private PoolManager _pool = new PoolManager();

@@ -40,6 +40,34 @@ public class SkillSettingData : ScriptableObject
     private GameObject _skillObject;
 
     public SkillActionData actionData;
+
+    public Vector3 Dir 
+    { 
+        get 
+        {
+            Vector3 ret = Vector3.one;
+            switch (_dir)
+            {
+                case SkillDir.Front:
+                    ret = _owner.transform.forward;
+                    break;
+                case SkillDir.Back:
+                    ret = -_owner.transform.forward;
+                    break;
+                case SkillDir.Right:
+                    ret = _owner.transform.right;
+                    break;
+                case SkillDir.Left:
+                    ret = -_owner.transform.right;
+                    break;
+            }
+
+            return ret.normalized;
+        } 
+    }
+    public Vector3 Offset { get { return _offset; } }
+    public Vector3 Pos { get { return _pos; } }
+    
     [SerializeField] private SkillDir _dir;
     [SerializeField] private Vector3 _offset;
     [SerializeField] private Vector3 _pos;
@@ -52,8 +80,6 @@ public class SkillSettingData : ScriptableObject
         effect?.Init(creature);
     }
 
-    public Vector3 GetPos() { return _offset + _pos; }
-
     public Vector3 GetDir()
     {
         Vector3 ret = Vector3.one;
@@ -61,16 +87,16 @@ public class SkillSettingData : ScriptableObject
         switch (_dir)
         {
             case SkillDir.Front:
-                ret = _skillObject.transform.forward;
+                ret = _owner.transform.forward;
                 break;
             case SkillDir.Back:
-                ret = -_skillObject.transform.forward;
+                ret = -_owner.transform.forward;
                 break;
             case SkillDir.Right:
-                ret = _skillObject.transform.right;
+                ret = _owner.transform.right;
                 break;
             case SkillDir.Left:
-                ret = -_skillObject.transform.right;
+                ret = -_owner.transform.right;
                 break;
         }
 

@@ -93,5 +93,15 @@ public abstract partial class Creature : MonoBehaviour
     public virtual void TakeDamage(SkillInfoScript script, Creature attacker)
     {
         float damage = ExtendedHelper.CalcuateDamage(script, this, attacker);
+
+        _hp -= damage;
+        if (_hp <= 0f)
+        {
+            ChangeState(Define.CreatureState.Dead);
+        }
+        else
+        {
+            ChangeState(Define.CreatureState.Hit);
+        }
     }
 }

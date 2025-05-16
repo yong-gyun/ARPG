@@ -36,14 +36,16 @@ public class SkillEventHandler : MonoBehaviour
         SkillSettingData skillData = _skillStateData.GetSkillSettingData(CurrentSkill);
         if (skillData != null)
         {
-            GameObject go = await skillData.CreateSkill();
+            GameObject go = await skillData.CreateSkill(_owner);
             Effect effect = go.GetComponent<Effect>();
+            Debug.Log("Action Effect");
             effect.PlayAction(command);
         }
     }
 
     public void OnSkillEnd()
     {
+        Debug.Log($"On Skill End: caller {gameObject.name}");
         OnSkillAnimationEndEvent.OnNext(Unit.Default);
     }
 }

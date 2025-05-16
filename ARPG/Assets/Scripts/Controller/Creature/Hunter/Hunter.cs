@@ -191,7 +191,7 @@ public partial class Hunter : Creature
             case Define.CreatureState.Skill:
                 {
                     var skillSetting = _skillEvent.GetCurrentSkillSettingData();
-                    SetAnimation(skillSetting.actionData.animName);
+                    SetAnimation(skillSetting.actionData.animName, 0f);
                 }
                 break;
             case Define.CreatureState.Hit:

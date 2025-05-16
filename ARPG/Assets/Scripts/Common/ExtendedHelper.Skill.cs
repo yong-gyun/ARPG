@@ -33,21 +33,21 @@ public static partial class ExtendedHelper
         return 0;
     }
 
-    public async static UniTask<GameObject> CreateSkill(this SkillSettingData skillData)
+    public async static UniTask<GameObject> CreateSkill(this SkillSettingData skillData, Creature creature)
     {
         Vector3 dir = skillData.GetDir();
-        Vector3 pos = skillData.GetPos();
+        Vector3 pos = skillData.Pos;
         Vector3 dest = new Vector3(dir.x * pos.x, pos.y, dir.z * pos.z);
+        dest += skillData.Offset + creature.transform.position;
 
-        Quaternion rot = Quaternion.LookRotation(dir);
+        Quaternion rot = Quaternion.LookRotation(new Vector3(dir.x, 0f, dir.z));
         await UniTask.Delay(skillData.actionData.delay);
-
 
         var origin = skillData.actionData.skillObject;
         if (origin == null)
             return null;
 
-        GameObject go = Managers.Resource.Instantiate(origin, pos, rot);
+        GameObject go = Managers.Resource.Instantiate(origin, dest, rot);
         go.name = origin.name;
         return go;
     }
