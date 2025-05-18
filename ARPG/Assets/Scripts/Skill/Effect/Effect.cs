@@ -24,7 +24,7 @@ public class Effect : MonoBehaviour
     {
         await UniTask.Delay(activeTime);
 
-        Time.timeScale = 0.2f;
+        //Time.timeScale = 0.2f;
         var activeEffects = _effects.FindAll(x => x.command == command).ToList();
         foreach (var mit in activeEffects)
             mit.PlayAction();

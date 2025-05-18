@@ -335,6 +335,7 @@ GameObject:
   - component: {fileID: 1052419573}
   - component: {fileID: 1052419572}
   - component: {fileID: 1052419571}
+  - component: {fileID: 1052419575}
   m_Layer: 0
   m_Name: TestBox
   m_TagString: Untagged
@@ -431,6 +432,30 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1052419575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1052419570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d080dbbd31c69d42b4a453854c374ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _model: {fileID: 0}
+  _state: 0
+  _skillEvent: {fileID: 0}
+  _templateID: 0
+  _level: 0
+  _hp: 0
+  _mp: 0
+  _atk: 0
+  _defense: 0
+  _speed: 0
+  CriticalPercent: 0
+  CriticalDamage: 0
 --- !u!1 &1737243982
 GameObject:
   m_ObjectHideFlags: 0

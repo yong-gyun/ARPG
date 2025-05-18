@@ -15,4 +15,14 @@ public class TestMonster : Creature
                 break;
         }
     }
+
+#if UNITY_EDITOR
+
+    [Button("캐릭터 스탯 설정")]
+    public void SetCharacterStat()
+    {
+        SetStat(_templateID);
+        Debug.Log($"캐릭터 스탯 설정 완료: {_templateID}");
+    }
+#endif
 }

@@ -92,9 +92,10 @@ public abstract partial class Creature : MonoBehaviour
 
     public virtual void TakeDamage(SkillInfoScript script, Creature attacker)
     {
-        float damage = ExtendedHelper.CalcuateDamage(script, this, attacker);
+        var damageInfo = ExtendedHelper.CaculateDamage(script, this, attacker);
 
-        _hp -= damage;
+        _hp -= damageInfo.damage;
+        Debug.Log($"{script.SkillID} :\n{attacker.name} -> {this.name}:\n 최종 대미지 = {damageInfo.damage}");
         if (_hp <= 0f)
         {
             ChangeState(Define.CreatureState.Dead);

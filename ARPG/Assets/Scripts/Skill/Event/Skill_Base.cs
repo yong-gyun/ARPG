@@ -26,5 +26,7 @@ public class Skill_Base
 
     public virtual void Apply(Creature target) { }
 
-    public virtual void Release(Creature target) { }
+    public virtual void Exit(Creature target) { }
+
+    public virtual void Release() { }
 }

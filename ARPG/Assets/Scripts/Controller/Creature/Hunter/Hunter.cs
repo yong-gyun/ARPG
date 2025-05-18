@@ -58,6 +58,8 @@ public partial class Hunter : Creature
                 _skillEvent.CurrentSkill = _nextSkillType;
                 ChangeState(Define.CreatureState.Skill);
             }
+
+
         });
 
         _colliderEvent = _model.GetOrAddComponent<ColliderEventHandler>();

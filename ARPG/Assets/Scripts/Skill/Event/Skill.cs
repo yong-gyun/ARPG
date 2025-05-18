@@ -14,7 +14,7 @@ public class Skill : MonoBehaviour
     private List<Skill_Base> _executeSkillEffects = new List<Skill_Base>();     //스킬 사용 즉시 호출
 
     [SerializeReference, SubclassSelector]
-    private List<Skill_Base> _applySkillEffects = new List<Skill_Base>();       //스킬이 대상에게 적용될 때 호출
+    private List<Skill_Base> _applySkills = new List<Skill_Base>();       //스킬이 대상에게 적용될 때 호출
 
     [SerializeReference, SubclassSelector]
     private List<Skill_Base> _completeSkillEffects = new List<Skill_Base>();    //스킬 종료 시 호출
@@ -36,7 +36,7 @@ public class Skill : MonoBehaviour
             if (target != null)
             {
                 _targets.Add(target);
-                foreach (var skill in _applySkillEffects)
+                foreach (var skill in _applySkills)
                     skill.Apply(target);
             }
         }
@@ -52,6 +52,8 @@ public class Skill : MonoBehaviour
                 if (_targets.Contains(target) == true)
                 {
                     _targets.Remove(target);
+                    foreach (var skill in _applySkills)
+                        skill.Exit(target);
                 }
             }
         }
@@ -75,6 +77,9 @@ public class Skill : MonoBehaviour
 
     private void OnDisable()
     {
+        foreach (var skill in _executeSkillEffects)
+            skill.Release();
+
         foreach (var skill in _completeSkillEffects)
         {
             skill.Execute();
@@ -83,5 +88,7 @@ public class Skill : MonoBehaviour
             foreach (var target in _targets)
                 skill.Apply(target);
         }
+
+        _targets.Clear();
     }
 }

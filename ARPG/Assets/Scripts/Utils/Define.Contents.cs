@@ -14,6 +14,8 @@ public partial class Define
         DashDistance = 2,       //대쉬 거리
         DashTime = 3,           //대쉬 시간
         HunterMoveSpeed = 4,    //헌터 이동 속도
+        CriticalDamage = 5,     //크리티컬 대미지 계수
+        DefenseCorrection = 6,            //방어력 연산 보정 수치
     }
 
     public enum ClassType
