@@ -108,7 +108,8 @@ public class InputManager
                         _inputMouseCallback.OnNext((keyID, InputState.Up));
                 }
             }
-            else
+            
+            if (GetInputEnv(keyID) == InputEnv.Keyboard)
             {
                 if (CheckDownKey(keyID) == true)
                 {
