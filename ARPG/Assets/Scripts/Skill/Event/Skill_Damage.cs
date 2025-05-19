@@ -4,8 +4,6 @@ using UnityEngine;
 [Serializable]
 public class Skill_Damage : Skill_Base
 {
-
-
     public override void Apply(Creature target)
     {
         if (target.IsTarget(_owner, _targetType) == false)
