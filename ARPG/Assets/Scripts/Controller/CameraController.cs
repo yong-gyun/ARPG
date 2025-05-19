@@ -34,7 +34,7 @@ public class CameraController : MonoBehaviour
         _pitch = Mathf.Clamp(_pitch, _minAngle, _maxAngle);
 
         Quaternion rot = Quaternion.Euler(_pitch, _yaw, 0f);
-        Vector3 offset = rot * new Vector3(0f, 0f, _offset.z);
+        Vector3 offset = rot * new Vector3(0f, 0f, _offset.z); 
         Vector3 caculatedPos = _target.position + offset + Vector3.up * _offset.y;
         Vector3 dir = caculatedPos - _target.position;
 
