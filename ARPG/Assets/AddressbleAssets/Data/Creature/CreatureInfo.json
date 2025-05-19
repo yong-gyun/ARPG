@@ -3,6 +3,14 @@
 			"TemplateID" : 1001,
 			"PrefabName" : "Eco",
 			"Name" : "Test",
-			"Desc" : "Test"
+			"Desc" : "Test",
+			"PassiveSkillID" : 10101,
+			"CombatAttack1ID" : 10102,
+			"CombatAttack2ID" : 10103,
+			"CombatAttack3ID" : 10104,
+			"CombatAttack4ID" : 10105,
+			"NormalSkill1ID" : 10106,
+			"NormalSkill2ID" : 10107,
+			"UltSkillID" : 10108
     },
 ]

@@ -15,4 +15,12 @@
 			"ConstType" : 4,
 			"Value" : 3
     },
+    {
+			"ConstType" : 5,
+			"Value" : 1500000
+    },
+    {
+			"ConstType" : 6,
+			"Value" : 1500000
+    },
 ]

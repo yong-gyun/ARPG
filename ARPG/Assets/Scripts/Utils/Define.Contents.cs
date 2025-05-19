@@ -15,7 +15,7 @@ public partial class Define
         DashTime = 3,           //대쉬 시간
         HunterMoveSpeed = 4,    //헌터 이동 속도
         CriticalDamage = 5,     //크리티컬 대미지 계수
-        DefenseCorrection = 6,            //방어력 연산 보정 수치
+        DefenseCorrection = 6,  //방어력 연산 보정 수치
     }
 
     public enum ClassType
@@ -99,5 +99,11 @@ public partial class Define
         Skill,
         Hit,
         Dead
+    }
+
+    public enum SkillExecuteType
+    {
+        Colision,   //이펙트에 충돌시
+        Instante,   //충돌 상관 없이 즉시 발동
     }
 }

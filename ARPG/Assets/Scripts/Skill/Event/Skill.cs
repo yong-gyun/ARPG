@@ -1,21 +1,17 @@
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class Skill : MonoBehaviour
 {
-    public enum ExecuteType
-    {
-        Colision,   //이펙트에 충돌시
-        Instante,   //충돌 상관 없이 즉시 발동
-    }
-
+    [Header("스킬이 사용 되는 즉시 호출")]
     [SerializeReference, SubclassSelector]
     private List<Skill_Base> _executeSkillEffects = new List<Skill_Base>();     //스킬 사용 즉시 호출
 
+    [Header("스킬이 대상에게 적중했을 때 호출 (충돌 등)")]
     [SerializeReference, SubclassSelector]
     private List<Skill_Base> _applySkills = new List<Skill_Base>();       //스킬이 대상에게 적용될 때 호출
 
+    [Header("스킬이 종료될 시 호출")]
     [SerializeReference, SubclassSelector]
     private List<Skill_Base> _completeSkillEffects = new List<Skill_Base>();    //스킬 종료 시 호출
 
@@ -26,18 +22,27 @@ public class Skill : MonoBehaviour
     public void Init(Creature owner, int skillID)
     {
         Owner = owner;
+
+        foreach (var mit in _executeSkillEffects)
+            mit.Init(owner, skillID);
+
+        foreach (var mit in _applySkills)
+            mit.Init(owner, skillID);
+
+        foreach (var mit in _completeSkillEffects)
+            mit.Init(owner, skillID);
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Creature"))
         {
-            Creature target = other.GetComponent<Creature>();
-            if (target != null)
+            Creature creature = other.GetComponent<Creature>();
+            if (creature != null)
             {
-                _targets.Add(target);
+                _targets.Add(creature);
                 foreach (var skill in _applySkills)
-                    skill.Apply(target);
+                    skill.Apply(creature);
             }
         }
     }
@@ -66,7 +71,7 @@ public class Skill : MonoBehaviour
         foreach (var skill in _executeSkillEffects)
         {
             skill.Execute();
-            if (skill.executeType == ExecuteType.Instante)
+            if (skill.executeType == Define.SkillExecuteType.Instante)
             {
                 skill.Apply(Owner);
                 foreach (var target in _targets)

@@ -44,5 +44,13 @@ namespace Data.Contents
 		public string PrefabName { get; set; }
 		public string Name { get; set; }
 		public string Desc { get; set; }
+		public int PassiveSkillID { get; set; }
+		public int CombatAttack1ID { get; set; }
+		public int CombatAttack2ID { get; set; }
+		public int CombatAttack3ID { get; set; }
+		public int CombatAttack4ID { get; set; }
+		public int NormalSkill1ID { get; set; }
+		public int NormalSkill2ID { get; set; }
+		public int UltSkillID { get; set; }
     }
 }

@@ -83,7 +83,6 @@ public class SkillSettingData : ScriptableObject
     public Vector3 GetDir()
     {
         Vector3 ret = Vector3.one;
-
         switch (_dir)
         {
             case SkillDir.Front:

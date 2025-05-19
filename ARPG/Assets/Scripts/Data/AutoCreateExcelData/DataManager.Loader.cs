@@ -27,6 +27,7 @@ public partial class DataManager
 	public List<HunterLevelStatScript> GetHunterLevelStatScripts { get; private set; }
 	public List<OverclockStatScript> GetOverclockStatScripts { get; private set; }
 	public List<CreatureInfoScript> GetCreatureInfoScripts { get; private set; }
+	public List<SkillLeveInfoScript> GetSkillLeveInfoScripts { get; private set; }
 	public List<SkillInfoScript> GetSkillInfoScripts { get; private set; }
 	public List<ConstValueScript> GetConstValueScripts { get; private set; }
 
@@ -37,6 +38,7 @@ public partial class DataManager
 		GetHunterLevelStatScripts = await Load<HunterLevelStatScriptLoader, HunterLevelStatScript>("Stat", "HunterLevelStat");
 		GetOverclockStatScripts = await Load<OverclockStatScriptLoader, OverclockStatScript>("Stat", "OverclockStat");
 		GetCreatureInfoScripts = await Load<CreatureInfoScriptLoader, CreatureInfoScript>("Creature", "CreatureInfo");
+		GetSkillLeveInfoScripts = await Load<SkillLeveInfoScriptLoader, SkillLeveInfoScript>("Creature", "SkillLeveInfo");
 		GetSkillInfoScripts = await Load<SkillInfoScriptLoader, SkillInfoScript>("Creature", "SkillInfo");
 		GetConstValueScripts = await Load<ConstValueScriptLoader, ConstValueScript>("Common", "ConstValue");
 
@@ -49,6 +51,7 @@ public partial class DataManager
 		HunterLevelStatScriptLoader.ConvertBinary();
 		OverclockStatScriptLoader.ConvertBinary();
 		CreatureInfoScriptLoader.ConvertBinary();
+		SkillLeveInfoScriptLoader.ConvertBinary();
 		SkillInfoScriptLoader.ConvertBinary();
 		ConstValueScriptLoader.ConvertBinary();
 
@@ -61,6 +64,7 @@ public partial class DataManager
 		GetHunterLevelStatScripts.Clear();
 		GetOverclockStatScripts.Clear();
 		GetCreatureInfoScripts.Clear();
+		GetSkillLeveInfoScripts.Clear();
 		GetSkillInfoScripts.Clear();
 		GetConstValueScripts.Clear();
 

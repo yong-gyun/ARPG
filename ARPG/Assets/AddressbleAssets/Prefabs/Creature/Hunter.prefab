@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6105558732249933720}
   m_Layer: 0
   m_Name: Hunter
-  m_TagString: Untagged
+  m_TagString: Creature
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -47,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _model: {fileID: 0}
   _state: 0
+  _skillEvent: {fileID: 0}
   _templateID: 0
   _level: 0
   _hp: 0
@@ -57,7 +58,7 @@ MonoBehaviour:
   CriticalPercent: 0
   CriticalDamage: 0
   _moveType: 0
-  _useAttackType: 0
+  _curDashTime: 0
   SkillCoooldown: 0
 --- !u!143 &6105558732249933720
 CharacterController:

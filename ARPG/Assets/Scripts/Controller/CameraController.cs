@@ -41,8 +41,11 @@ public class CameraController : MonoBehaviour
         Vector3 destPos = caculatedPos;
         if (Physics.Raycast(_target.position, dir.normalized, out RaycastHit hit, _offset.z) == true)
         {
-            destPos = hit.point;
-            Debug.Log($"Change cam point {hit.point}");
+            if (hit.collider.gameObject != _target.gameObject)
+            {
+                destPos = hit.point;
+                Debug.Log($"Change cam point {hit.point}");
+            }
         }
 
         transform.position = Vector3.Lerp(transform.position, destPos, _smoothSpeed * Time.deltaTime);

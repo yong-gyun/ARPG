@@ -28,26 +28,29 @@ public partial class Hunter : Creature
                     {
                         //이전에 사용한 스킬이 기본 공격이 아니였으니 콤보 어택1로 설정
                         _skillEvent.CurrentSkill = Define.SkillType.Combat_Attack_1;
-
                         ChangeState(Define.CreatureState.Skill);
                     }
                     else
                     {
-                        //이전에 콤보 어택을 사용했으니 다음 콤보 어택으로 설정
-                        switch (_skillEvent.CurrentSkill)
+                        //다음 콤보 어택을 예약 할 수 있는 상태
+                        if (_skillEvent.CurrentSkill == _nextSkillType)
                         {
-                            case Define.SkillType.Combat_Attack_1:
-                                _nextSkillType = Define.SkillType.Combat_Attack_2;
-                                break;
-                            case Define.SkillType.Combat_Attack_2:
-                                _nextSkillType = Define.SkillType.Combat_Attack_3;
-                                break;
-                            case Define.SkillType.Combat_Attack_3:
-                                _nextSkillType = Define.SkillType.Combat_Attack_4;
-                                break;
-                            default:
-                                _nextSkillType = Define.SkillType.None;  //Idle로 전환
-                                break;
+                            //이전에 콤보 어택을 사용했으니 다음 콤보 어택으로 설정
+                            switch (_skillEvent.CurrentSkill)
+                            {
+                                case Define.SkillType.Combat_Attack_1:
+                                    _nextSkillType = Define.SkillType.Combat_Attack_2;
+                                    break;
+                                case Define.SkillType.Combat_Attack_2:
+                                    _nextSkillType = Define.SkillType.Combat_Attack_3;
+                                    break;
+                                case Define.SkillType.Combat_Attack_3:
+                                    _nextSkillType = Define.SkillType.Combat_Attack_4;
+                                    break;
+                                default:
+                                    _nextSkillType = Define.SkillType.None;  //Idle로 전환
+                                    break;
+                            }
                         }
                     }
                 }

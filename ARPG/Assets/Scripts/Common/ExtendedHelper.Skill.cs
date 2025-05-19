@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static partial class ExtendedHelper
 {
-    public static long GetSkillLevelValue(this SkillInfoScript script, int level)
+    public static long GetSkillLevelValue(this SkillLeveInfoScript script, int level)
     {
         switch (level)
         {

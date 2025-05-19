@@ -28,7 +28,9 @@ public partial class Hunter : Creature
 
     private Vector3 _lockDir;
     [SerializeField] private float _curDashTime = 0f;
-    private int _attackIndex;
+    private bool _isReservedNextAttack;
+    private float _animClipTime = 0f;
+    private float _currentAnimClipTime = 0f;
 
     private void Awake()
     {
@@ -58,8 +60,6 @@ public partial class Hunter : Creature
                 _skillEvent.CurrentSkill = _nextSkillType;
                 ChangeState(Define.CreatureState.Skill);
             }
-
-
         });
 
         _colliderEvent = _model.GetOrAddComponent<ColliderEventHandler>();
@@ -157,9 +157,20 @@ public partial class Hunter : Creature
         transform.rotation = Quaternion.Slerp(transform.rotation, qua, 10f);
     }
 
+
     protected override void UpdateSkill(float deltaTime)
     {
-        
+        //이벤트가 타이밍이 안맞아 종종 씹히는 현상이 있을 수 있으니 여기선 애니메이션 종료 되었는지 체크하는 방어 코드 추가
+        _currentAnimClipTime += deltaTime;
+        if (_currentAnimClipTime >= _animClipTime)
+        {
+            _currentAnimClipTime = 0f;
+            ChangeState(Define.CreatureState.Idle);
+        }
+
+        //1.   현재 콤보 어택이 다음으로 예약된 콤보 어택이랑 같은지 체크
+        //2-1. 만약 None이 오거나 애니메이션이 끝날 때까지 예약된 콤보 어택이 계속 똑같으면 idle로 전환 (이건 되어 있음 이벤트로)
+        //2-2. 
     }
 
     public override void ChangeState(Define.CreatureState state)
@@ -193,6 +204,7 @@ public partial class Hunter : Creature
             case Define.CreatureState.Skill:
                 {
                     var skillSetting = _skillEvent.GetCurrentSkillSettingData();
+                    _animClipTime = _anim.GetAnimationClip(skillSetting.actionData.animName).length;
                     SetAnimation(skillSetting.actionData.animName, 0f);
                 }
                 break;

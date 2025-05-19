@@ -1,14 +1,15 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using static Skill;
 
-public class Skill_Base
+[Serializable]
+public abstract class Skill_Base
 {
     protected Creature _owner;
 
     [SerializeField] protected Define.TargetType _targetType;
 
-    public ExecuteType executeType = ExecuteType.Colision;   //스킬 판정 (충돌, 즉시 발동 등)
+    public Define.SkillExecuteType executeType = Define.SkillExecuteType.Colision;   //스킬 판정 (충돌, 즉시 발동 등)
 
     [SerializeField] protected int _skillArg;
 
@@ -22,11 +23,8 @@ public class Skill_Base
         _skillID = skillID;
     }
 
-    public virtual void Execute() { }
-
-    public virtual void Apply(Creature target) { }
-
-    public virtual void Exit(Creature target) { }
-
-    public virtual void Release() { }
+    public abstract void Execute();
+    public abstract void Apply(Creature target);
+    public abstract void Exit(Creature target);
+    public abstract void Release();
 }

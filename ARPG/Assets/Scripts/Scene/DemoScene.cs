@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets.ResourceLocators;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using Data.Contents.LoaderForm;
 
 public class DemoScene : BaseScene
 {
@@ -58,9 +59,12 @@ public class DemoScene : BaseScene
     public async void OnCompletedResourceDownload()
     {
         await Managers.Data.LoadAll();
+        Managers.Data.Loaded = true;
         Destroy(this);
 
         gameObject.AddComponent<GameScene>();
+        TestMonster tm = FindAnyObjectByType<TestMonster>();
+        tm.SetCharacterStat();
     }
 
     private double GetDownloadResourceSize(string label)

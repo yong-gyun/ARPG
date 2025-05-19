@@ -41,18 +41,7 @@ namespace Data.Contents
     public class SkillInfoScript
     {
 		public int SkillID { get; set; }
-		public int SkillArg { get; set; }
-		public Define.EffectType Effect { get; set; }
-		public long Lv1 { get; set; }
-		public long Lv2 { get; set; }
-		public long Lv3 { get; set; }
-		public long Lv4 { get; set; }
-		public long Lv5 { get; set; }
-		public long Lv6 { get; set; }
-		public long Lv7 { get; set; }
-		public long Lv8 { get; set; }
-		public long Lv9 { get; set; }
-		public long Lv10 { get; set; }
-
+		public string SkillName { get; set; }
+		public string SkillDesc { get; set; }
     }
 }
