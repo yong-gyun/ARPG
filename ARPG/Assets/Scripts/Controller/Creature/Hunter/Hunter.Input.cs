@@ -15,9 +15,7 @@ public partial class Hunter : Creature
     {
         Managers.Input.InputMouseEventHandler.Subscribe(info =>
         {
-            if (State == Define.CreatureState.Skill ||
-                State == Define.CreatureState.Hit ||
-                State == Define.CreatureState.Dead)
+            if (State == Define.CreatureState.Hit || State == Define.CreatureState.Dead)
                 return;
 
             if (info.inputState == Define.InputState.Down)
@@ -29,6 +27,8 @@ public partial class Hunter : Creature
                         //이전에 사용한 스킬이 기본 공격이 아니였으니 콤보 어택1로 설정
                         _skillEvent.CurrentSkill = Define.SkillType.Combat_Attack_1;
                         ChangeState(Define.CreatureState.Skill);
+
+                        Debug.Log("Check1");
                     }
                     else
                     {
@@ -88,9 +88,7 @@ public partial class Hunter : Creature
     {
         Managers.Input.InputKeyEventHandler.Subscribe(async info =>
         {
-            if (State == Define.CreatureState.Skill || 
-                State == Define.CreatureState.Hit || 
-                State == Define.CreatureState.Dead)
+            if (State == Define.CreatureState.Hit || State == Define.CreatureState.Dead)
                 return;
 
             if (info.inputState == Define.InputState.Pressed)

@@ -1,3 +1,4 @@
+using Common.Anim;
 using Cysharp.Threading.Tasks;
 using Data.Contents;
 using System;
@@ -31,6 +32,8 @@ public abstract partial class Creature : MonoBehaviour
 
     protected ColliderEventHandler _colliderEvent;
 
+    protected CreatureAnimStateBehaviour _animStateBehaviour;
+
     public void SetAnimation(string animationName, float duration = 0.1f, int layer = 0)
     {
         _anim.CrossFade(animationName, duration, layer);
@@ -48,6 +51,8 @@ public abstract partial class Creature : MonoBehaviour
         _model = await Managers.Resource.InstantiateAsync($"Creature/{creatureType}/{Info.PrefabName}", $"{Info.PrefabName}.prefab", transform);
         
         _anim = _model.GetComponent<Animator>();
+        _animStateBehaviour = _anim.GetBehaviour<CreatureAnimStateBehaviour>();
+
         _skillEvent = _model.GetOrAddComponent<SkillEventHandler>();
         _skillEvent.Init(this);
 

@@ -49,18 +49,18 @@ public partial class Hunter : Creature
         _control.height = collider.size.y;
         _control.radius = collider.size.x;
 
-        _skillEvent.OnSkillAnimationEndEvent.Subscribe(_ =>
-        {
-            if (_nextSkillType == Define.SkillType.None || _nextSkillType == _skillEvent.CurrentSkill)
-            {
-                ChangeState(Define.CreatureState.Idle);
-            }
-            else
-            {
-                _skillEvent.CurrentSkill = _nextSkillType;
-                ChangeState(Define.CreatureState.Skill);
-            }
-        });
+        //_skillEvent.OnSkillAnimationEndEvent.Subscribe(_ =>
+        //{
+        //    if (_nextSkillType == Define.SkillType.None || _nextSkillType == _skillEvent.CurrentSkill)
+        //    {
+        //        ChangeState(Define.CreatureState.Idle);
+        //    }
+        //    else
+        //    {
+        //        _skillEvent.CurrentSkill = _nextSkillType;
+        //        ChangeState(Define.CreatureState.Skill);
+        //    }
+        //});
 
         _colliderEvent = _model.GetOrAddComponent<ColliderEventHandler>();
     }
@@ -164,8 +164,11 @@ public partial class Hunter : Creature
         _currentAnimClipTime += deltaTime;
         if (_currentAnimClipTime >= _animClipTime)
         {
-            _currentAnimClipTime = 0f;
-            ChangeState(Define.CreatureState.Idle);
+            if (_nextSkillType == Define.SkillType.None)
+            {
+                _currentAnimClipTime = 0f;
+                ChangeState(Define.CreatureState.Idle);
+            }
         }
 
         //1.   현재 콤보 어택이 다음으로 예약된 콤보 어택이랑 같은지 체크
