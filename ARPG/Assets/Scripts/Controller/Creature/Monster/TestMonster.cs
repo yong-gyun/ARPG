@@ -27,4 +27,10 @@ public class TestMonster : Creature
         Debug.Log($"캐릭터 스탯 설정 완료: {_templateID}");
     }
 #endif
+
+    [Button("체력 500 회복")]
+    public void HealMonster()
+    {
+
+    }
 }

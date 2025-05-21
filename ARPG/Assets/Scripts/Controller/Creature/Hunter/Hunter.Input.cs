@@ -7,7 +7,7 @@ using Common.State.Hunter;
 
 public partial class Hunter : Creature
 {
-    private Define.SkillType _nextSkillType;
+    [SerializeField] private Define.SkillType _nextSkillType;
     private float _horizontal;
     private float _vertical;
 
@@ -33,7 +33,7 @@ public partial class Hunter : Creature
                     else
                     {
                         //다음 콤보 어택을 예약 할 수 있는 상태
-                        if (_skillEvent.CurrentSkill == _nextSkillType)
+                        if (_skillEvent.CurrentSkill == _nextSkillType || _nextSkillType == Define.SkillType.None)
                         {
                             //이전에 콤보 어택을 사용했으니 다음 콤보 어택으로 설정
                             switch (_skillEvent.CurrentSkill)
@@ -51,7 +51,14 @@ public partial class Hunter : Creature
                                     _nextSkillType = Define.SkillType.None;  //Idle로 전환
                                     break;
                             }
+
+                            if (_skillEvent.CurrentSkill != Define.SkillType.Combat_Attack_4)
+                                _anim.SetBool(RESERVE_NEXT_COMBAT_ATTACK_ANIM_KEY, true);
+                            
+                            Debug.Log($"Check2 {_nextSkillType}");
                         }
+
+                        _anim.SetBool(RESERVE_NEXT_COMBAT_ATTACK_ANIM_KEY, true);
                     }
                 }
                 else if (info.keyID == Define.KeyID.NormalSkill_1)

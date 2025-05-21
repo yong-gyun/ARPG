@@ -32,7 +32,7 @@ public abstract partial class Creature : MonoBehaviour
 
     protected ColliderEventHandler _colliderEvent;
 
-    protected CreatureAnimStateBehaviour _animStateBehaviour;
+    protected SkillAnimStateBehaviour _animStateBehaviour;
 
     public void SetAnimation(string animationName, float duration = 0.1f, int layer = 0)
     {
@@ -49,10 +49,8 @@ public abstract partial class Creature : MonoBehaviour
         Info = Managers.Data.GetCreatureInfoScripts.Find(info => info.TemplateID == templateID);
         
         _model = await Managers.Resource.InstantiateAsync($"Creature/{creatureType}/{Info.PrefabName}", $"{Info.PrefabName}.prefab", transform);
-        
         _anim = _model.GetComponent<Animator>();
-        _animStateBehaviour = _anim.GetBehaviour<CreatureAnimStateBehaviour>();
-
+        
         _skillEvent = _model.GetOrAddComponent<SkillEventHandler>();
         _skillEvent.Init(this);
 

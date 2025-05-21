@@ -32,6 +32,8 @@ public partial class Hunter : Creature
     private float _animClipTime = 0f;
     private float _currentAnimClipTime = 0f;
 
+    private const string RESERVE_NEXT_COMBAT_ATTACK_ANIM_KEY = "ReserveNextCombatAttack";
+
     private void Awake()
     {
         _cameraControl = (Managers.Scene.CurrentScene as GameScene).GetCameraController;
@@ -49,18 +51,38 @@ public partial class Hunter : Creature
         _control.height = collider.size.y;
         _control.radius = collider.size.x;
 
-        //_skillEvent.OnSkillAnimationEndEvent.Subscribe(_ =>
-        //{
-        //    if (_nextSkillType == Define.SkillType.None || _nextSkillType == _skillEvent.CurrentSkill)
-        //    {
-        //        ChangeState(Define.CreatureState.Idle);
-        //    }
-        //    else
-        //    {
-        //        _skillEvent.CurrentSkill = _nextSkillType;
-        //        ChangeState(Define.CreatureState.Skill);
-        //    }
-        //});
+        _skillEvent.OnSkillAnimationEndEvent.Subscribe(_ =>
+        {
+            if (_nextSkillType == Define.SkillType.None || _nextSkillType == _skillEvent.CurrentSkill)
+            {
+                ChangeState(Define.CreatureState.Idle);
+            }
+        });
+
+        _animStateBehaviour.OnStateEnterListener.Subscribe(info =>
+        {
+            if (_nextSkillType != Define.SkillType.None)
+            {
+                _nextSkillType = _skillEvent.CurrentSkill;
+            }
+
+            _currentAnimClipTime = 0f;
+            _animClipTime = info.stateInfo.length;
+        }).AddTo(this);
+
+        _animStateBehaviour.OnStateExitListener.Subscribe(info =>
+        {
+            if (_nextSkillType == Define.SkillType.None || _skillEvent.CurrentSkill == _nextSkillType)
+            {
+                _nextSkillType = Define.SkillType.None;
+                _anim.SetBool(RESERVE_NEXT_COMBAT_ATTACK_ANIM_KEY, false);
+            }
+            else
+            {
+                _skillEvent.CurrentSkill = _nextSkillType;
+            }
+        }).AddTo(this);
+
 
         _colliderEvent = _model.GetOrAddComponent<ColliderEventHandler>();
     }
@@ -161,19 +183,19 @@ public partial class Hunter : Creature
     protected override void UpdateSkill(float deltaTime)
     {
         //이벤트가 타이밍이 안맞아 종종 씹히는 현상이 있을 수 있으니 여기선 애니메이션 종료 되었는지 체크하는 방어 코드 추가
+        if (_currentAnimClipTime <= 0f)
+            return;
+
         _currentAnimClipTime += deltaTime;
-        if (_currentAnimClipTime >= _animClipTime)
+        if (_currentAnimClipTime >= _animClipTime - 0.05f)
         {
             if (_nextSkillType == Define.SkillType.None)
             {
                 _currentAnimClipTime = 0f;
+                _anim.SetBool(RESERVE_NEXT_COMBAT_ATTACK_ANIM_KEY, false);
                 ChangeState(Define.CreatureState.Idle);
             }
         }
-
-        //1.   현재 콤보 어택이 다음으로 예약된 콤보 어택이랑 같은지 체크
-        //2-1. 만약 None이 오거나 애니메이션이 끝날 때까지 예약된 콤보 어택이 계속 똑같으면 idle로 전환 (이건 되어 있음 이벤트로)
-        //2-2. 
     }
 
     public override void ChangeState(Define.CreatureState state)
@@ -193,22 +215,24 @@ public partial class Hunter : Creature
                     switch (_moveType)
                     {
                         case MoveType.Walk:
-                            SetAnimation("Walk");
+                            SetAnimation("Walk", 0.05f);
                             break;
                         case MoveType.Run:
-                            SetAnimation("Run");
+                            SetAnimation("Run", 0.05f);
                             break;
                         case MoveType.Dash:
-                            SetAnimation("Dash");
+                            SetAnimation("Dash", 0.05f);
                             break;
                     }
                 }
                 break;
             case Define.CreatureState.Skill:
                 {
-                    var skillSetting = _skillEvent.GetCurrentSkillSettingData();
-                    _animClipTime = _anim.GetAnimationClip(skillSetting.actionData.animName).length;
-                    SetAnimation(skillSetting.actionData.animName, 0f);
+                    if (CheckNotNormalAttack(_skillEvent.CurrentSkill) == false || _skillEvent.CurrentSkill == Define.SkillType.Combat_Attack_1)
+                    {
+                        var skillSetting = _skillEvent.GetCurrentSkillSettingData();
+                        SetAnimation(skillSetting.actionData.animName, 0f);
+                    }
                 }
                 break;
             case Define.CreatureState.Hit:
