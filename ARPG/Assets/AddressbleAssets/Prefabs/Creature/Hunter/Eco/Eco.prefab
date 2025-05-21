@@ -3968,6 +3968,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _skillStateData: {fileID: 11400000, guid: b272ea5220551554885a408e270e08e6, type: 2}
+  _animator: {fileID: 3501912982989711946}
 --- !u!1 &6412820766451538564
 GameObject:
   m_ObjectHideFlags: 0

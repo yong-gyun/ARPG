@@ -22,10 +22,10 @@ public partial class Hunter : Creature
             {
                 if (info.keyID == Define.KeyID.NormalAttack)
                 {
-                    if (_skillEvent.CurrentSkill == Define.SkillType.None || CheckNotNormalAttack(_skillEvent.CurrentSkill) == false)
+                    if (_skillEventHandler.CurrentSkill == Define.SkillType.None || CheckNotNormalAttack(_skillEventHandler.CurrentSkill) == false)
                     {
                         //이전에 사용한 스킬이 기본 공격이 아니였으니 콤보 어택1로 설정
-                        _skillEvent.CurrentSkill = Define.SkillType.Combat_Attack_1;
+                        _skillEventHandler.CurrentSkill = Define.SkillType.Combat_Attack_1;
                         ChangeState(Define.CreatureState.Skill);
 
                         Debug.Log("Check1");
@@ -33,10 +33,10 @@ public partial class Hunter : Creature
                     else
                     {
                         //다음 콤보 어택을 예약 할 수 있는 상태
-                        if (_skillEvent.CurrentSkill == _nextSkillType || _nextSkillType == Define.SkillType.None)
+                        if (_skillEventHandler.CurrentSkill == _nextSkillType || _nextSkillType == Define.SkillType.None)
                         {
                             //이전에 콤보 어택을 사용했으니 다음 콤보 어택으로 설정
-                            switch (_skillEvent.CurrentSkill)
+                            switch (_skillEventHandler.CurrentSkill)
                             {
                                 case Define.SkillType.Combat_Attack_1:
                                     _nextSkillType = Define.SkillType.Combat_Attack_2;
@@ -52,7 +52,7 @@ public partial class Hunter : Creature
                                     break;
                             }
 
-                            if (_skillEvent.CurrentSkill != Define.SkillType.Combat_Attack_4)
+                            if (_skillEventHandler.CurrentSkill != Define.SkillType.Combat_Attack_4)
                                 _anim.SetBool(RESERVE_NEXT_COMBAT_ATTACK_ANIM_KEY, true);
                             
                             Debug.Log($"Check2 {_nextSkillType}");
@@ -63,17 +63,17 @@ public partial class Hunter : Creature
                 }
                 else if (info.keyID == Define.KeyID.NormalSkill_1)
                 {
-                    _skillEvent.CurrentSkill = Define.SkillType.NormalSkill_1;
+                    _skillEventHandler.CurrentSkill = Define.SkillType.NormalSkill_1;
                     ChangeState(Define.CreatureState.Skill);
                 }
                 else if (info.keyID == Define.KeyID.NormalSkill_2)
                 {
-                    _skillEvent.CurrentSkill = Define.SkillType.NormalSkill_2;
+                    _skillEventHandler.CurrentSkill = Define.SkillType.NormalSkill_2;
                     ChangeState(Define.CreatureState.Skill);
                 }
                 else if (info.keyID == Define.KeyID.UltSkill)
                 {
-                    _skillEvent.CurrentSkill = Define.SkillType.UltSkill;
+                    _skillEventHandler.CurrentSkill = Define.SkillType.UltSkill;
                     ChangeState(Define.CreatureState.Skill);
                 }
             }

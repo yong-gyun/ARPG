@@ -3,8 +3,10 @@ using UnityEngine;
 
 namespace Common.Anim
 {
-    public class AnimStateInfo
+    public struct AnimStateInfo
     {
+        public static AnimStateInfo Empty = new AnimStateInfo();
+
         public Animator animator;
         public AnimatorStateInfo stateInfo;
         public int layer;
@@ -25,54 +27,51 @@ namespace Common.Anim
 
     public class SkillAnimStateBehaviour : StateMachineBehaviour
     {
-        public Subject<AnimStateInfo> OnStateEnterListener { get; private set; } = new Subject<AnimStateInfo>();
-        public Subject<AnimStateInfo> OnStateUpdateListener { get; private set; } = new Subject<AnimStateInfo>();
-        public Subject<AnimStateInfo> OnStateExitListener { get; private set; } = new Subject<AnimStateInfo>();
-        public Subject<(AnimStateInfo prevAnimInfo, AnimStateInfo newAnimInfo)> OnStateChangeListener { get; private set; } = new Subject<(AnimStateInfo prevnewAnimInfo, AnimStateInfo newAnimInfo)>();
         public Define.SkillType SkillType { get { return _skillType; } }
-        public AnimStateInfo CurrentAnimStateInfo { get { return _currentAnimStateInfo; } }
+        private Define.SkillType _prevSkillType;
+        private SkillEventHandler _owner;
 
-        private AnimStateInfo _currentAnimStateInfo;
-        private AnimStateInfo _prevAnimInfo;
         [SerializeField] private Define.SkillType _skillType;
+
+        private bool _init;
+
+        public void Init(SkillEventHandler owner)
+        {
+            if (_init == true)
+                return;
+
+            _owner = owner;
+            _init = true;
+        }
+
+        public void Clear()
+        {
+            _owner = null;
+            _init = false;
+        }
 
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            var temp = _currentAnimStateInfo;
-            _currentAnimStateInfo = new AnimStateInfo(animator, stateInfo, layerIndex);
-
-            if (_prevAnimInfo != null)
-            {
-                _prevAnimInfo = _currentAnimStateInfo;
-                OnStateChangeListener.OnNext((_prevAnimInfo, _currentAnimStateInfo));
-            }
-            else if (_prevAnimInfo == null && temp != null)
-            {
-                _prevAnimInfo = _currentAnimStateInfo;
-                
-            }
-
-            
-            if (OnStateEnterListener.HasObservers == false)
+            if (_init == false)
                 return;
 
-            OnStateEnterListener.OnNext(new AnimStateInfo(animator, stateInfo, layerIndex));
+            _owner.OnSkillAnimStateEnter.OnNext(new AnimStateInfo(animator, stateInfo, layerIndex));
         }
 
         public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            if (OnStateUpdateListener.HasObservers == false)
+            if (_init == false)
                 return;
 
-            OnStateUpdateListener.OnNext(new AnimStateInfo(animator, stateInfo, layerIndex));
+            _owner.OnSkillAnimStateUpdate.OnNext(new AnimStateInfo(animator, stateInfo, layerIndex));
         }
 
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
-            if (OnStateExitListener.HasObservers == false)
+            if (_init == false)
                 return;
 
-            OnStateExitListener.OnNext(new AnimStateInfo(animator, stateInfo, layerIndex));
+            _owner.OnSkillAnimStateExit.OnNext(new AnimStateInfo(animator, stateInfo, layerIndex));
         }
     }
 }

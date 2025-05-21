@@ -11,17 +11,25 @@ public class SkillEventHandler : MonoBehaviour
 
     [SerializeField] private SkillStateDatas _skillStateData;
 
-    [SerializeField] private Animator _animator;
+    private Animator _animator;
 
     private Creature _owner;
 
-    public Subject<Unit> OnSkillAnimationEndEvent { get; private set; } = new Subject<Unit>();
+    public Subject<(Define.SkillType currentSkillType, Define.SkillType prevSkillType, AnimStateInfo newStateInfo)> OnChangeSkillAnimState { get; private set; } = new Subject<(Define.SkillType currentSkillType, Define.SkillType prevSkillType, AnimStateInfo newStateInfo)>();
 
-    private Dictionary<Define.SkillType, SkillAnimStateBehaviour> _animStateBehaviours = new Dictionary<Define.SkillType, SkillAnimStateBehaviour>();
+    public Subject<AnimStateInfo> OnSkillAnimStateEnter { get; private set; } = new Subject<AnimStateInfo>();
+
+    public Subject<AnimStateInfo> OnSkillAnimStateUpdate { get; private set; } = new Subject<AnimStateInfo>();
+
+    public Subject<AnimStateInfo> OnSkillAnimStateExit { get; private set; } = new Subject<AnimStateInfo>();
+    
+    public Subject<Unit> OnSkillAnimationEndEvent { get; private set; } = new Subject<Unit>();
 
     public void Init(Creature owner)
     {
         _owner = owner;
+        _animator =  GetComponent<Animator>();
+
         _skillStateData.Init(owner);
 
         foreach (var item in _skillStateData.GetSkillSettingDataAll())
@@ -32,9 +40,7 @@ public class SkillEventHandler : MonoBehaviour
 
         var animStateBehaviours = _animator.GetBehaviours<SkillAnimStateBehaviour>();
         foreach (var item in animStateBehaviours)
-        {
-            _animStateBehaviours.Add(item.SkillType, item);
-        }
+            item.Init(this);
     }
 
     public SkillSettingData GetCurrentSkillSettingData()
@@ -64,21 +70,6 @@ public class SkillEventHandler : MonoBehaviour
     {
         Debug.Log($"On Skill End: caller {gameObject.name}");
         OnSkillAnimationEndEvent.OnNext(Unit.Default);
-    }
-
-    public void BindSkillAnimEventAll(IObservable<AnimStateInfo> observer)
-    {
-        //Observable.Merge()
-
-
-    }
-
-    public SkillAnimStateBehaviour GetSkillAnimObserver(Define.SkillType skillType)
-    {
-        if (_animStateBehaviours.TryGetValue(skillType, out var ret) == false)
-            return null;
-
-        return ret;
     }
 
     private int GetCurrentSkillID()

@@ -28,11 +28,9 @@ public abstract partial class Creature : MonoBehaviour
 
     [SerializeField] protected Define.CreatureState _state;
 
-    [SerializeField] protected SkillEventHandler _skillEvent;
+    [SerializeField] protected SkillEventHandler _skillEventHandler;
 
     protected ColliderEventHandler _colliderEvent;
-
-    protected SkillAnimStateBehaviour _animStateBehaviour;
 
     public void SetAnimation(string animationName, float duration = 0.1f, int layer = 0)
     {
@@ -51,8 +49,8 @@ public abstract partial class Creature : MonoBehaviour
         _model = await Managers.Resource.InstantiateAsync($"Creature/{creatureType}/{Info.PrefabName}", $"{Info.PrefabName}.prefab", transform);
         _anim = _model.GetComponent<Animator>();
         
-        _skillEvent = _model.GetOrAddComponent<SkillEventHandler>();
-        _skillEvent.Init(this);
+        _skillEventHandler = _model.GetOrAddComponent<SkillEventHandler>();
+        _skillEventHandler.Init(this);
 
         SetStat(templateID);
         _init = true;
