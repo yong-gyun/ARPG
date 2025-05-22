@@ -51,13 +51,22 @@ public partial class Hunter : Creature
         _control.height = collider.size.y;
         _control.radius = collider.size.x;
 
-        //_skillEvent.OnSkillAnimationEndEvent.Subscribe(_ =>
-        //{
-        //    if (_nextSkillType == Define.SkillType.None || _nextSkillType == _skillEvent.CurrentSkill)
-        //    {
-        //        ChangeState(Define.CreatureState.Idle);
-        //    }
-        //});
+        _skillEventHandler.OnSkillAnimStateEnter.Subscribe(info =>
+        {
+            if (_skillEventHandler.CurrentSkill != Define.SkillType.Combat_Attack_4 && _nextSkillType != Define.SkillType.None)
+                _skillEventHandler.CurrentSkill = _nextSkillType;
+
+            _animClipTime = info.stateInfo.length;
+            _anim.SetBool(RESERVE_NEXT_COMBAT_ATTACK_ANIM_KEY, false);
+        }).AddTo(this);
+
+        _skillEventHandler.OnSkillAnimationEndEvent.Subscribe(_ =>
+        {
+            if (IsNormalAttack(_skillEventHandler.CurrentSkill) == true)
+            {
+                ChangeState(Define.CreatureState.Idle);
+            }
+        });
 
         //_animStateBehaviour.OnStateEnterListener.Subscribe(info =>
         //{
@@ -182,6 +191,9 @@ public partial class Hunter : Creature
 
     protected override void UpdateSkill(float deltaTime)
     {
+        if (_skillEventHandler.CurrentSkill != Define.SkillType.Combat_Attack_4 && _skillEventHandler.CurrentSkill != _nextSkillType)
+            _anim.SetBool(RESERVE_NEXT_COMBAT_ATTACK_ANIM_KEY, true);
+
         //이벤트가 타이밍이 안맞아 종종 씹히는 현상이 있을 수 있으니 여기선 애니메이션 종료 되었는지 체크하는 방어 코드 추가
         if (_currentAnimClipTime <= 0f)
             return;
@@ -207,6 +219,7 @@ public partial class Hunter : Creature
                     _curDashTime = 0f;
                     _moveType = MoveType.Walk;
                     _skillEventHandler.CurrentSkill = Define.SkillType.None;
+                    _nextSkillType = Define.SkillType.None;
                     SetAnimation("Idle");
                 }
                 break;
@@ -228,7 +241,7 @@ public partial class Hunter : Creature
                 break;
             case Define.CreatureState.Skill:
                 {
-                    if (CheckNotNormalAttack(_skillEventHandler.CurrentSkill) == false || _skillEventHandler.CurrentSkill == Define.SkillType.Combat_Attack_1)
+                    if (IsNormalAttack(_skillEventHandler.CurrentSkill) == false || _skillEventHandler.CurrentSkill == Define.SkillType.Combat_Attack_1)
                     {
                         var skillSetting = _skillEventHandler.GetCurrentSkillSettingData();
                         SetAnimation(skillSetting.actionData.animName, 0f);

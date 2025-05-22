@@ -22,7 +22,7 @@ public partial class Hunter : Creature
             {
                 if (info.keyID == Define.KeyID.NormalAttack)
                 {
-                    if (_skillEventHandler.CurrentSkill == Define.SkillType.None || CheckNotNormalAttack(_skillEventHandler.CurrentSkill) == false)
+                    if (_skillEventHandler.CurrentSkill == Define.SkillType.None && IsNormalAttack(_skillEventHandler.CurrentSkill) == false)
                     {
                         //이전에 사용한 스킬이 기본 공격이 아니였으니 콤보 어택1로 설정
                         _skillEventHandler.CurrentSkill = Define.SkillType.Combat_Attack_1;
@@ -52,13 +52,8 @@ public partial class Hunter : Creature
                                     break;
                             }
 
-                            if (_skillEventHandler.CurrentSkill != Define.SkillType.Combat_Attack_4)
-                                _anim.SetBool(RESERVE_NEXT_COMBAT_ATTACK_ANIM_KEY, true);
-                            
                             Debug.Log($"Check2 {_nextSkillType}");
                         }
-
-                        _anim.SetBool(RESERVE_NEXT_COMBAT_ATTACK_ANIM_KEY, true);
                     }
                 }
                 else if (info.keyID == Define.KeyID.NormalSkill_1)
@@ -80,7 +75,7 @@ public partial class Hunter : Creature
         }).AddTo(this);
     }
 
-    private bool CheckNotNormalAttack(Define.SkillType skillType)
+    private bool IsNormalAttack(Define.SkillType skillType)
     {
         if (skillType == Define.SkillType.Combat_Attack_1 ||
             skillType == Define.SkillType.Combat_Attack_2 ||
