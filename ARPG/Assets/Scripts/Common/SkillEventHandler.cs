@@ -1,16 +1,20 @@
 using Common.Anim;
+using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UniRx;
+using UniRx.Triggers;
 using UnityEngine;
 
 public class SkillEventHandler : MonoBehaviour
 {
     public Define.SkillType CurrentSkill { get; set; }
 
-    [SerializeField] private SkillStateDatas _skillStateData;
+    private Dictionary<Define.SkillType, GameObject> _skillPoolDict = new Dictionary<Define.SkillType, GameObject>();
 
+    [SerializeField] private SkillStateDatas _skillStateData;
+        
     private Animator _animator;
 
     private Creature _owner;
@@ -50,22 +54,39 @@ public class SkillEventHandler : MonoBehaviour
 
     public async void SkillAction(int command)
     {
+        GameObject go = await GetSkillObject(CurrentSkill);
+        Effect effect = go.GetComponent<Effect>();
+        var skills = go.GetComponentsInChildren<Skill>().ToList();
+        var skillID = GetCurrentSkillID();
+
+        effect.Init(_owner);
+
+        foreach (var mit in skills)
+            mit.Init(_owner, skillID);
+
+        Debug.Log("Action Effect");
+        effect.PlayAction(command);
+    }
+
+    private async UniTask<GameObject> GetSkillObject(Define.SkillType skillType)
+    {
+        if (_skillPoolDict.TryGetValue(skillType, out var ret) == true)
+        {
+            if (ret != null)
+                return ret;
+        }
+
         SkillSettingData skillData = _skillStateData.GetSkillSettingData(CurrentSkill);
         if (skillData != null)
         {
             GameObject go = await skillData.CreateSkill(_owner);
-            Effect effect = go.GetComponent<Effect>();
-            var skills = go.GetComponentsInChildren<Skill>().ToList();
-            var skillID = GetCurrentSkillID();
+            _skillPoolDict[skillType] =  go;
 
-            foreach (var mit in skills)
-                mit.Init(_owner, skillID);
-
-            Debug.Log("Action Effect");
-            effect.PlayAction(command);
+            return go;
         }
-    }
 
+        return null;
+    }
     public void OnSkillAnimationEnd()
     {
         Debug.Log($"On Skill End: caller {gameObject.name}");

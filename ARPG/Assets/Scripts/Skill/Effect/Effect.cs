@@ -14,24 +14,36 @@ public class Effect : MonoBehaviour
 
     [SerializeField] private int _deactiveTime = 1000;    //n ms 후에 오브젝트 비활성화
 
+    private bool _activeEffect;
+
+    private int _destroyTime;
+
     public void Init(Creature owner)
     {
         foreach (var mit in _effects)
             mit.Init(owner);
     }
 
+    private async void Start()
+    {
+        await UniTask.Delay(_deactiveTime);
+        Managers.Resource.Destroy(gameObject);
+    }
+
     public async void PlayAction(int command)
     {
-        await UniTask.Delay(_activeTime);
+        try
+        {
+            await UniTask.Delay(_activeTime);
 
-        //Time.timeScale = 0.2f;
-        var activeEffects = _effects.FindAll(x => x.command == command).ToList();
-        foreach (var mit in activeEffects)
-            mit.PlayAction();
+            //Time.timeScale = 0.2f;
+            var activeEffects = _effects.FindAll(x => x.command == command).ToList();
+            foreach (var mit in activeEffects)
+                mit.PlayAction();
+        }
+        catch (Exception e)
+        {
 
-        await UniTask.Delay(_deactiveTime);
-        //Time.timeScale = 1f;
-
-        Managers.Resource.Destroy(gameObject);
+        }
     }
 }

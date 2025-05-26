@@ -14,6 +14,8 @@ public abstract partial class Creature : MonoBehaviour
 
     public Vector3 Dir { get { return _dir.normalized; } set { _dir = value; } }
     
+    public bool LockGravity { get; set; }
+
     public CreatureInfoScript Info { get; private set; }
 
     public bool IsInitialized { get { return _init; } }

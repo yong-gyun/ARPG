@@ -18,5 +18,5 @@ MonoBehaviour:
     actionType: 0
     skillObject: {fileID: 3540696110766487898, guid: 4a7667af3f716af41921fc4891454947, type: 3}
   _dir: 0
-  _offset: {x: 0, y: 0, z: 0}
+  _offset: {x: 0, y: 0.75, z: 0.3}
   _pos: {x: 0, y: 0, z: 0}

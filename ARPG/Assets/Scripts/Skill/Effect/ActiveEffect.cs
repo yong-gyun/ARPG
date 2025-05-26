@@ -15,6 +15,12 @@ public class ActiveEffect : BaseEffect
 
     public override void PlayAction()
     {
+        foreach (var obj in _activeObjects)
+            obj.SetActive(false);
+
+        foreach (var obj in _deactiveObjects)
+            obj.SetActive(false);
+
         ActiveObjects();
         DeactiveObjects();
     }

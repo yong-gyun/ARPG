@@ -35,7 +35,7 @@ public static partial class ExtendedHelper
 
     public async static UniTask<GameObject> CreateSkill(this SkillSettingData skillData, Creature creature)
     {
-        Vector3 dir = skillData.GetDir();
+        Vector3 dir = skillData.Dir;
         Vector3 pos = skillData.Pos;
         Vector3 dest = new Vector3(dir.x * pos.x, pos.y, dir.z * pos.z);
         dest += skillData.Offset + creature.transform.position;

@@ -42,4 +42,20 @@ public partial class Define
         BreakSkill = 9,         //∫Í∑π¿Ã≈© Ω∫≈≥
         UltSkill = 10,          //±√±ÿ±‚
     }
+
+    public enum DirType
+    {
+        None = -1,
+        Front,
+        Back,
+        Right,
+        Left,
+    }
+
+    public enum UpDirType
+    {
+        None,
+        Up,
+        Down
+    }
 }

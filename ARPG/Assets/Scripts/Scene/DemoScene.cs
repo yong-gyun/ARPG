@@ -8,6 +8,8 @@ using Data.Contents.LoaderForm;
 
 public class DemoScene : BaseScene
 {
+    [SerializeField] private float _timeScale = 1f;
+
     public override bool Init()
     {
         if (base.Init() == false)
@@ -16,6 +18,11 @@ public class DemoScene : BaseScene
         var handle = Addressables.InitializeAsync();
         handle.Completed += OnCompletedInitAddressables;
         return true;
+    }
+
+    private void Update()
+    {
+        Time.timeScale = _timeScale;
     }
 
     private void OnCompletedInitAddressables(AsyncOperationHandle<IResourceLocator> handle)
@@ -60,7 +67,7 @@ public class DemoScene : BaseScene
     {
         await Managers.Data.LoadAll();
         Managers.Data.Loaded = true;
-        Destroy(this);
+        //Destroy(this);
 
         gameObject.AddComponent<GameScene>();
         TestMonster tm = FindAnyObjectByType<TestMonster>();

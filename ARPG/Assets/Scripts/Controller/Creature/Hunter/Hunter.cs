@@ -64,41 +64,17 @@ public partial class Hunter : Creature
         {
             if (IsNormalAttack(_skillEventHandler.CurrentSkill) == true)
             {
+                _anim.SetBool(RESERVE_NEXT_COMBAT_ATTACK_ANIM_KEY, false);
                 ChangeState(Define.CreatureState.Idle);
             }
         });
-
-        //_animStateBehaviour.OnStateEnterListener.Subscribe(info =>
-        //{
-        //    if (_nextSkillType != Define.SkillType.None)
-        //    {
-        //        _nextSkillType = _skillEvent.CurrentSkill;
-        //    }
-
-        //    _currentAnimClipTime = 0f;
-        //    _animClipTime = info.stateInfo.length;
-        //}).AddTo(this);
-
-        //_animStateBehaviour.OnStateExitListener.Subscribe(info =>
-        //{
-        //    if (_nextSkillType == Define.SkillType.None || _skillEventHandler.CurrentSkill == _nextSkillType)
-        //    {
-        //        _nextSkillType = Define.SkillType.None;
-        //        _anim.SetBool(RESERVE_NEXT_COMBAT_ATTACK_ANIM_KEY, false);
-        //    }
-        //    else
-        //    {
-        //        _skillEventHandler.CurrentSkill = _nextSkillType;
-        //    }
-        //}).AddTo(this);
-
 
         _colliderEvent = _model.GetOrAddComponent<ColliderEventHandler>();
     }
 
     protected override void OnUpdate(float deltaTime)
     {
-        if (_control.isGrounded == false)
+        if (LockGravity == false && _control.isGrounded == false)
             _control.Move(Vector3.down * 9.8f * deltaTime);       
 
         Dir = _cameraControl.Forward * _vertical + _cameraControl.Right * _horizontal;
@@ -191,7 +167,7 @@ public partial class Hunter : Creature
 
     protected override void UpdateSkill(float deltaTime)
     {
-        if (_skillEventHandler.CurrentSkill != Define.SkillType.Combat_Attack_4 && _skillEventHandler.CurrentSkill != _nextSkillType)
+        if (_skillEventHandler.CurrentSkill != Define.SkillType.Combat_Attack_4 && _skillEventHandler.CurrentSkill != _nextSkillType && _nextSkillType != Define.SkillType.None)
             _anim.SetBool(RESERVE_NEXT_COMBAT_ATTACK_ANIM_KEY, true);
 
         //이벤트가 타이밍이 안맞아 종종 씹히는 현상이 있을 수 있으니 여기선 애니메이션 종료 되었는지 체크하는 방어 코드 추가
