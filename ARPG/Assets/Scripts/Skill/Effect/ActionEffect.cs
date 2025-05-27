@@ -10,7 +10,7 @@ public class ActionEffect : BaseEffect
 
     [Header("스케일 변경")]
     [SerializeField] private Vector3 _targetScale;
-    [SerializeField] private int _scaleDuration;
+    [SerializeField] private float _scaleDuration;
     [SerializeField] private int _scaleDelay;
     [SerializeField] private bool _scaleAction;
 
@@ -19,13 +19,13 @@ public class ActionEffect : BaseEffect
     [SerializeField] private Define.UpDirType _upDir;
     [SerializeField] private float _distance;
     [SerializeField] private float _upPower;
-    [SerializeField] private int _moveDuration;
+    [SerializeField] private float _moveDuration;
     [SerializeField] private int _moveDelay;
     [SerializeField] private bool _moveAction;
 
     [Header("로테이션 변경")]
     [SerializeField] private Vector3 _targetRot;
-    [SerializeField] private int _rotDuration;
+    [SerializeField] private float _rotDuration;
     [SerializeField] private int _rotDelay;
     [SerializeField] private bool _rotAction;
 
@@ -53,7 +53,7 @@ public class ActionEffect : BaseEffect
             var cc = target.GetComponent<CharacterController>();
 
             Vector3 dir = Vector3.zero;
-            if (_moveDir == Define.DirType.None)
+            if (_moveDir != Define.DirType.None)
                 dir += target.GetLocalDir(_moveDir);
 
             if (_upDir == Define.UpDirType.None)
@@ -65,7 +65,7 @@ public class ActionEffect : BaseEffect
             var upPower = _upPower / _moveDuration;
 
             var currentTime = 0f;
-            while (currentTime >= _moveDuration)
+            while (currentTime <= _moveDuration)
             {
                 Vector3 motion = new Vector3(dir.x * speed, dir.y * upPower, dir.z * speed);
                 cc.Move(motion * Time.deltaTime);

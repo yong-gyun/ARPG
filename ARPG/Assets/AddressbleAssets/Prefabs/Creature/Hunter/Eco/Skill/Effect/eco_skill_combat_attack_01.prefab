@@ -47,8 +47,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _effects:
-  - rid: 4889547215503097926
   - rid: 480752158226251860
+  - rid: 4889547215503097926
   _activeTime: 0
   _deactiveTime: 1000
   references:
@@ -64,8 +64,10 @@ MonoBehaviour:
         _scaleDelay: 0
         _scaleAction: 0
         _moveDir: 0
+        _upDir: 0
         _distance: 1.2
-        _moveDuration: 100
+        _upPower: 0
+        _moveDuration: 0.1
         _moveDelay: 100
         _moveAction: 1
         _targetRot: {x: 0, y: 0, z: 0}

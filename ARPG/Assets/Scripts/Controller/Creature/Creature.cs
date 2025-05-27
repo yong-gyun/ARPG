@@ -34,9 +34,9 @@ public abstract partial class Creature : MonoBehaviour
 
     protected ColliderEventHandler _colliderEvent;
 
-    public void SetAnimation(string animationName, float duration = 0.1f, int layer = 0)
+    public void SetAnimation(string animationName, float duration = 0.1f, int layer = 0, float normalizedTimeOffset = 0.1f)
     {
-        _anim.CrossFade(animationName, duration, layer);
+        _anim.CrossFade(animationName, duration, layer, normalizedTimeOffset);
         Debug.Log($"Set animation {animationName}");
     }
 

@@ -8,7 +8,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private Transform _target;
     [SerializeField] private Vector3 _offset = new Vector3(0f, 4f, -5.75f);
 
-    [SerializeField] private float _horizontalSensitive = 2.5f;
+    [SerializeField] private float _horizontalSensitive = 1.25f;
     [SerializeField] private float _verticalSensitive = 0.5f;
     [SerializeField] private float _smoothSpeed = 10f;
 
@@ -30,9 +30,8 @@ public class CameraController : MonoBehaviour
 
         _yaw += Input.GetAxis("Mouse X") * _horizontalSensitive;
         _pitch -= Input.GetAxis("Mouse Y") * _verticalSensitive;
-
         _pitch = Mathf.Clamp(_pitch, _minAngle, _maxAngle);
-
+        
         Quaternion rot = Quaternion.Euler(_pitch, _yaw, 0f);
         Vector3 offset = rot * new Vector3(0f, 0f, _offset.z); 
         Vector3 caculatedPos = _target.position + offset + Vector3.up * _offset.y;
@@ -49,6 +48,6 @@ public class CameraController : MonoBehaviour
         }
 
         transform.position = Vector3.Lerp(transform.position, destPos, _smoothSpeed * Time.deltaTime);
-        transform.LookAt(_target, Vector3.up);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rot, _smoothSpeed * Time.deltaTime);
     }
 }

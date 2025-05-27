@@ -48,7 +48,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _effects:
   - rid: 480752091413610579
+  - rid: 480752181060304962
   - rid: 480752091413610580
+  - rid: 480752181060304963
   _activeTime: 0
   _deactiveTime: 1000
   references:
@@ -62,8 +64,7 @@ MonoBehaviour:
         deactiveDelay: 0
         _activeObjects:
         - {fileID: 4489461707285878210}
-        _deactiveObjects:
-        - {fileID: 457137991074364884}
+        _deactiveObjects: []
     - rid: 480752091413610580
       type: {class: ActiveEffect, ns: , asm: Assembly-CSharp}
       data:
@@ -73,6 +74,46 @@ MonoBehaviour:
         _activeObjects:
         - {fileID: 457137991074364884}
         _deactiveObjects: []
+    - rid: 480752181060304962
+      type: {class: ActionEffect, ns: , asm: Assembly-CSharp}
+      data:
+        command: 0
+        _target: {fileID: 0}
+        _targetScale: {x: 0, y: 0, z: 0}
+        _scaleDuration: 0
+        _scaleDelay: 0
+        _scaleAction: 0
+        _moveDir: 0
+        _upDir: 0
+        _distance: 2
+        _upPower: 0
+        _moveDuration: 0.1
+        _moveDelay: 0
+        _moveAction: 1
+        _targetRot: {x: 0, y: 0, z: 0}
+        _rotDuration: 0
+        _rotDelay: 0
+        _rotAction: 0
+    - rid: 480752181060304963
+      type: {class: ActionEffect, ns: , asm: Assembly-CSharp}
+      data:
+        command: 1
+        _target: {fileID: 0}
+        _targetScale: {x: 0, y: 0, z: 0}
+        _scaleDuration: 0
+        _scaleDelay: 0
+        _scaleAction: 0
+        _moveDir: 0
+        _upDir: 0
+        _distance: 2
+        _upPower: 0
+        _moveDuration: 0.1
+        _moveDelay: 0
+        _moveAction: 1
+        _targetRot: {x: 0, y: 0, z: 0}
+        _rotDuration: 0
+        _rotDelay: 0
+        _rotAction: 0
 --- !u!1001 &6082343185476159648
 PrefabInstance:
   m_ObjectHideFlags: 0

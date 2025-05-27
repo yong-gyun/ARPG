@@ -18,6 +18,15 @@ public class Effect : MonoBehaviour
 
     private int _destroyTime;
 
+    private void Awake()
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            GameObject child = transform.GetChild(i).gameObject;
+            child.SetActive(false);
+        }
+    }
+
     public void Init(Creature owner)
     {
         foreach (var mit in _effects)
@@ -36,7 +45,6 @@ public class Effect : MonoBehaviour
         {
             await UniTask.Delay(_activeTime);
 
-            //Time.timeScale = 0.2f;
             var activeEffects = _effects.FindAll(x => x.command == command).ToList();
             foreach (var mit in activeEffects)
                 mit.PlayAction();

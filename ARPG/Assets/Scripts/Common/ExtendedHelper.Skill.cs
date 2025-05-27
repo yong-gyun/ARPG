@@ -47,7 +47,7 @@ public static partial class ExtendedHelper
         if (origin == null)
             return null;
 
-        GameObject go = Managers.Resource.Instantiate(origin, dest, rot);
+        GameObject go = Managers.Resource.Instantiate(origin, dest, rot, creature.transform);
         go.name = origin.name;
         return go;
     }

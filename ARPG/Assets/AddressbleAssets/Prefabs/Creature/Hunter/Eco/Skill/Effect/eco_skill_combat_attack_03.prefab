@@ -72,12 +72,12 @@ MonoBehaviour:
         _scaleDelay: 0
         _scaleAction: 0
         _moveDir: 0
-        _upDir: 0
+        _upDir: 1
         _distance: 1
-        _upPower: 1.5
-        _moveDuration: 200
+        _upPower: 3
+        _moveDuration: 0.2
         _moveDelay: 0
-        _moveAction: 0
+        _moveAction: 1
         _targetRot: {x: 0, y: 0, z: 0}
         _rotDuration: 0
         _rotDelay: 0
