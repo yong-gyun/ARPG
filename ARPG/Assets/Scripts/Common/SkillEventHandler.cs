@@ -11,6 +11,8 @@ public class SkillEventHandler : MonoBehaviour
 {
     public Define.SkillType CurrentSkill { get; set; }
 
+    public SkillStateDatas SkillStateData { get { return _skillStateData; } }
+
     private Dictionary<Define.SkillType, GameObject> _skillPoolDict = new Dictionary<Define.SkillType, GameObject>();
 
     [SerializeField] private SkillStateDatas _skillStateData;

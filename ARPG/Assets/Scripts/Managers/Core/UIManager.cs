@@ -90,6 +90,12 @@ public class UIManager
         _sceneUI = sceneUI;
     }
 
+    public void UnrgsiterSceneUI(UI_Scene sceneUI)
+    {
+        if (_sceneUI == sceneUI)
+            _sceneUI = null;
+    }
+
     public async UniTask<GameObject> GetPopupPrefab(Define.PopupType popupType)
     {
         GameObject prefab = await Managers.Resource.LoadGameObjectAsync("Popup", popupType.ToString());

@@ -4,6 +4,13 @@ using System;
 
 namespace Common.Skill
 {
+    public class SkillData
+    {
+        public int SkillID {  get; set; }
+        public float CurrentCooldown { get; set; }
+        public float Cooldown { get; set; }
+    }
+
     [Serializable]
     public struct SkillActionData
     {
@@ -31,6 +38,7 @@ public class SkillSettingData : ScriptableObject
     public Vector3 Dir { get { return _owner.gameObject.GetLocalDir(_dir); } }
 
     public Vector3 Offset { get { return _offset; } }
+
     public Vector3 Pos { get { return _pos; } }
     
     [SerializeField] private Define.DirType _dir;

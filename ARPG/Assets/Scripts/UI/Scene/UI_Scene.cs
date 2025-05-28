@@ -2,15 +2,13 @@ using UnityEngine;
 
 public class UI_Scene : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public virtual void Init()
     {
-        
+        Managers.UI.RegsiterSceneUI(this);
     }
 
-    // Update is called once per frame
-    void Update()
+    public virtual void Clear()
     {
-        
+        Managers.UI.UnregsiterSceneUI(this);
     }
 }

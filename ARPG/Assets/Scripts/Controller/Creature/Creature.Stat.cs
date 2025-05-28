@@ -4,7 +4,12 @@ using UnityEngine;
 public partial class Creature : MonoBehaviour
 {
     protected Dictionary<Define.StatType, float> Buffs { get; private set; } = new Dictionary<Define.StatType, float>();
+
+    
     public int Level { get; set; } = 1;
+    public virtual float MaxHp { get; set; }
+    public virtual float MaxMp { get; set; }
+
     public virtual float Hp { get { return _hp; } }
     public virtual float Mp { get { return _mp; } }
     public virtual float Atk { get { return _atk; } }

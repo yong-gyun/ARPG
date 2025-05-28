@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Common.State.Hunter;
 using Cysharp.Threading.Tasks;
-using Common.Input;
+using Common.Skill;
 
 namespace Common.State.Hunter
 {
@@ -19,6 +19,8 @@ namespace Common.State.Hunter
 
 public partial class Hunter : Creature
 {
+    public Dictionary<int, SkillData> SkillDatas { get; private set; } = new Dictionary<int, SkillData>();
+
     [SerializeField] private MoveType _moveType;
 
     private CharacterController _control;

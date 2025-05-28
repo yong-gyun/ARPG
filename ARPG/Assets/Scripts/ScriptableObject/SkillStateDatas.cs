@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Generic.Serialized;
 using System.Linq;
@@ -18,6 +19,15 @@ public class SkillStateDatas : ScriptableObject
     public SkillSettingData GetSkillSettingData(Define.SkillType skillType)
     {
         return _skillStateDict[skillType];
+    }
+
+    public Dictionary<Define.SkillType, SkillSettingData> GetSkillSettingPairDataAll()
+    {
+        Dictionary<Define.SkillType, SkillSettingData> ret = new Dictionary<Define.SkillType, SkillSettingData>();
+        foreach ((Define.SkillType, SkillSettingData) mit in _skillStateDict)
+            ret.Add(mit.Item1, mit.Item2);
+
+        return ret;
     }
 
     public List<SkillSettingData> GetSkillSettingDataAll()
