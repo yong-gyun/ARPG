@@ -17,7 +17,9 @@ public class ObjectManager
 
     private Transform _hunterRoot;
 
-    public HashSet<Hunter> Hunters { get; private set; } = new HashSet<Hunter>();
+    public Hunter Hunter { get; private set; }
+
+    public List<Creature> Monsters { get; private set; } = new List<Creature>();
 
     public async UniTask<Creature> Spawn(int templateID)
     {
@@ -28,6 +30,17 @@ public class ObjectManager
 
         Creature creature = go.GetOrAddComponent<Creature>();
         await creature.Init(templateID);
+
+        switch (creature.CreatureType)
+        {
+            case Define.CreatureType.Hunter:
+                Hunter = creature as Hunter;
+                break;
+            case Define.CreatureType.Monster:
+                Monsters.Add(creature);
+                break;
+        }
+
         return creature;
     }
 

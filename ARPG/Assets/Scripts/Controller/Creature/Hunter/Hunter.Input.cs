@@ -27,8 +27,6 @@ public partial class Hunter : Creature
                         //이전에 사용한 스킬이 기본 공격이 아니였으니 콤보 어택1로 설정
                         _skillEventHandler.CurrentSkill = Define.SkillType.Combat_Attack_1;
                         ChangeState(Define.CreatureState.Skill);
-
-                        Debug.Log("Check1");
                     }
                     else
                     {
@@ -51,8 +49,6 @@ public partial class Hunter : Creature
                                     _nextSkillType = Define.SkillType.None;  //Idle로 전환
                                     break;
                             }
-
-                            Debug.Log($"Check2 {_nextSkillType}");
                         }
                     }
                 }

@@ -8,9 +8,13 @@ public class UI_Skill : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     [SerializeField] private Image _skillIcon;
     [SerializeField] private Image _cooldownMask;
 
-    public void Init(int skillID)
+    public async void Init(int skillID)
     {
+        if (_skillIcon != null)
+            _skillIcon.sprite = await Managers.Resource.LoadSpriteAsync("Icon/Skill", $"Skill_{skillID}");
 
+        if (_detailUI != null)
+            _detailUI.Init(skillID);
     }
 
     public void SetCooldown(float time)

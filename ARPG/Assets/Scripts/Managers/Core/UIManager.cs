@@ -90,7 +90,7 @@ public class UIManager
         _sceneUI = sceneUI;
     }
 
-    public void UnrgsiterSceneUI(UI_Scene sceneUI)
+    public void UnregsiterSceneUI(UI_Scene sceneUI)
     {
         if (_sceneUI == sceneUI)
             _sceneUI = null;
