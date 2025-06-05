@@ -61,7 +61,7 @@ public class SkillEventHandler : MonoBehaviour
         var skills = go.GetComponentsInChildren<Skill>().ToList();
         var skillID = GetCurrentSkillID();
 
-        effect.Init(_owner);
+        effect.Init(_owner.gameObject);
 
         foreach (var mit in skills)
             mit.Init(_owner, skillID);
@@ -81,7 +81,7 @@ public class SkillEventHandler : MonoBehaviour
         SkillSettingData skillData = _skillStateData.GetSkillSettingData(CurrentSkill);
         if (skillData != null)
         {
-            GameObject go = await skillData.CreateSkill(_owner);
+            GameObject go = await skillData.CreateSkill(_owner.gameObject);
             _skillPoolDict[skillType] =  go;
 
             return go;

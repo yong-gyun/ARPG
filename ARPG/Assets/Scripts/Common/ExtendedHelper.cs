@@ -3,7 +3,6 @@ using Data.Contents;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.UI.GridLayoutGroup;
 
 public static partial class ExtendedHelper
 {

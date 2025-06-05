@@ -30,7 +30,10 @@ namespace Common.Skill
 [CreateAssetMenu(fileName = "Skill", menuName = "ScriptableObject/Skill", order = 0)]
 public class SkillSettingData : ScriptableObject
 {
-    private Creature _owner;
+    public GameObject Owner { get { return _owner; } }
+
+    private Creature _creature;
+    private GameObject _owner;
     private GameObject _skillObject;
 
     public SkillActionData actionData;
@@ -47,7 +50,15 @@ public class SkillSettingData : ScriptableObject
 
     public void Init(Creature creature)
     {
-        _owner = creature;
+        _creature = creature;
         _skillObject = actionData.skillObject;
+        if (_owner == null && _creature != null)
+            _owner = _creature.gameObject;
+    }
+
+    public void SetOwner(GameObject owner)
+    {
+        _owner = owner;
+        Init(null);
     }
 }

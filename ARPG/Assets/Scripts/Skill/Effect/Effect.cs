@@ -24,10 +24,11 @@ public class Effect : MonoBehaviour
         {
             GameObject child = transform.GetChild(i).gameObject;
             child.SetActive(false);
+            Debug.Log(child.name);
         }
     }
 
-    public void Init(Creature owner)
+    public void Init(GameObject owner)
     {
         foreach (var mit in _effects)
             mit.Init(owner);
@@ -47,7 +48,16 @@ public class Effect : MonoBehaviour
 
             var activeEffects = _effects.FindAll(x => x.command == command).ToList();
             foreach (var mit in activeEffects)
-                mit.PlayAction();
+            {
+                try
+                {
+                    mit.PlayAction();
+                }
+                catch(Exception e)
+                {
+                    Debug.LogError($"Effect Action Error {mit.GetType().Name}");   
+                }
+            }
         }
         catch (Exception e)
         {

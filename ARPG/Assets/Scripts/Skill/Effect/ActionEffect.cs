@@ -38,7 +38,7 @@ public class ActionEffect : BaseEffect
 
         if (_scaleAction == true)
             ScaleAction();
-        
+
         if (_rotAction == true)
             RotationAction();
     }
@@ -51,6 +51,8 @@ public class ActionEffect : BaseEffect
         {
             GameObject target = Owner.gameObject;
             var cc = target.GetComponent<CharacterController>();
+            if (cc == null)
+                return;
 
             Vector3 dir = Vector3.zero;
             if (_moveDir != Define.DirType.None)
