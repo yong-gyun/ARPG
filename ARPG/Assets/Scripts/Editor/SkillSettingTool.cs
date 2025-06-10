@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-
 public class SkillSettingTool : EditorWindow
 {
     public float AnimLength
@@ -63,6 +62,8 @@ public class SkillSettingTool : EditorWindow
 
     private bool _effectAction;
     private double _effectACtionTime;
+
+    private Vector3 _scrollviewPos;
 
     private List<Renderer> _rendererBuffer = new List<Renderer>();
 
@@ -146,12 +147,14 @@ public class SkillSettingTool : EditorWindow
             //프리뷰 및 옵션 설정
             EditorGUILayout.BeginHorizontal();
             {
-                EditorGUILayout.BeginVertical("box", GUILayout.Width(900), GUILayout.Height(500));
+                EditorGUILayout.BeginVertical("box", GUILayout.Width(300), GUILayout.Height(500));
                 {
                     DrawPreviewer(PREVIEW_WIDTH, PREVIEW_HEIGHT);
                     DrawEvents();
                 }
                 EditorGUILayout.EndVertical();
+
+                DrawHierachy();
             }
             EditorGUILayout.EndHorizontal();
 
@@ -161,6 +164,32 @@ public class SkillSettingTool : EditorWindow
                 AddAnimationEvent();
             }
             EditorGUILayout.EndHorizontal();
+        }
+        EditorGUILayout.EndVertical();
+    }
+
+    private void DrawHierachy()
+    {
+        EditorGUILayout.BeginVertical("box", GUILayout.Width(150), GUILayout.Height(510));
+        {
+            EditorGUILayout.BeginScrollView(_scrollviewPos, GUILayout.Width(900), GUILayout.Height(500));
+            {
+                
+            }
+            EditorGUILayout.EndScrollView();
+        }
+        EditorGUILayout.EndVertical();
+    }
+
+    private void DrawInspector()
+    {
+        EditorGUILayout.BeginVertical("box", GUILayout.Width(150), GUILayout.Height(510));
+        {
+            EditorGUILayout.BeginScrollView(_scrollviewPos, GUILayout.Width(900), GUILayout.Height(500));
+            {
+
+            }
+            EditorGUILayout.EndScrollView();
         }
         EditorGUILayout.EndVertical();
     }
