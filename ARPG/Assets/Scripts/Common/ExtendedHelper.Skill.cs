@@ -33,40 +33,40 @@ public static partial class ExtendedHelper
         return 0;
     }
 
-    public async static UniTask<GameObject> CreateSkill(this SkillSettingData skillData, GameObject owner)
-    {
-        Vector3 dir = skillData.Dir;
-        Vector3 pos = skillData.Pos;
-        Vector3 dest = new Vector3(dir.x * pos.x, pos.y, dir.z * pos.z);
-        dest += skillData.Offset + owner.transform.position;
+    //public async static UniTask<GameObject> CreateSkill(this SkillSettingData skillData, GameObject owner)
+    //{
+    //    Vector3 dir = skillData.Dir;
+    //    Vector3 pos = skillData.Pos;
+    //    Vector3 dest = new Vector3(dir.x * pos.x, pos.y, dir.z * pos.z);
+    //    dest += skillData.Offset + owner.transform.position;
 
-        Quaternion rot = Quaternion.LookRotation(new Vector3(dir.x, 0f, dir.z));
-        await UniTask.Delay(skillData.actionData.delay);
+    //    Quaternion rot = Quaternion.LookRotation(new Vector3(dir.x, 0f, dir.z));
+    //    await UniTask.Delay(skillData.actionData.delay);
 
-        var origin = skillData.actionData.skillObject;
-        if (origin == null)
-            return null;
+    //    var origin = skillData.actionData.skillObject;
+    //    if (origin == null)
+    //        return null;
         
-        GameObject go = Managers.Resource.Instantiate(origin, dest, rot, owner.transform);
-        go.name = origin.name;
-        return go;
-    }
+    //    GameObject go = Managers.Resource.Instantiate(origin, dest, rot, owner.transform);
+    //    go.name = origin.name;
+    //    return go;
+    //}
 
-    public static GameObject CreateSkillToEditor(this SkillSettingData skillData, GameObject owner)
-    {
-        Vector3 dir = skillData.Dir;
-        Vector3 pos = skillData.Pos;
-        Vector3 dest = new Vector3(dir.x * pos.x, pos.y, dir.z * pos.z);
-        dest += skillData.Offset + owner.transform.position;
+    //public static GameObject CreateSkillToEditor(this SkillSettingData skillData, GameObject owner)
+    //{
+    //    Vector3 dir = skillData.Dir;
+    //    Vector3 pos = skillData.Pos;
+    //    Vector3 dest = new Vector3(dir.x * pos.x, pos.y, dir.z * pos.z);
+    //    dest += skillData.Offset + owner.transform.position;
 
-        Quaternion rot = Quaternion.LookRotation(new Vector3(dir.x, 0f, dir.z));
+    //    Quaternion rot = Quaternion.LookRotation(new Vector3(dir.x, 0f, dir.z));
 
-        var origin = skillData.actionData.skillObject;
-        if (origin == null)
-            return null;
+    //    var origin = skillData.actionData.skillObject;
+    //    if (origin == null)
+    //        return null;
 
-        GameObject go = Object.Instantiate(origin, dest, rot, owner.transform);
-        go.name = origin.name;
-        return go;
-    }
+    //    GameObject go = Object.Instantiate(origin, dest, rot, owner.transform);
+    //    go.name = origin.name;
+    //    return go;
+    //}
 }

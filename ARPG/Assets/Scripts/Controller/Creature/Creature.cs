@@ -1,4 +1,3 @@
-using Common.Anim;
 using Cysharp.Threading.Tasks;
 using Data.Contents;
 using System;
@@ -30,7 +29,7 @@ public abstract partial class Creature : MonoBehaviour
 
     [SerializeField] protected Define.CreatureState _state;
 
-    [SerializeField] protected SkillEventHandler _skillEventHandler;
+    //[SerializeField] protected SkillEventHandler _skillEventHandler;
 
     protected ColliderEventHandler _colliderEvent;
 
@@ -51,8 +50,8 @@ public abstract partial class Creature : MonoBehaviour
         _model = await Managers.Resource.InstantiateAsync($"Creature/{creatureType}/{Info.PrefabName}", $"{Info.PrefabName}.prefab", transform);
         _anim = _model.GetComponent<Animator>();
         
-        _skillEventHandler = _model.GetOrAddComponent<SkillEventHandler>();
-        _skillEventHandler.Init(this);
+        //_skillEventHandler = _model.GetOrAddComponent<SkillEventHandler>();
+        //_skillEventHandler.Init(this);
 
         SetStat(templateID);
         _init = true;

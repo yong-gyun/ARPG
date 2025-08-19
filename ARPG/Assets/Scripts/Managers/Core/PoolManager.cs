@@ -98,6 +98,9 @@ public class PoolManager
 
     public GameObject Pop(GameObject origin, string key = "", bool checkRef = true)
     {
+        if (string.IsNullOrEmpty(key) == true)
+            key = origin.name;
+
         if (_pools.TryGetValue(key, out var pool) == false)
         {
             pool = new Pool(key, origin, checkRef);
