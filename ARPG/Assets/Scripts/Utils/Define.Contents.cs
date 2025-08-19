@@ -2,6 +2,7 @@ public partial class Define
 {
     public enum TargetType
     {
+        None,
         Me,         //나
         Monster,      //적들 (일반몹 + 보스)
         Boss,       //보스만

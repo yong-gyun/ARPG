@@ -12,7 +12,7 @@ public class ResourceManager
 
     public async UniTask<T> LoadAsync<T>(string dir, string key) where T : Object
     {
-        return await assetManager.LoadAsync<T>(dir, key);
+        return await assetManager.LoadAsync<T>(ZString.Concat(dir, "/", key));
     }
 
     public UniTask<GameObject> LoadGameObjectAsync(string dir, string key)
@@ -20,7 +20,7 @@ public class ResourceManager
         if (key.Contains(".prefab") == false)
             key = ZString.Concat(key, ".prefab");
 
-        return LoadAsync<GameObject>(Config.PREFAB_PATH, key);
+        return LoadAsync<GameObject>(ZString.Concat(Config.PREFAB_PATH, "/", dir), key);
     }
 
     public UniTask<Sprite> LoadSpriteAsync(string dir, string key)
@@ -28,7 +28,7 @@ public class ResourceManager
         if (key.Contains(".sprite") == false)
             key = ZString.Concat(key, ".sprite");
 
-        return LoadAsync<Sprite>(Config.SPRITE_PATH, key);
+        return LoadAsync<Sprite>(ZString.Concat(Config.SPRITE_PATH, "/", dir), key);
     }
 
     public UniTask<TextAsset> LoadJson(string dir, string key)
@@ -36,7 +36,7 @@ public class ResourceManager
         if (key.Contains(".json") == false)
             key = ZString.Concat(key, ".json");
 
-        return LoadAsync<TextAsset>(Config.DATA_PATH, key);
+        return LoadAsync<TextAsset>(ZString.Concat(Config.DATA_PATH, "/", dir), key);
     }
 
     public async UniTask<GameObject> InstantiateAsync(string dir, string key, Vector3 pos, Quaternion rot, Transform parent = null, bool pool = false)
@@ -74,7 +74,7 @@ public class ResourceManager
         {
             go.OnDestroyAsObservable().Subscribe(_ =>
             {
-                Release(Config.PREFAB_PATH, key);
+                Release(ZString.Concat(Config.PREFAB_PATH, "/", dir), key);
             });
         }
 
