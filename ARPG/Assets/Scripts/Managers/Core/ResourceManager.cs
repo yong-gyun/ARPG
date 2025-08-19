@@ -17,17 +17,26 @@ public class ResourceManager
 
     public UniTask<GameObject> LoadGameObjectAsync(string dir, string key)
     {
-        return LoadAsync<GameObject>(CheckDir(dir, "Prefabs"), CheckKey(key, ".prefab"));
+        if (key.Contains(".prefab") == false)
+            key = ZString.Concat(key, ".prefab");
+
+        return LoadAsync<GameObject>(Config.PREFAB_PATH, key);
     }
 
     public UniTask<Sprite> LoadSpriteAsync(string dir, string key)
     {
-        return LoadAsync<Sprite>(CheckDir(dir, "Sprites"), CheckKey(key, ".sprite"));
+        if (key.Contains(".sprite") == false)
+            key = ZString.Concat(key, ".sprite");
+
+        return LoadAsync<Sprite>(Config.SPRITE_PATH, key);
     }
 
     public UniTask<TextAsset> LoadJson(string dir, string key)
     {
-        return LoadAsync<TextAsset>(CheckDir(dir, "Data"), CheckKey(key, ".json"));
+        if (key.Contains(".json") == false)
+            key = ZString.Concat(key, ".json");
+
+        return LoadAsync<TextAsset>(Config.DATA_PATH, key);
     }
 
     public async UniTask<GameObject> InstantiateAsync(string dir, string key, Vector3 pos, Quaternion rot, Transform parent = null, bool pool = false)
@@ -43,6 +52,9 @@ public class ResourceManager
 
     public async UniTask<GameObject> InstantiateAsync(string dir, string key, Transform parent = null, bool pool = false)
     {
+        if (key.Contains(".prefab") == false)
+            key = ZString.Concat(key, ".prefab");
+
         GameObject prefab = await LoadGameObjectAsync(dir, key);
         if (prefab == null)
             return null;
@@ -50,7 +62,7 @@ public class ResourceManager
         GameObject go = null;
         if (pool == true)
         {
-            string path = ZString.Concat(CheckDir(dir, "Prefabs"), "/", CheckKey(key, ".prefab"));
+            string path = ZString.Concat(Config.PREFAB_PATH, "/", key);
             go = Managers.Pool.Pop(prefab, path);
         }
         else
@@ -62,7 +74,7 @@ public class ResourceManager
         {
             go.OnDestroyAsObservable().Subscribe(_ =>
             {
-                Release(CheckDir(dir, "Prefabs"), CheckKey(key, ".prefab"));
+                Release(Config.PREFAB_PATH, key);
             });
         }
 
@@ -109,24 +121,6 @@ public class ResourceManager
         {
             Object.Destroy(go, t);
         }
-    }
-
-    public string CheckKey(string key, string checkFormmat)
-    {
-        string result = key;
-        if (key.Contains(checkFormmat) == false)
-            result = ZString.Concat(key, checkFormmat);
-
-        return result;
-    }
-
-    public string CheckDir(string dir, string root)
-    {
-        string result = dir;
-        if (dir.Contains(root) == false)
-            result = ZString.Concat(root, "/", dir);
-
-        return result;
     }
 
     public void Release(string key, int releaseCount = 1, bool releaseImmediate = false)

@@ -23,112 +23,50 @@ namespace Data.Contents.LoaderForm
 
 public partial class DataManager
 {
+	public List<ConstValueScript> GetConstValueScripts { get; private set; }
 	public List<BaseStatScript> GetBaseStatScripts { get; private set; }
 	public List<HunterLevelStatScript> GetHunterLevelStatScripts { get; private set; }
 	public List<OverclockStatScript> GetOverclockStatScripts { get; private set; }
 	public List<CreatureInfoScript> GetCreatureInfoScripts { get; private set; }
 	public List<SkillLeveInfoScript> GetSkillLeveInfoScripts { get; private set; }
 	public List<SkillInfoScript> GetSkillInfoScripts { get; private set; }
-	public List<ConstValueScript> GetConstValueScripts { get; private set; }
 
 
     public async UniTask LoadAll()
     {
+		GetConstValueScripts = await Load<ConstValueScriptLoader, ConstValueScript>("Common", "ConstValue");
 		GetBaseStatScripts = await Load<BaseStatScriptLoader, BaseStatScript>("Stat", "BaseStat");
 		GetHunterLevelStatScripts = await Load<HunterLevelStatScriptLoader, HunterLevelStatScript>("Stat", "HunterLevelStat");
 		GetOverclockStatScripts = await Load<OverclockStatScriptLoader, OverclockStatScript>("Stat", "OverclockStat");
 		GetCreatureInfoScripts = await Load<CreatureInfoScriptLoader, CreatureInfoScript>("Creature", "CreatureInfo");
 		GetSkillLeveInfoScripts = await Load<SkillLeveInfoScriptLoader, SkillLeveInfoScript>("Creature", "SkillLeveInfo");
 		GetSkillInfoScripts = await Load<SkillInfoScriptLoader, SkillInfoScript>("Creature", "SkillInfo");
-		GetConstValueScripts = await Load<ConstValueScriptLoader, ConstValueScript>("Common", "ConstValue");
 
     }
 
 #if UNITY_EDITOR
     public void ConvertBinary()
     {
+		ConstValueScriptLoader.ConvertBinary();
 		BaseStatScriptLoader.ConvertBinary();
 		HunterLevelStatScriptLoader.ConvertBinary();
 		OverclockStatScriptLoader.ConvertBinary();
 		CreatureInfoScriptLoader.ConvertBinary();
 		SkillLeveInfoScriptLoader.ConvertBinary();
 		SkillInfoScriptLoader.ConvertBinary();
-		ConstValueScriptLoader.ConvertBinary();
 
     }
 #endif
 
     public void Clear()
     {
+		GetConstValueScripts.Clear();
 		GetBaseStatScripts.Clear();
 		GetHunterLevelStatScripts.Clear();
 		GetOverclockStatScripts.Clear();
 		GetCreatureInfoScripts.Clear();
 		GetSkillLeveInfoScripts.Clear();
 		GetSkillInfoScripts.Clear();
-		GetConstValueScripts.Clear();
 
-    }
-
-    public async UniTask<List<TItem>> Load<TLoader, TItem>(string dir, string key) where TLoader : ILoader<TItem>
-    {
-        List<TItem> result = null;
-#if UNITY_EDITOR == false || TEST_DOWNLOAD == true
-        try
-        {
-            TextAsset textAsset = await Managers.Resource.LoadByte(key);
-            using (MemoryStream stream = new MemoryStream(textAsset.bytes))
-            {
-                
-            }
-        }
-        catch (Exception e)
-        {
-            Debug.LogError($"Failed read {key}.byte");
-        }
-
-        result = null;
-#endif
-        try
-        {
-            if (result == null)
-            {
-                TextAsset textAsset = await Managers.Resource.LoadJson(dir, key);
-                result = JsonConvert.DeserializeObject<TLoader>("{ \"result\" : " + textAsset.text + "}").Read();
-                Debug.Log($"Load {key}.json");
-            }
-        }
-        catch (Exception e)
-        {
-            Debug.LogError($"Failed read {key}.json\n {e}");
-        }
-        finally
-        {
-            Managers.Resource.Release(Managers.Resource.CheckDir(dir, "Data"), key + ".json", 1, true);
-        }
-
-        return result;
-    }
-
-    public async UniTask<Dictionary<TKey, TValue>> Load<TLoader, TKey, TValue>(string dir, string key) where TLoader : ILoader<TKey, TValue>
-    {
-        try
-        {
-            TextAsset textAsset = await Managers.Resource.LoadJson(dir, key);
-            Dictionary<TKey, TValue> result = JsonConvert.DeserializeObject<TLoader>("{ \"result\" : " + textAsset.text + "}").MakeDict();
-
-            if (result != null)
-            {
-                Managers.Resource.Release(Managers.Resource.CheckDir(dir, "Data"), key, 1, true);
-                return result;
-            }
-
-        }
-        catch (Exception e)
-        {
-            Debug.LogError($"Failed read {key}.json");
-        }
-
-        return null;
     }
 }

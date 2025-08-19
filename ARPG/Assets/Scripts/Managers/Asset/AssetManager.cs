@@ -5,22 +5,17 @@ using Object = UnityEngine.Object;
 public class AssetManager
 {
     public const string DOWNLOAD_LABEL = "download";
-    public const string DIRECTORY_PATH = "Assets/AddressbleAssets";
+    
 
     private AssetPool _assetPool = new AssetPool();
 
     public UniTask<T> LoadAsync<T>(string dir, string asset) where T : Object
     {
-        return _assetPool.LoadAsync<T>(GetAssetPathFormatter(dir, asset));
-    }
-
-    public string GetAssetPathFormatter(string dir, string asset)
-    {
-        return ZString.Concat(DIRECTORY_PATH + "/" + dir + "/" + asset);
+        return _assetPool.LoadAsync<T>(ZString.Concat(Config.ASSET_PATH, "/", dir, "/", asset));
     }
 
     public void Release(string key, int releaseCount, bool releaseImmediate)
     {
-        _assetPool.Release(ZString.Concat(DIRECTORY_PATH, "/", key), releaseCount, releaseImmediate);
+        _assetPool.Release(ZString.Concat(Config.ASSET_PATH, "/", key), releaseCount, releaseImmediate);
     }
 }

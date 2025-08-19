@@ -43,7 +43,7 @@ public class SceneManagerEx
 
     public string GetScenePath(Define.SceneType sceneType)
     {
-        string path = ZString.Concat(AssetManager.DIRECTORY_PATH, "/", $"Scenes/{sceneType}.unity");
+        string path = ZString.Concat(Config.ASSET_PATH, "/", $"Scenes/{sceneType}.unity");
         return path;
     }
 }
