@@ -1,30 +1,19 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
 public class Effect : MonoBehaviour
 {
-    public List<BaseEffect> Effects = new List<BaseEffect>();
+    [SerializeReference, SubclassSelector] public List<BaseEffectEvent> Effects = new List<BaseEffectEvent>();
 
     public void UpdateTick(float tick)
     {
-        foreach (BaseEffect effect in Effects)
+        foreach (BaseEffectEvent effect in Effects)
         {
             if (effect.ActionTime >= tick)
                 effect.Action();
-        }
-    }
-}
-
-public class EffectInspector : Editor
-{
-    public override void OnInspectorGUI()
-    {
-        base.OnInspectorGUI();
-
-        if (GUILayout.Button("테스트 플레이"))
-        {
-
         }
     }
 }
