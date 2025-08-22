@@ -35,6 +35,8 @@ public class Managers : MonoBehaviour
     public static ObjectManager Object { get { return Instance._object; } }
     public static InputManager Input { get { return Instance._input; } }
     public static PoolManager Pool { get { return Instance._pool; } }
+    public static TimeManager Time { get { return Instance._time; } }
+
 
     private ResourceManager _resource = new ResourceManager();
     private SoundManager _sound = new SoundManager();
@@ -44,6 +46,7 @@ public class Managers : MonoBehaviour
     private ObjectManager _object = new ObjectManager();
     private InputManager _input = new InputManager();
     private PoolManager _pool = new PoolManager();
+    private TimeManager _time = new TimeManager();
 
     static void Init()
     {

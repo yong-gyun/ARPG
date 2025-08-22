@@ -27,14 +27,6 @@ public class ShowObject : BaseEffectEvent
     }
 }
 
-public class MoveObject : BaseEffectEvent
-{
-    public override void OnAction()
-    {
-        
-    }
-}
-
 public class PlaySfx : BaseEffectEvent
 {
     public override void OnAction()

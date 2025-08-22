@@ -437,6 +437,7 @@ GameObject:
   - component: {fileID: 1717910105}
   - component: {fileID: 1717910106}
   - component: {fileID: 1717910107}
+  - component: {fileID: 1717910108}
   m_Layer: 0
   m_Name: '@Scene'
   m_TagString: Untagged
@@ -491,6 +492,52 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
+--- !u!114 &1717910108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1717910104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2760c317b90e1c14c91b59a69298a554, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isMoveActive: 0
+  _isRotationActive: 0
+  _isScaleActive: 0
+  _moveEvent:
+    ActionTime: 0
+    _targetObject: {fileID: 0}
+    _duration: 0
+    _speed: 0
+    _useSpeed: 0
+    _easeType: 0
+    _loopType: 0
+    _loop: 0
+    _offset: {x: 0, y: 0, z: 0}
+  _rotationEvent:
+    ActionTime: 0
+    _targetObject: {fileID: 0}
+    _duration: 0
+    _speed: 0
+    _useSpeed: 0
+    _easeType: 0
+    _loopType: 0
+    _loop: 0
+    _rotateMode: 0
+    _rotation: {x: 0, y: 0, z: 0}
+  _scaleEvent:
+    ActionTime: 0
+    _targetObject: {fileID: 0}
+    _duration: 0
+    _speed: 0
+    _useSpeed: 0
+    _easeType: 0
+    _loopType: 0
+    _loop: 0
+    _scale: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
