@@ -5,65 +5,44 @@ using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
 
-public abstract partial class Creature : MonoBehaviour
+public abstract partial class Creature : BaseObject
 {
     public Define.CreatureState State { get { return _state; } }
 
     public Define.CreatureType CreatureType { get; set; }
 
-    public Vector3 Dir { get { return _dir.normalized; } set { _dir = value; } }
-    
-    public bool LockGravity { get; set; }
-
     public CreatureInfoScript Info { get; private set; }
-
-    public bool IsInitialized { get { return _init; } }
-    
-    protected Vector3 _dir;
-    
-    protected Animator _anim;
-
-    protected bool _init;
-
-    [SerializeField] protected GameObject _model;
 
     [SerializeField] protected Define.CreatureState _state;
 
     //[SerializeField] protected SkillEventHandler _skillEventHandler;
 
-    protected ColliderEventHandler _colliderEvent;
-
-    public void SetAnimation(string animationName, float duration = 0.1f, int layer = 0, float normalizedTimeOffset = 0.1f)
+    public override bool Initialized()
     {
-        _anim.CrossFade(animationName, duration, layer, normalizedTimeOffset);
-        Debug.Log($"Set animation {animationName}");
+        if (base.Initialized() == false)
+            return false;
+
+        return true;
     }
 
-    public virtual async UniTask Init(int templateID)
+    public Transform GetBone(HumanBodyBones humanBodyBonesType)
     {
-        if (_init == true)
-            return;
+        if (_anim == null)
+            return null;
 
-        Define.CreatureType creatureType = templateID.GetCreatureType();
-        Info = Managers.Data.GetCreatureInfoScripts.Find(info => info.TemplateID == templateID);
-        
-        _model = await Managers.Resource.InstantiateAsync($"Creature/{creatureType}/{Info.PrefabName}", $"{Info.PrefabName}.prefab", transform);
-        _anim = _model.GetComponent<Animator>();
-        
-        //_skillEventHandler = _model.GetOrAddComponent<SkillEventHandler>();
-        //_skillEventHandler.Init(this);
-
-        SetStat(templateID);
-        _init = true;
+        return _anim.GetBoneTransform(humanBodyBonesType);
     }
 
-    protected virtual void Update()
+    public override void SetInfo(int templateID)
     {
-        OnUpdate(Time.deltaTime);
+        base.SetInfo(templateID);
+        Define.CreatureType creatureType = TemplateID.GetCreatureType();
+        Info = Managers.Data.GetCreatureInfoScripts.Find(info => info.TemplateID == TemplateID);
     }
 
-    protected virtual void OnUpdate(float deltaTime)
+    protected override void OnUpdate(float deltaTime)
     {
+        base.OnUpdate(deltaTime);
         switch (State)
         {
             case Define.CreatureState.Idle:

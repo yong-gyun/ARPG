@@ -45,13 +45,17 @@ public partial class Hunter : Creature
         BindKeyInputEvent();
     }
 
-    public override async UniTask Init(int templateID)
+    public override bool Initialized()
     {
-        await base.Init(templateID);
+        if (base.Initialized() == false)
+            return false;
 
         BoxCollider collider = _model.GetComponent<BoxCollider>();
         _control.height = collider.size.y;
         _control.radius = collider.size.x;
+
+        //_skillEventHandler = _model.GetOrAddComponent<SkillEventHandler>();
+        //_skillEventHandler.Init(this);
 
         //_skillEventHandler.OnSkillAnimStateEnter.Subscribe(info =>
         //{
@@ -71,7 +75,16 @@ public partial class Hunter : Creature
         //    }
         //});
 
-        _colliderEvent = _model.GetOrAddComponent<ColliderEventHandler>();
+        return true;
+    }
+
+    public override async UniTask SetObject()
+    {
+        _model = await Managers.Resource.InstantiateAsync($"Creature/{CreatureType}/{Info.PrefabName}", $"{Info.PrefabName}.prefab");
+        _model.transform.SetParent(transform, false);
+        _model.transform.Initialized();
+
+        _anim = _model.GetComponent<Animator>();
     }
 
     protected override void OnUpdate(float deltaTime)

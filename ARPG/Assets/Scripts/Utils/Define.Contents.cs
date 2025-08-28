@@ -1,14 +1,5 @@
 public partial class Define
 {
-    public enum TargetType
-    {
-        None,
-        Me,         //나
-        Monster,      //적들 (일반몹 + 보스)
-        Boss,       //보스만
-        Player,     //전체 플레이어
-    }
-
     public enum ConstDefType
     {
         RunSpeed = 1,           //이동속도 * 달리기 속도      
@@ -56,15 +47,6 @@ public partial class Define
         CriticalPercent,    //크리티컬 확률
         CriticalDamage,     //크리티컬 대미지
         Penetration,        //방어력 관통
-    }
-
-    public enum EffectType
-    {
-        Damage,
-        Damage_Fixed,
-        Dot,
-        Buff,
-        Debuff,
     }
 
     public enum DamageType

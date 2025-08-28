@@ -60,35 +60,8 @@ public static partial class ExtendedHelper
         return new DamageResultInfo(damage, isCritical);
     }
 
-    public static bool IsTarget(this Creature target, Creature my, Define.TargetType targetType)
+    public static bool IsMatchedObjectType(this BaseObject baseObject, Define.ObjectType objectType)
     {
-        switch (targetType)
-        {
-            case Define.TargetType.Me:
-                {
-                    if (my == target)
-                        return true;
-                }
-                break;
-            case Define.TargetType.Monster:
-                {
-                    if (target.CreatureType == Define.CreatureType.Monster || target.CreatureType == Define.CreatureType.Boss)
-                        return true;
-                }
-                break;
-            case Define.TargetType.Boss:
-                {
-                    if (target.CreatureType == Define.CreatureType.Boss)
-                        return true;
-                }
-                break;
-            case Define.TargetType.Player:
-                {
-                    if (target.CreatureType == Define.CreatureType.Hunter)
-                        return true;
-                }
-                break;
-        }
 
         return false;
     }

@@ -58,4 +58,38 @@ public partial class Define
         Up,
         Down
     }
+    public enum ObjectType
+    {
+        None,           //아무것도 없음
+        GameObject,     //모든 오브젝트
+        Creature,       //생명체
+        Effect,         //이펙트
+    }
+
+    public enum EffectType
+    {
+        Damage,
+        Damage_Fixed,
+        Dot,
+        Buff,
+        Debuff,
+    }
+
+    public enum EffectRigType
+    {
+        OwnerBone,
+        OwnerLink,
+        Owner,
+        TargetBone,
+        TargetLink,
+        Target,
+        Position,
+    }
+
+    public enum EventActionType
+    {
+        Enter,
+        Update,
+        Exit
+    }
 }

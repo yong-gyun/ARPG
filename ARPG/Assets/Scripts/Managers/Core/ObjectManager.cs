@@ -29,18 +29,22 @@ public class ObjectManager
             return null;
 
         Creature creature = go.GetOrAddComponent<Creature>();
-        await creature.Init(templateID);
+        creature.SetInfo(templateID);
+        creature.SetStat(templateID);
+        await creature.SetObject();
+        creature.Initialized();
 
         switch (creature.CreatureType)
         {
             case Define.CreatureType.Hunter:
-                Hunter = creature as Hunter;
+                    Hunter = creature as Hunter;
                 break;
             case Define.CreatureType.Monster:
                 Monsters.Add(creature);
                 break;
         }
 
+        creature.Initialized();
         return creature;
     }
 

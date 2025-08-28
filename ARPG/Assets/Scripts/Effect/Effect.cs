@@ -1,34 +1,33 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
-public class Effect : MonoBehaviour
+public partial class Effect : MonoBehaviour
 {
-    [SerializeReference, SubclassSelector] public List<BaseEffectEvent> Effects = new List<BaseEffectEvent>();
+    public Creature Owner { get; set; }
+    public Creature Target { get; set; }
 
-    public void Initialized(Creature owner)
+    public List<EffectRig> externalRigs = new List<EffectRig>();
+
+
+
+    private void OnEnable()
     {
-        EffectAnimStateHandler handler = owner.GetComponent<EffectAnimStateHandler>();
-        handler.Initialized(OnEnter, OnUpdate, OnExit);
+        
     }
 
-    public void OnEnter()
+    private void OnDestroy()
+    {
+        Clear();
+    }
+
+    public void Initialized()
     {
 
     }
 
-    public void OnUpdate(float tick)
+    public void Clear()
     {
-        foreach (BaseEffectEvent effect in Effects)
-        {
-            if (effect.ActionTime >= tick)
-                effect.Action();
-        }
-    }
-
-    public void OnExit()
-    {
-
+        for (int i = 0; i < externalRigs.Count; i++)
+            Destroy(externalRigs[i]);
     }
 }

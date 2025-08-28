@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class Creature : MonoBehaviour
+public partial class Creature : BaseObject
 {
     protected Dictionary<Define.StatType, float> Buffs { get; private set; } = new Dictionary<Define.StatType, float>();
 
