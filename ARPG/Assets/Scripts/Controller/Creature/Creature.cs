@@ -1,7 +1,7 @@
-using Cysharp.Threading.Tasks;
-using Data.Contents;
 using System;
 using System.Collections.Generic;
+using Data.Contents;
+using Cysharp.Threading.Tasks;
 using UniRx;
 using UnityEngine;
 
@@ -13,9 +13,13 @@ public abstract partial class Creature : BaseObject
 
     public CreatureInfoScript Info { get; private set; }
 
-    [SerializeField] protected Define.CreatureState _state;
+    public bool LockGravity { get; set; }
 
-    //[SerializeField] protected SkillEventHandler _skillEventHandler;
+    public bool IsInitialized { get { return _init; } }
+
+    protected Define.CreatureState _state;
+    protected Animator _anim;
+    protected GameObject _model;
 
     public override bool Initialized()
     {
@@ -38,6 +42,21 @@ public abstract partial class Creature : BaseObject
         base.SetInfo(templateID);
         Define.CreatureType creatureType = TemplateID.GetCreatureType();
         Info = Managers.Data.GetCreatureInfoScripts.Find(info => info.TemplateID == TemplateID);
+    }
+
+    public void SetAnimation(string animationName, float duration = 0.1f, int layer = 0, float normalizedTimeOffset = 0.1f)
+    {
+        _anim.CrossFade(animationName, duration, layer, normalizedTimeOffset);
+        Debug.Log($"Set animation {animationName}");
+    }
+
+    public virtual async UniTask SetObject()
+    {
+        _model = await Managers.Resource.InstantiateAsync($"Creature/{CreatureType}/{Info.PrefabName}", $"{Info.PrefabName}.prefab");
+        _model.transform.SetParent(transform, false);
+        _model.transform.Initialized();
+
+        _anim = _model.GetComponent<Animator>();
     }
 
     protected override void OnUpdate(float deltaTime)

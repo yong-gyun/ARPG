@@ -88,8 +88,16 @@ public partial class Define
 
     public enum EventActionType
     {
-        Enter,
-        Update,
-        Exit
+        None,
+        SetAnimation,
+        Collision,
+        CollisionHeal,
+        CollisionDamage,
+        CollisionBuff,
+        CollisionDebuff,
+        Position,
+        InputAction,
+        Effect,
+        Max
     }
 }

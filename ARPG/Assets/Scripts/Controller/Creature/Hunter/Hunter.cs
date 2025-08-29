@@ -19,30 +19,18 @@ namespace Common.State.Hunter
 
 public partial class Hunter : Creature
 {
-    //public Dictionary<int, SkillData> SkillDatas { get; private set; } = new Dictionary<int, SkillData>();
-
     [SerializeField] private MoveType _moveType;
 
-    private CharacterController _control;
+    private CharacterController _controller;
     private CameraController _cameraControl;
-
-    private bool _actionFlag;
 
     private Vector3 _lockDir;
     [SerializeField] private float _curDashTime = 0f;
-    private bool _isReservedNextAttack;
-    private float _animClipTime = 0f;
-    private float _currentAnimClipTime = 0f;
-
-    private const string RESERVE_NEXT_COMBAT_ATTACK_ANIM_KEY = "ReserveNextCombatAttack";
-
+    
     private void Awake()
     {
         _cameraControl = (Managers.Scene.CurrentScene as GameScene).GetCameraController;
-        _control = GetComponent<CharacterController>();
-
-        BindMouseInputEvent();
-        BindKeyInputEvent();
+        _controller = GetComponent<CharacterController>();
     }
 
     public override bool Initialized()
@@ -51,46 +39,15 @@ public partial class Hunter : Creature
             return false;
 
         BoxCollider collider = _model.GetComponent<BoxCollider>();
-        _control.height = collider.size.y;
-        _control.radius = collider.size.x;
-
-        //_skillEventHandler = _model.GetOrAddComponent<SkillEventHandler>();
-        //_skillEventHandler.Init(this);
-
-        //_skillEventHandler.OnSkillAnimStateEnter.Subscribe(info =>
-        //{
-        //    if (_skillEventHandler.CurrentSkill != Define.SkillType.Combat_Attack_4 && _nextSkillType != Define.SkillType.None)
-        //        _skillEventHandler.CurrentSkill = _nextSkillType;
-
-        //    _animClipTime = info.stateInfo.length;
-        //    _anim.SetBool(RESERVE_NEXT_COMBAT_ATTACK_ANIM_KEY, false);
-        //}).AddTo(this);
-
-        //_skillEventHandler.OnSkillAnimationEndEvent.Subscribe(_ =>
-        //{
-        //    if (IsNormalAttack(_skillEventHandler.CurrentSkill) == true)
-        //    {
-        //        _anim.SetBool(RESERVE_NEXT_COMBAT_ATTACK_ANIM_KEY, false);
-        //        ChangeState(Define.CreatureState.Idle);
-        //    }
-        //});
-
+        _controller.height = collider.size.y;
+        _controller.radius = collider.size.x;
         return true;
-    }
-
-    public override async UniTask SetObject()
-    {
-        _model = await Managers.Resource.InstantiateAsync($"Creature/{CreatureType}/{Info.PrefabName}", $"{Info.PrefabName}.prefab");
-        _model.transform.SetParent(transform, false);
-        _model.transform.Initialized();
-
-        _anim = _model.GetComponent<Animator>();
     }
 
     protected override void OnUpdate(float deltaTime)
     {
-        if (LockGravity == false && _control.isGrounded == false)
-            _control.Move(Vector3.down * 9.8f * deltaTime);       
+        if (LockGravity == false && _controller.isGrounded == false)
+            _controller.Move(Vector3.down * 9.8f * deltaTime);       
 
         Dir = _cameraControl.Forward * _vertical + _cameraControl.Right * _horizontal;
         base.OnUpdate(deltaTime);
@@ -155,10 +112,10 @@ public partial class Hunter : Creature
         switch (_moveType)
         {
             case MoveType.Walk:
-                _control.Move(Dir * Speed * deltaTime);
+                _controller.Move(Dir * Speed * deltaTime);
                 break;
             case MoveType.Run:
-                _control.Move(Dir * RunSpeed * deltaTime);
+                _controller.Move(Dir * RunSpeed * deltaTime);
                 break;
             case MoveType.Dash:
                 {
@@ -169,7 +126,7 @@ public partial class Hunter : Creature
                         return;
                     }
 
-                    _control.Move(_lockDir.normalized * DashSpeed * deltaTime);
+                    _controller.Move(_lockDir.normalized * DashSpeed * deltaTime);
                 }
                 break;
         }
@@ -182,23 +139,7 @@ public partial class Hunter : Creature
 
     protected override void UpdateSkill(float deltaTime)
     {
-        //if (_skillEventHandler.CurrentSkill != Define.SkillType.Combat_Attack_4 && _skillEventHandler.CurrentSkill != _nextSkillType && _nextSkillType != Define.SkillType.None)
-        //    _anim.SetBool(RESERVE_NEXT_COMBAT_ATTACK_ANIM_KEY, true);
-
-        ////이벤트가 타이밍이 안맞아 종종 씹히는 현상이 있을 수 있으니 여기선 애니메이션 종료 되었는지 체크하는 방어 코드 추가
-        //if (_currentAnimClipTime <= 0f)
-        //    return;
-
-        //_currentAnimClipTime += deltaTime;
-        //if (_currentAnimClipTime >= _animClipTime - 0.05f)
-        //{
-        //    if (_nextSkillType == Define.SkillType.None)
-        //    {
-        //        _currentAnimClipTime = 0f;
-        //        _anim.SetBool(RESERVE_NEXT_COMBAT_ATTACK_ANIM_KEY, false);
-        //        ChangeState(Define.CreatureState.Idle);
-        //    }
-        //}
+        
     }
 
     public override void ChangeState(Define.CreatureState state)
@@ -209,8 +150,6 @@ public partial class Hunter : Creature
                 {
                     _curDashTime = 0f;
                     _moveType = MoveType.Walk;
-                    //_skillEventHandler.CurrentSkill = Define.SkillType.None;
-                    //_nextSkillType = Define.SkillType.None;
                     SetAnimation("Idle");
                 }
                 break;
@@ -232,11 +171,7 @@ public partial class Hunter : Creature
                 break;
             case Define.CreatureState.Skill:
                 {
-                    //if (IsNormalAttack(_skillEventHandler.CurrentSkill) == false || _skillEventHandler.CurrentSkill == Define.SkillType.Combat_Attack_1)
-                    //{
-                    //    var skillSetting = _skillEventHandler.GetCurrentSkillSettingData();
-                    //    SetAnimation(skillSetting.actionData.animName, 0f);
-                    //}
+
                 }
                 break;
             case Define.CreatureState.Hit:

@@ -7,9 +7,9 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class StartScene : BaseScene
 {
-    public override bool Init()
+    public override bool Initialized()
     {
-        if (base.Init() == false)
+        if (base.Initialized() == false)
             return false;
 
         var handle = Addressables.InitializeAsync();

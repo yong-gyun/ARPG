@@ -1,3 +1,4 @@
+using System.Diagnostics.Contracts;
 using UnityEngine;
 
 public class EffectRig : MonoBehaviour
@@ -12,6 +13,7 @@ public class EffectRig : MonoBehaviour
 
     [SerializeField] private float _offset;
     [SerializeField] private float _height;
+    private float _elapsed;
 
     public Transform TargetTranform
     {
@@ -75,5 +77,12 @@ public class EffectRig : MonoBehaviour
                 }
                 break;
         }
+    }
+
+    public void OnUpdate(float deltaTime)
+    {
+        _elapsed += deltaTime;
+        if (EffectRigType != Define.EffectRigType.OwnerLink && EffectRigType != Define.EffectRigType.TargetLink)
+            return;
     }
 }

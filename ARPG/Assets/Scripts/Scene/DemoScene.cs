@@ -10,9 +10,9 @@ public class DemoScene : BaseScene
 {
     [SerializeField] private float _timeScale = 1f;
 
-    public override bool Init()
+    public override bool Initialized()
     {
-        if (base.Init() == false)
+        if (base.Initialized() == false)
             return false;
 
         var handle = Addressables.InitializeAsync();

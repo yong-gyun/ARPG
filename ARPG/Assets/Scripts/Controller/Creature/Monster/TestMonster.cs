@@ -33,9 +33,4 @@ public class TestMonster : Creature
     {
 
     }
-
-    public override async UniTask SetObject()
-    {
-        
-    }
 }

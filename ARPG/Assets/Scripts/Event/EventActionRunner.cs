@@ -1,17 +1,31 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using static Define;
 
 public class EventActionRunner
 {
-    public float Elapsed { get { return _elapsed; } }
+    private OnEventAction[] _actions = new OnEventAction[(int)Define.EventActionType.Max];
 
-    [SerializeField] private List<BaseEventAction> _eventActions = new List<BaseEventAction>();
-    private BaseObject _owner;
+    public delegate void OnEventAction(EventAction evt);
 
-    private float _elapsed = 0f;
-
-    public void SetOwner(BaseObject owner)
+    public void AddEventAction(Define.EventActionType eventType, OnEventAction eventAction)
     {
-        owner = _owner;
+        if (eventType == Define.EventActionType.None)
+            return;
+
+        _actions[(int)eventType] = eventAction;
+    }
+
+    public OnEventAction GetAction(EventActionType type)
+    {
+        OnEventAction action = _actions[(int)type];
+
+        return action;
+    }
+
+    public void Action(EventAction evtAction)
+    {
+        _actions[(int)evtAction.Type].Invoke(evtAction);
     }
 }

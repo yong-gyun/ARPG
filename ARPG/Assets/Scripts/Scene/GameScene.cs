@@ -7,9 +7,9 @@ public class GameScene : BaseScene
     [SerializeField] private CameraController _cameraController;
 
 
-    public override bool Init()
+    public override bool Initialized()
     {
-        if (base.Init() == false)
+        if (base.Initialized() == false)
             return false;
 
         _cameraController = GameObject.FindObjectOfType<CameraController>();

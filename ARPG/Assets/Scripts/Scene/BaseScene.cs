@@ -1,13 +1,15 @@
 using UnityEngine;
 
-public class BaseScene : InitBase
+public class BaseScene : MonoBehaviour
 {
     public Define.SceneType SceneType { get { return _sceneType; } }
     [SerializeField] protected Define.SceneType _sceneType;
 
-    public override bool Init()
+    protected bool _initialized = false;
+
+    public virtual bool Initialized()
     {
-        if (base.Init() == false)
+        if (_initialized == true)
             return false;
 
         Managers.Scene.RegisterCurrentScene(this);

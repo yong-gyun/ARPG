@@ -31,13 +31,17 @@ public class ObjectManager
         Creature creature = go.GetOrAddComponent<Creature>();
         creature.SetInfo(templateID);
         creature.SetStat(templateID);
-        await creature.SetObject();
+
+        IObject obj = creature.GetComponent<IObject>();
+        if (obj != null) 
+            await creature.SetObject();
+        
         creature.Initialized();
 
         switch (creature.CreatureType)
         {
             case Define.CreatureType.Hunter:
-                    Hunter = creature as Hunter;
+                Hunter = creature as Hunter;
                 break;
             case Define.CreatureType.Monster:
                 Monsters.Add(creature);

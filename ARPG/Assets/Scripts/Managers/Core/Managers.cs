@@ -33,7 +33,6 @@ public class Managers : MonoBehaviour
     public static SceneManagerEx Scene { get { return Instance._scene; } }
     public static UIManager UI { get { return Instance._ui; } }
     public static ObjectManager Object { get { return Instance._object; } }
-    public static InputManager Input { get { return Instance._input; } }
     public static PoolManager Pool { get { return Instance._pool; } }
     public static TimeManager Time { get { return Instance._time; } }
 
@@ -44,13 +43,11 @@ public class Managers : MonoBehaviour
     private SceneManagerEx _scene = new SceneManagerEx();
     private UIManager _ui = new UIManager();
     private ObjectManager _object = new ObjectManager();
-    private InputManager _input = new InputManager();
     private PoolManager _pool = new PoolManager();
     private TimeManager _time = new TimeManager();
 
     static void Init()
     {
-        s_instance._input.Init();
         _init = true;
     }
 
@@ -58,12 +55,10 @@ public class Managers : MonoBehaviour
     {
         if (OnInitialized == false)
             return;
-
-        _input.OnUpdate();
     }
 
     private void OnApplicationQuit()
     {
-        _input.SaveData();
+
     }
 }
