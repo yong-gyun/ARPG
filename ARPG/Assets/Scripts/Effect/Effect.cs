@@ -16,7 +16,7 @@ public partial class Effect : BaseObject
 
     private List<EffectAnimator> _animators = new List<EffectAnimator>();
 
-    private EventActionBehaviour _behaviour;
+    public EventActionBehaviour behaviour = new EventActionBehaviour();
 
     [SerializeField] private float _length;
     
@@ -39,7 +39,7 @@ public partial class Effect : BaseObject
         foreach(EffectAnimator animator in _animators) 
             animator.OnUpdate(deltaTime);
 
-        _behaviour.OnUpdate(Elapsed, _runner);
+        behaviour.OnUpdate(Elapsed, _runner);
     }
 
     public void Collect()

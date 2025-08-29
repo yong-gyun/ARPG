@@ -14,8 +14,6 @@ public partial class Effect : BaseObject
         _runner.AddEventAction(Define.EventActionType.Position, OnEventPosition);
         _runner.AddEventAction(Define.EventActionType.InputAction, OnEventInputAction);
         _runner.AddEventAction(Define.EventActionType.Effect, OnEventEffect);
-
-        _behaviour = new EventActionBehaviour();
     }
 
     #region Event Collision Methods

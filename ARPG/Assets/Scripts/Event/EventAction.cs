@@ -1,15 +1,12 @@
 using UnityEngine;
 
-public abstract class EventAction
+public partial class EventAction
 {
     //이벤트들 정의
-    public Define.EventActionType Type { get { return _type; } }
+    public Define.EventActionType Type { get; set; }
+    public float Time { get; set; }
     public BaseObject Owner { get; set; }
     public BaseObject Target { get; set; }
-    public float Time { get { return _time; } }
-
-    [SerializeField] private Define.EventActionType _type;
-    [SerializeField] protected float _time;
 
     public int[] ints = null;
     public float[] floats = null;
