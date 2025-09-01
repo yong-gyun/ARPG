@@ -11,12 +11,15 @@ public abstract class BaseObject : MonoBehaviour
     public Define.ObjectType ObjcetType { get { return _objectType; } }
     public Vector3 Dir { get { return _dir.normalized; } set { _dir = value; } }
     public EventActionRunner Runner { get { return _runner; } }
+    public BoundObject Bound { get { return _bound; } }
     public int TemplateID { get; protected set; }
     public float Elapsed { get { return _elapsed; } }
 
     [SerializeField] protected Define.ObjectType _objectType;
     
     [SerializeField] protected Vector3 _dir;
+
+    [SerializeField] protected BoundObject _bound;
 
     protected float _elapsed = 0f;
     protected bool _init;

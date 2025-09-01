@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using static Define;
 
 public class EventActionRunner
 {
@@ -14,18 +13,25 @@ public class EventActionRunner
         if (eventType == Define.EventActionType.None)
             return;
 
-        _actions[(int)eventType] = eventAction;
+        _actions[(int)eventType] += eventAction;
     }
 
-    public OnEventAction GetAction(EventActionType type)
+    public OnEventAction GetAction(Define.EventActionType type)
     {
-        OnEventAction action = _actions[(int)type];
-
-        return action;
+        return _actions[(int)type];
     }
 
     public void Action(EventAction evtAction)
     {
         _actions[(int)evtAction.Type].Invoke(evtAction);
+    }
+
+    public void Clear()
+    {
+        for (int i = 0; i < _actions.Length; i++)
+        {
+            var item = _actions[i];
+            _actions[i] = null;
+        }
     }
 }

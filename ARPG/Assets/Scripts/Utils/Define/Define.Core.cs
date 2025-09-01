@@ -90,14 +90,22 @@ public partial class Define
     {
         None,
         SetAnimation,
-        Collision,
-        CollisionHeal,
-        CollisionDamage,
-        CollisionBuff,
-        CollisionDebuff,
+        Bound,
+        BoundHeal,
+        BoundDamage,
+        BoundBuff,
+        BoundDebuff,
         Position,
         InputAction,
         Effect,
         Max
+    }
+
+    public enum BoundObjectType
+    {
+        None,
+        Box,
+        Sphere,
+        Capsule,
     }
 }

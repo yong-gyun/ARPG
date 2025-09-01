@@ -5,11 +5,11 @@ public partial class Effect : BaseObject
     public void SetRunner(EventActionRunner runner)
     {
         _runner = new EventActionRunner();
-        _runner.AddEventAction(Define.EventActionType.Collision, OnEventCollision);
-        _runner.AddEventAction(Define.EventActionType.CollisionHeal, OnEventCollisionHeal);
-        _runner.AddEventAction(Define.EventActionType.CollisionDamage, OnEventCollisionDamage);
-        _runner.AddEventAction(Define.EventActionType.CollisionBuff, OnEventCollisionBuff);
-        _runner.AddEventAction(Define.EventActionType.CollisionDebuff, OnEventCollisionDebuff);
+        _runner.AddEventAction(Define.EventActionType.Bound, OnEventBound);
+        _runner.AddEventAction(Define.EventActionType.BoundHeal, OnEventBoundHeal);
+        _runner.AddEventAction(Define.EventActionType.BoundDamage, OnEventBoundDamage);
+        _runner.AddEventAction(Define.EventActionType.BoundBuff, OnEventBoundBuff);
+        _runner.AddEventAction(Define.EventActionType.BoundDebuff, OnEventBoundDebuff);
         _runner.AddEventAction(Define.EventActionType.SetAnimation, OnEventSetAnimation);
         _runner.AddEventAction(Define.EventActionType.Position, OnEventPosition);
         _runner.AddEventAction(Define.EventActionType.InputAction, OnEventInputAction);
@@ -17,27 +17,27 @@ public partial class Effect : BaseObject
     }
 
     #region Event Collision Methods
-    public void OnEventCollision(EventAction eventAction)
+    public void OnEventBound(EventAction eventAction)
     {
 
     }
 
-    public void OnEventCollisionHeal(EventAction eventAction)
+    public void OnEventBoundHeal(EventAction eventAction)
     {
 
     }
 
-    public void OnEventCollisionDamage(EventAction eventAction)
+    public void OnEventBoundDamage(EventAction eventAction)
     {
 
     }
 
-    public void OnEventCollisionBuff(EventAction eventAction)
+    public void OnEventBoundBuff(EventAction eventAction)
     {
 
     }
 
-    public void OnEventCollisionDebuff(EventAction eventAction)
+    public void OnEventBoundDebuff(EventAction eventAction)
     {
 
     }
@@ -68,6 +68,4 @@ public partial class Effect : BaseObject
 
     }
     #endregion
-
-
 }
