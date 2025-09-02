@@ -11,13 +11,15 @@ public class BoundObject : MonoBehaviour
     public Vector3 Offset { get { return _offset; } }
     [SerializeField] protected Vector3 _offset;
 
+    public Vector3 Center { get { return transform.position + _offset; } }
+    
     public virtual bool IsHit(BoundObject target)
     {
         var targetType = target.Type;
         switch (targetType)
         {
             case Define.BoundObjectType.Box: return IsHitBox((BoundBox)target);
-            case Define.BoundObjectType.Sphere: return IsHitShpere((BoundShpere)target);
+            case Define.BoundObjectType.Sphere: return IsHitSphere((BoundSphere)target);
             case Define.BoundObjectType.Capsule: return IsHitCapsule((BoundCapsule)target);
         }
 
@@ -25,6 +27,6 @@ public class BoundObject : MonoBehaviour
     }
 
     public virtual bool IsHitBox(BoundBox target) { return false; }
-    public virtual bool IsHitShpere(BoundShpere target) { return false; }
+    public virtual bool IsHitSphere(BoundSphere target) { return false; }
     public virtual bool IsHitCapsule(BoundCapsule target) { return false; }
 }

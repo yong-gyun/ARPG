@@ -19,27 +19,31 @@ public partial class Effect : BaseObject
     #region Event Collision Methods
     public void OnEventBound(EventAction eventAction)
     {
-
+        Debug.Log("OnEventBound");
     }
 
     public void OnEventBoundHeal(EventAction eventAction)
     {
+        Debug.Log("OnEventBoundHeal");
 
     }
 
     public void OnEventBoundDamage(EventAction eventAction)
     {
 
+        Debug.Log("OnEventBoundDamage");
     }
 
     public void OnEventBoundBuff(EventAction eventAction)
     {
 
+        Debug.Log("OnEventBoundBuff");
     }
 
     public void OnEventBoundDebuff(EventAction eventAction)
     {
 
+        Debug.Log("OnEventBoundDebuff");
     }
     #endregion
 

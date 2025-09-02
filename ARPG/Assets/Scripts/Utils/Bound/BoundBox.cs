@@ -3,15 +3,13 @@ using UnityEngine;
 
 public class BoundBox : BoundObject
 {
-    public Vector3 Center { get { return transform.position + _offset; } }
-    public Vector3 Half { get { return _size * 0.5f; } }
     public Vector3 Min { get { return Center - Half; } }
     public Vector3 Max { get { return Center + Half; } }
-    
+    public Vector3 Half { get { return _size * 0.5f; } }
     public Vector3 Size { get { return _size; } }
-    
+
     [SerializeField] private Vector3 _size;
-    
+
     private void Reset()
     {
         _type = Define.BoundObjectType.Box;
@@ -25,7 +23,7 @@ public class BoundBox : BoundObject
                (Min.z <= target.Min.z) && (Max.z >= target.Min.z);
     }
 
-    public override bool IsHitShpere(BoundShpere target)
+    public override bool IsHitSphere(BoundSphere target)
     {
         Vector3 sphereCenter = target.transform.position + target.Offset;
         float sphereRadius = target.Radius;
@@ -34,7 +32,6 @@ public class BoundBox : BoundObject
         float cy = Mathf.Clamp(sphereCenter.y, Min.y, Max.y);
         float cz = Mathf.Clamp(sphereCenter.z, Min.z, Max.z);
 
-        //center - 센터 최소 값
         float dx = sphereCenter.x - cx;
         float dy = sphereCenter.y - cy;
         float dz = sphereCenter.z - cz;
@@ -45,7 +42,8 @@ public class BoundBox : BoundObject
 
     public override bool IsHitCapsule(BoundCapsule target)
     {
-        return false;
+        
+        return true;
     }
 
 #if UNITY_EDITOR
