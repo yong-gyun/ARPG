@@ -10,12 +10,6 @@ public class BoundBox : BoundObject
 
     [SerializeField] private Vector3 _size;
 
-    private void Reset()
-    {
-        _type = Define.BoundObjectType.Box;
-        _size = Vector3.one;
-    }
-
     public override bool IsHitBox(BoundBox target)
     {
         return (Min.x <= target.Min.x) && (Max.x >= target.Min.x) &&
@@ -70,6 +64,13 @@ public class BoundBox : BoundObject
             result[i] = c + r * v[i];
 
         return result;
+    }
+
+    protected override void Reset()
+    {
+        base.Reset();
+        _type = Define.BoundObjectType.Box;
+        _size = Vector3.one;
     }
 
     private void OnDrawGizmosSelected()

@@ -71,8 +71,9 @@ public class BoundCapsule : BoundObject
     }
 
 #if UNITY_EDITOR
-    private void Reset()
+    protected override void Reset()
     {
+        base.Reset();
         _type = Define.BoundObjectType.Capsule;
         _radius = 0.5f;
         _height = 2f;

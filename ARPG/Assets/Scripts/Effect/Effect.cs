@@ -10,11 +10,10 @@ public partial class Effect : BaseObject
 
     public bool IsEnd { get { return _elapsed >= _length; } }
 
-    public List<EffectRig> externalRigs = new List<EffectRig>();
-
     private List<EffectRig> _rigs = new List<EffectRig>();
-
     private List<EffectAnimator> _animators = new List<EffectAnimator>();
+
+    public List<EffectRig> externalRigs = new List<EffectRig>();
 
     public EventActionBehaviour behaviour = new EventActionBehaviour();
 
@@ -77,6 +76,7 @@ public partial class Effect : BaseObject
 
     private void Reset()
     {
+        _objectType = Define.ObjectType.Effect;
         Collect();
     }
 }

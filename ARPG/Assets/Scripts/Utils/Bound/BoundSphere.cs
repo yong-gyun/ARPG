@@ -5,6 +5,15 @@ public class BoundSphere : BoundObject
     public float Radius { get { return _radius;  } }
     [SerializeField] private float _radius;
 
+    public override void Refersh()
+    {
+        _position = transform.position + Offset;
+
+        float d = Radius * 2f;
+        Vector3 size = new Vector3(d, d, d);
+        _bounds = new Bounds(Center, size);
+    }
+
     public override bool IsHitBox(BoundBox target)
     {
         float cx = Mathf.Clamp(Center.x, target.Min.x, target.Max.x);
@@ -61,10 +70,17 @@ public class BoundSphere : BoundObject
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position + Offset, Radius);
+
+        Gizmos.color = Color.yellow;
+
+        float d = Radius * 2f;
+        Vector3 size = new Vector3(d, d, d);
+        Gizmos.DrawWireCube(transform.position + Offset, size);
     }
 
-    private void Reset()
+    protected override void Reset()
     {
+        base.Reset();
         _type = Define.BoundObjectType.Sphere;
         _radius = 0.5f;
     }

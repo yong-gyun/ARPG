@@ -12,6 +12,7 @@ public class StartScene : BaseScene
         if (base.Initialized() == false)
             return false;
 
+        Debug.Log("Cdddddd");
         var handle = Addressables.InitializeAsync();
         handle.Completed += OnCompletedInitAddressables;
         return true;

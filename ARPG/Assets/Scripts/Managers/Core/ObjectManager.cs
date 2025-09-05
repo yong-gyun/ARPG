@@ -21,6 +21,8 @@ public class ObjectManager
 
     public List<Creature> Monsters { get; private set; } = new List<Creature>();
 
+    public List<BoundObject> Bounds { get; private set; } = new List<BoundObject>();
+
     public async UniTask<Creature> Spawn(int templateID)
     {
         Define.CreatureType creatureType = templateID.GetCreatureType();
@@ -56,5 +58,12 @@ public class ObjectManager
     {
         Transform root = new GameObject(name).transform;
         return root;
+    }
+
+    public void Clear()
+    {
+        Hunter = null;
+        Monsters.Clear();
+        Bounds.Clear();
     }
 }
